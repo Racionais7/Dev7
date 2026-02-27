@@ -1,0 +1,60 @@
+[build]
+  # Diretório onde está o package.json
+  base = "."
+  
+  # Comando de build
+  command = "npm run build"
+  
+  # Pasta de saída do build
+  publish = "build"
+
+[build.environment]
+  # Versão do Node.js
+  NODE_VERSION = "18"
+  
+  # Configurações para React
+  GENERATE_SOURCEMAP = "false"
+  CI = "false"
+
+# Redirects para SPA (Single Page Application)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers de segurança e performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Cache Control
+    Cache-Control = "public, max-age=31536000"
+    
+    # Segurança
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Performance
+    X-DNS-Prefetch-Control = "on"
+
+# Cache específico para assets estáticos
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache para imagens
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"

@@ -1,0 +1,478 @@
+/* App.css - Casino MG Jogos Theme */
+
+/* Remove default margins and ensure proper box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body and HTML setup */
+html, body {
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #000000;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* App container */
+.App {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #8b5cf6, #f59e0b);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #7c3aed, #d97706);
+}
+
+/* Custom animations */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(139, 92, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.8), 0 0 30px rgba(245, 158, 11, 0.5);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PREMIUM GLASS BUTTON STYLES - Apple VisionOS / iOS Inspired
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* Base Premium Glass Button */
+.btn-glass-premium {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: rgba(20, 20, 30, 0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid transparent;
+  background-image: linear-gradient(rgba(20, 20, 30, 0.35), rgba(20, 20, 30, 0.35)), 
+                    linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.04) 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  color: #F1F5FF;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 220ms ease;
+  overflow: hidden;
+}
+
+/* Inner highlight (light reflection on top) */
+.btn-glass-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
+  border-radius: 12px 12px 0 0;
+  pointer-events: none;
+}
+
+/* Hover Effect */
+.btn-glass-premium:hover {
+  transform: scale(1.03);
+  background: rgba(30, 30, 45, 0.45);
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.06),
+              0 0 0 1px rgba(255, 255, 255, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Active/Pressed Effect */
+.btn-glass-premium:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Disabled State */
+.btn-glass-premium:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   VARIANT: Primary Action (Subtle Green Tint)
+───────────────────────────────────────────────────────────────────────── */
+.btn-glass-primary {
+  background: rgba(16, 35, 30, 0.45);
+  background-image: linear-gradient(rgba(16, 35, 30, 0.45), rgba(16, 35, 30, 0.45)), 
+                    linear-gradient(180deg, rgba(52, 211, 153, 0.25) 0%, rgba(52, 211, 153, 0.05) 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.btn-glass-primary::before {
+  background: linear-gradient(180deg, rgba(52, 211, 153, 0.12) 0%, transparent 100%);
+}
+
+.btn-glass-primary:hover {
+  background: rgba(20, 45, 38, 0.55);
+  box-shadow: 0 8px 32px rgba(52, 211, 153, 0.12),
+              0 0 0 1px rgba(52, 211, 153, 0.2),
+              inset 0 1px 0 rgba(52, 211, 153, 0.15);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   VARIANT: Secondary Action (Subtle Violet Tint)
+───────────────────────────────────────────────────────────────────────── */
+.btn-glass-secondary {
+  background: rgba(25, 20, 40, 0.45);
+  background-image: linear-gradient(rgba(25, 20, 40, 0.45), rgba(25, 20, 40, 0.45)), 
+                    linear-gradient(180deg, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.05) 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.btn-glass-secondary::before {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.12) 0%, transparent 100%);
+}
+
+.btn-glass-secondary:hover {
+  background: rgba(35, 28, 55, 0.55);
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.12),
+              0 0 0 1px rgba(139, 92, 246, 0.2),
+              inset 0 1px 0 rgba(139, 92, 246, 0.15);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   VARIANT: CTA / Highlight (Warm Amber Tint)
+───────────────────────────────────────────────────────────────────────── */
+.btn-glass-cta {
+  background: rgba(40, 28, 18, 0.45);
+  background-image: linear-gradient(rgba(40, 28, 18, 0.45), rgba(40, 28, 18, 0.45)), 
+                    linear-gradient(180deg, rgba(251, 191, 36, 0.3) 0%, rgba(251, 191, 36, 0.08) 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.btn-glass-cta::before {
+  background: linear-gradient(180deg, rgba(251, 191, 36, 0.15) 0%, transparent 100%);
+}
+
+.btn-glass-cta:hover {
+  background: rgba(50, 38, 22, 0.55);
+  box-shadow: 0 8px 32px rgba(251, 191, 36, 0.15),
+              0 0 0 1px rgba(251, 191, 36, 0.25),
+              inset 0 1px 0 rgba(251, 191, 36, 0.2);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   VARIANT: Large CTA Button
+───────────────────────────────────────────────────────────────────────── */
+.btn-glass-large {
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 14px;
+}
+
+.btn-glass-large:hover {
+  transform: scale(1.04);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   VARIANT: Small Button
+───────────────────────────────────────────────────────────────────────── */
+.btn-glass-small {
+  padding: 8px 16px;
+  font-size: 12px;
+  border-radius: 10px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   VARIANT: Full Width
+───────────────────────────────────────────────────────────────────────── */
+.btn-glass-full {
+  width: 100%;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Icon Animation
+───────────────────────────────────────────────────────────────────────── */
+.btn-glass-premium svg,
+.btn-glass-primary svg,
+.btn-glass-secondary svg,
+.btn-glass-cta svg {
+  transition: transform 220ms ease;
+}
+
+.btn-glass-premium:hover svg,
+.btn-glass-primary:hover svg,
+.btn-glass-secondary:hover svg,
+.btn-glass-cta:hover svg {
+  transform: translateX(3px);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Utility classes for animations */
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background-size: 200px 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Custom gradient backgrounds */
+.bg-casino-primary {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%);
+}
+
+.bg-casino-secondary {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+}
+
+.bg-casino-dark {
+  background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #374151 100%);
+}
+
+/* Hover effects for interactive elements */
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Button animations */
+.btn-casino {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-casino::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-casino:hover::before {
+  left: 100%;
+}
+
+/* Text gradients */
+.text-gradient-primary {
+  background: linear-gradient(135deg, #8b5cf6, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-secondary {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom shadows */
+.shadow-casino {
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+}
+
+.shadow-gold {
+  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+}
+
+/* Loading spinner */
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top: 3px solid #8b5cf6;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  .responsive-text-5xl {
+    font-size: 2.5rem;
+  }
+  
+  .responsive-text-7xl {
+    font-size: 3.5rem;
+  }
+}
+
+/* Focus states for accessibility */
+.focus-casino:focus {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+}
+
+/* Custom scrollbar for webkit browsers */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #8b5cf6, #f59e0b);
+  border-radius: 3px;
+}
+
+/* Pulsing effect for status indicators */
+.pulse-status {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.25),
+    0 0 30px rgba(139, 92, 246, 0.2);
+}
+
+/* Gradient borders */
+.gradient-border {
+  position: relative;
+  background: linear-gradient(135deg, #8b5cf6, #f59e0b);
+  padding: 2px;
+  border-radius: 12px;
+}
+
+.gradient-border-content {
+  background: #1a1a2e;
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+}
+
+/* Neon glow effects */
+.neon-purple {
+  text-shadow: 
+    0 0 5px #8b5cf6,
+    0 0 10px #8b5cf6,
+    0 0 15px #8b5cf6,
+    0 0 20px #8b5cf6;
+}
+
+.neon-gold {
+  text-shadow: 
+    0 0 5px #f59e0b,
+    0 0 10px #f59e0b,
+    0 0 15px #f59e0b,
+    0 0 20px #f59e0b;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .mobile-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .mobile-text-sm {
+    font-size: 0.875rem;
+  }
+  
+  .mobile-space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+}
