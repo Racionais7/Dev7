@@ -28,3 +28,7 @@ Thumbs.db
 
 # Old cloned directory
 Dev7/
+-e 
+# Environment files
+*.env
+*.env.*
