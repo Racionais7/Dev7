@@ -15,7 +15,11 @@ const platformLogos = [
   { name: 'EGJOGO', logo: '/assets/platforms/egjogo.png' },
   { name: 'WGJOGO', logo: '/assets/platforms/wgjogo.png' },
   { name: 'YGJOGO', logo: '/assets/platforms/ygjogo.png' },
-  { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png' }
+  { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png' },
+  { name: 'FGJOGO', logo: '/assets/platforms/fgjogo.png' },
+  { name: 'HGJOGO', logo: '/assets/platforms/hgjogo.png' },
+  { name: 'AGJOGO', logo: '/assets/platforms/agjogo.png' },
+  { name: 'BGJOGO', logo: '/assets/platforms/bgjogo.png' }
 ];
 
 const responsibilityBadges = [
