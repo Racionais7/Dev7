@@ -11,15 +11,11 @@ const gameProviders = [
 ];
 
 const platformLogos = [
-  { name: 'AGJOGO', logo: '/assets/platforms/agjogo.png' },
-  { name: 'BGJOGO', logo: '/assets/platforms/bgjogo.png' },
-  { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png' },
-  { name: 'YGJOGO', logo: '/assets/platforms/ygjogo.png' },
-  { name: 'EGJOGO', logo: '/assets/platforms/egjogo.png' },
   { name: 'MGJOGO', logo: '/assets/platforms/mgjogo.png' },
-  { name: 'FGJOGO', logo: '/assets/platforms/fgjogo.png' },
-  { name: 'HGJOGO', logo: '/assets/platforms/hgjogo.png' },
-  { name: 'WGJOGO', logo: '/assets/platforms/wgjogo.png' }
+  { name: 'EGJOGO', logo: '/assets/platforms/egjogo.png' },
+  { name: 'WGJOGO', logo: '/assets/platforms/wgjogo.png' },
+  { name: 'YGJOGO', logo: '/assets/platforms/ygjogo.png' },
+  { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png' }
 ];
 
 const responsibilityBadges = [
