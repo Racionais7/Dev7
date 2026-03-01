@@ -30,32 +30,20 @@ O usuário é brasileiro e prefere comunicação em **Português do Brasil**.
 
 ## O Que Foi Implementado
 
-### Data: 14/02/2026
+### Data: 01/03/2026 - Atualização de Logotipos
+- **Alteração**: Substituição dos logotipos de plataformas no footer
+- **Logos Removidos**: AGJOGO, BGJOGO, FGJOGO, HGJOGO (e outros)
+- **Logos Adicionados**: MGJOGO, EGJOGO, WGJOGO, YGJOGO, DGJOGO
+- **Arquivos Atualizados**:
+  - `/app/frontend/src/components/PlatformSelector.jsx` - Array platformLogos atualizado
+  - `/app/frontend/public/assets/platforms/` - Novas imagens salvas
+- **Grid Ajustado**: De 9 colunas para 5 colunas no footer
 
-#### Persistência de Sinais (Bug Fix - P0)
-- **Problema**: Sinais eram regenerados ao navegar entre páginas
-- **Solução Implementada**:
-  - Sinais agora são identificados por `provider_id + game_id`
-  - Armazenamento completo em localStorage com:
-    - `createdAt`: timestamp de criação
-    - `expiresAt`: timestamp de expiração da janela
-    - `cooldownEndsAt`: timestamp do fim do cooldown
-    - `cyclePhase`, `deadSpinCount`, `lastBonusDistance`: estado do ciclo
-  - Estados são inicializados diretamente do localStorage no `useState`
-  - Timer continua de onde parou ao retornar ao jogo
-  - Novo sinal só é gerado quando o cooldown anterior termina
-
-#### UI/UX Premium (Concluído)
-- Provider Panel: Launcher limpo com logos de provedores
-- Slot Cards: Estilo "cinemático" com botão JOGAR vermelho profundo
-- Signal Generator: UI ação-orientada com instruções claras
-- Timing estável: 5s countdown inicial, 60s cooldown entre sinais
-- Turbo mode automático (não selecionável pelo usuário)
-- "Melhor horário" baseado em análise de ciclo
-
-#### Branding & Conteúdo
-- Logos estilizados para PG Soft e Pragmatic Play
-- Remoção de jogos específicos do TADA (Mines, Jackpot Fishing, etc.)
+### Data: 14/02/2026 - Funcionalidades Anteriores
+- Persistência de sinais com localStorage
+- UI/UX Premium com estilo cinemático
+- Sistema de cooldown de sinais
+- Providers: PG Soft, Pragmatic Play, Spirit Gaming, Tada Gaming, Reeveme
 
 ## Tecnologias
 - **Frontend**: React, Tailwind CSS, Craco
@@ -66,18 +54,17 @@ O usuário é brasileiro e prefere comunicação em **Português do Brasil**.
 ## Próximas Tarefas / Backlog
 
 ### P0 (Alta Prioridade)
-- Nenhuma tarefa pendente de alta prioridade
+- Nenhuma tarefa pendente
 
 ### P1 (Média Prioridade)
-- Adicionar mais slots com tema de moedas ao provedor TADA (solicitado pelo usuário)
+- Adicionar links clicáveis nos logos das plataformas
 
 ### P2 (Baixa Prioridade / Futura)
-- Refatorar SignalGenerator.jsx em hooks customizados (useSignalTimer, useSignalPersistence)
-- Considerar backend real para sinais
-- Adicionar mais provedores
+- Adicionar mais provedores de jogos
+- Implementar backend real para sinais
 
 ## Dados MOCKED
-⚠️ **IMPORTANTE**: Todos os dados de jogos são mocked em `frontend/src/data/mockData.js`. Não há chamadas de API reais para dados de jogos ou sinais.
+⚠️ **IMPORTANTE**: Todos os dados de jogos são mocked. Não há chamadas de API reais.
 
-## URLs de Preview
-- Frontend: https://slot-advisor.preview.yourserver.com
+## URLs
+- Frontend Preview: https://dnoov-site-edits.preview.emergentagent.com
