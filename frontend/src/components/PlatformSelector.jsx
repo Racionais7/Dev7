@@ -792,7 +792,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
           {/* LINE 3: Platform Logos Grid */}
           <div className="py-6 bg-[#08080e]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
-              <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 max-w-2xl mx-auto">
+              <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-3 max-w-4xl mx-auto">
                 {platformLogos.map((p, idx) => (
                   <div 
                     key={p.name}
