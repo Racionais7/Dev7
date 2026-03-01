@@ -11,14 +11,14 @@ const gameProviders = [
 ];
 
 const platformLogos = [
-  { name: 'MGJOGO', logo: '/assets/platforms/mgjogo.png' },
-  { name: 'EGJOGO', logo: '/assets/platforms/egjogo.png' },
-  { name: 'WGJOGO', logo: '/assets/platforms/wgjogo.png' },
-  { name: 'YGJOGO', logo: '/assets/platforms/ygjogo.png' },
-  { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png' },
-  { name: 'FGJOGO', logo: '/assets/platforms/fgjogo.png' },
-  { name: 'HGJOGO', logo: '/assets/platforms/hgjogo.png' },
   { name: 'AGJOGO', logo: '/assets/platforms/agjogo.png' },
+  { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png' },
+  { name: 'YGJOGO', logo: '/assets/platforms/ygjogo.png' },
+  { name: 'MGJOGO', logo: '/assets/platforms/mgjogo.png' },
+  { name: 'HGJOGO', logo: '/assets/platforms/hgjogo.png' },
+  { name: 'EGJOGO', logo: '/assets/platforms/egjogo.png' },
+  { name: 'FGJOGO', logo: '/assets/platforms/fgjogo.png' },
+  { name: 'WGJOGO', logo: '/assets/platforms/wgjogo.png' },
   { name: 'BGJOGO', logo: '/assets/platforms/bgjogo.png' }
 ];
 
