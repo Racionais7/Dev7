@@ -6,6 +6,7 @@ import SignalGenerator from "./components/SignalGenerator";
 import ProviderSelector from "./components/ProviderSelector";
 import PlatformSelector from "./components/PlatformSelector";
 import IntroAnimation from "./components/IntroAnimation";
+import WhatsAppButton from "./components/WhatsAppButton";
 import { slotsData, providers, platformLinks } from "./data/mockData";
 import { Toaster } from 'sonner';
 
@@ -64,7 +65,12 @@ function App() {
   const currentPlatformLink = platformLinks[selectedPlatform] || '';
 
   if (showIntro) return <IntroAnimation onComplete={() => setShowIntro(false)} />;
-  if (!selectedPlatform) return <PlatformSelector onPlatformSelect={setSelectedPlatform} />;
+  if (!selectedPlatform) return (
+    <>
+      <PlatformSelector onPlatformSelect={setSelectedPlatform} />
+      <WhatsAppButton />
+    </>
+  );
 
   return (
     <div className="min-h-screen bg-[#06060c] text-white flex flex-col">
@@ -206,6 +212,7 @@ function App() {
           </footer>
         </div>
       )}
+      <WhatsAppButton />
     </div>
   );
 }
