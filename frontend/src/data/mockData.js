@@ -559,6 +559,51 @@ const pgGamesData = {
     basePayout: 94,
     category: "Mystery",
     provider: "pg"
+  },
+  "Alchemy Gold": {
+    id: 42,
+    name: "Alchemy Gold",
+    image: "/pg/Alchemy Gold.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 90,
+    category: "Magic",
+    provider: "pg"
+  },
+  "Alibaba's Cave of Fortune": {
+    id: 43,
+    name: "Alibaba's Cave of Fortune",
+    image: "/pg/Alibaba's Cave of Fortune.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 91,
+    category: "Adventure",
+    provider: "pg"
+  },
+  "Asgardian Rising": {
+    id: 44,
+    name: "Asgardian Rising",
+    image: "/pg/Asgardian Rising.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 93,
+    category: "Norse",
+    provider: "pg"
+  },
+  "Bakery Bonanza": {
+    id: 45,
+    name: "Bakery Bonanza",
+    image: "/pg/Bakery Bonanza.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 88,
+    category: "Food",
+    provider: "pg"
+  },
+  "Bali Vacation": {
+    id: 46,
+    name: "Bali Vacation",
+    image: "/pg/Bali Vacation.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 89,
+    category: "Travel",
+    provider: "pg"
   }
 };
 
