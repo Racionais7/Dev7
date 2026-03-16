@@ -748,6 +748,51 @@ const pgGamesData = {
     basePayout: 92,
     category: "Adventure",
     provider: "pg"
+  },
+  "Jungle Delight": {
+    id: 63,
+    name: "Jungle Delight",
+    image: "/pg/Jungle Delight.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 87,
+    category: "Jungle",
+    provider: "pg"
+  },
+  "Jurassic Kingdom": {
+    id: 64,
+    name: "Jurassic Kingdom",
+    image: "/pg/Jurassic Kingdom.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 90,
+    category: "Dinosaur",
+    provider: "pg"
+  },
+  "Knockout Riches": {
+    id: 65,
+    name: "Knockout Riches",
+    image: "/pg/Knockout Riches.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 88,
+    category: "Sports",
+    provider: "pg"
+  },
+  "Leprechaun Riches": {
+    id: 66,
+    name: "Leprechaun Riches",
+    image: "/pg/Leprechaun Riches.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 91,
+    category: "Irish",
+    provider: "pg"
+  },
+  "Lucky Clover Lady": {
+    id: 67,
+    name: "Lucky Clover Lady",
+    image: "/pg/Lucky Clover Lady.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 89,
+    category: "Irish",
+    provider: "pg"
   }
 };
 
