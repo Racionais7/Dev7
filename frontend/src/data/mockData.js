@@ -694,6 +694,15 @@ const pgGamesData = {
     basePayout: 92,
     category: "Action",
     provider: "pg"
+  },
+  "Diner Frenzy": {
+    id: 57,
+    name: "Diner Frenzy",
+    image: "/pg/Diner Frenzy.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 87,
+    category: "Food",
+    provider: "pg"
   }
 };
 
