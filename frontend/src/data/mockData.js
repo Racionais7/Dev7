@@ -649,6 +649,51 @@ const pgGamesData = {
     basePayout: 91,
     category: "Asian",
     provider: "pg"
+  },
+  "Candy Bonanza": {
+    id: 52,
+    name: "Candy Bonanza",
+    image: "/pg/Candy Bonanza.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 86,
+    category: "Sweet",
+    provider: "pg"
+  },
+  "Candy Burst": {
+    id: 53,
+    name: "Candy Burst",
+    image: "/pg/Candy Burst.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 88,
+    category: "Sweet",
+    provider: "pg"
+  },
+  "Captain's Bounty": {
+    id: 54,
+    name: "Captain's Bounty",
+    image: "/pg/Captain's Bounty.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 90,
+    category: "Pirate",
+    provider: "pg"
+  },
+  "Chocolate Deluxe": {
+    id: 55,
+    name: "Chocolate Deluxe",
+    image: "/pg/Chocolate Deluxe.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 89,
+    category: "Sweet",
+    provider: "pg"
+  },
+  "Doomsday Rampage": {
+    id: 56,
+    name: "Doomsday Rampage",
+    image: "/pg/Doomsday Rampage.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 92,
+    category: "Action",
+    provider: "pg"
   }
 };
 
