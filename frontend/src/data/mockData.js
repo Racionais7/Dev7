@@ -703,6 +703,51 @@ const pgGamesData = {
     basePayout: 87,
     category: "Food",
     provider: "pg"
+  },
+  "Inferno Mayhem": {
+    id: 58,
+    name: "Inferno Mayhem",
+    image: "/pg/Inferno Mayhem.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 91,
+    category: "Action",
+    provider: "pg"
+  },
+  "Jack Frost's Winter": {
+    id: 59,
+    name: "Jack Frost's Winter",
+    image: "/pg/Jack Frost's Winter.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 88,
+    category: "Winter",
+    provider: "pg"
+  },
+  "Jack the Giant Hunter": {
+    id: 60,
+    name: "Jack the Giant Hunter",
+    image: "/pg/Jack the Giant Hunter.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 90,
+    category: "Adventure",
+    provider: "pg"
+  },
+  "Jewels of Prosperity": {
+    id: 61,
+    name: "Jewels of Prosperity",
+    image: "/pg/Jewels of Prosperity.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 89,
+    category: "Treasure",
+    provider: "pg"
+  },
+  "Journey to the Wealth": {
+    id: 62,
+    name: "Journey to the Wealth",
+    image: "/pg/Journey to the Wealth.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 92,
+    category: "Adventure",
+    provider: "pg"
   }
 };
 
