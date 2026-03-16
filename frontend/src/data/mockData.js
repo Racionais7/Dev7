@@ -604,6 +604,51 @@ const pgGamesData = {
     basePayout: 89,
     category: "Travel",
     provider: "pg"
+  },
+  "Battleground Royale": {
+    id: 47,
+    name: "Battleground Royale",
+    image: "/pg/Battleground Royale.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 90,
+    category: "Action",
+    provider: "pg"
+  },
+  "Bikini Paradise": {
+    id: 48,
+    name: "Bikini Paradise",
+    image: "/pg/Bikini Paradise.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 87,
+    category: "Beach",
+    provider: "pg"
+  },
+  "Buffalo Win": {
+    id: 49,
+    name: "Buffalo Win",
+    image: "/pg/Buffalo Win.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 88,
+    category: "Animal",
+    provider: "pg"
+  },
+  "Butterfly Blossom": {
+    id: 50,
+    name: "Butterfly Blossom",
+    image: "/pg/Butterfly Blossom.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 89,
+    category: "Nature",
+    provider: "pg"
+  },
+  "Caishen Wins": {
+    id: 51,
+    name: "Caishen Wins",
+    image: "/pg/Caishen Wins.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 91,
+    category: "Asian",
+    provider: "pg"
   }
 };
 
