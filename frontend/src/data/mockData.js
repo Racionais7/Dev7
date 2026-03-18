@@ -141,13 +141,24 @@ const TADA_ORDER = [
   "Money Coming 2",
   "Fortune Gems 2",
   "Golden Empire",
-  "Lucky Jaguar 500",
+  "Lucky Coming",
+  "Lucky Doggy",
+  "Lucky Goldbricks",
+  "Lucky Jaguar",
   "Lucky Jaguar 2",
+  "Lucky Jaguar 500",
+  "Lucky Macaw",
+  "Magic Lamp",
+  "Mayan Empire",
+  "Medusa",
+  "Mega Ace",
+  "3 Lucky Baozhu",
+  "Agent Ace",
+  "Bubble Beauty",
   "Crazy Hunter",
   "Fortune Gems 3",
   "Fortune Hook",
   "Fortune Hook Boom",
-  "Lucky Jaguar",
   "Devil Fire Twins",
   "Money Coming Expanded Bets",
   "3 Lucky Piggy",
@@ -1484,6 +1495,105 @@ const tadaGamesData = {
     bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
     basePayout: 85,
     category: "Animal",
+    provider: "tada"
+  },
+  "Lucky Coming": {
+    id: 250,
+    name: "Lucky Coming",
+    image: "/images/tada/Lucky Coming.jpg",
+    bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
+    basePayout: 91,
+    category: "Fortune",
+    provider: "tada"
+  },
+  "Lucky Doggy": {
+    id: 251,
+    name: "Lucky Doggy",
+    image: "/images/tada/Lucky Doggy.jpg",
+    bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
+    basePayout: 88,
+    category: "Animal",
+    provider: "tada"
+  },
+  "Lucky Goldbricks": {
+    id: 252,
+    name: "Lucky Goldbricks",
+    image: "/images/tada/Lucky Goldbricks.jpg",
+    bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
+    basePayout: 90,
+    category: "Gold",
+    provider: "tada"
+  },
+  "Lucky Macaw": {
+    id: 253,
+    name: "Lucky Macaw",
+    image: "/images/tada/Lucky Macaw.jpg",
+    bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
+    basePayout: 87,
+    category: "Animal",
+    provider: "tada"
+  },
+  "Magic Lamp": {
+    id: 254,
+    name: "Magic Lamp",
+    image: "/images/tada/Magic Lamp.jpg",
+    bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
+    basePayout: 92,
+    category: "Fantasy",
+    provider: "tada"
+  },
+  "Mayan Empire": {
+    id: 255,
+    name: "Mayan Empire",
+    image: "/images/tada/Mayan Empire.jpg",
+    bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
+    basePayout: 89,
+    category: "Ancient",
+    provider: "tada"
+  },
+  "Medusa": {
+    id: 256,
+    name: "Medusa",
+    image: "/images/tada/Medusa.jpg",
+    bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
+    basePayout: 93,
+    category: "Greek",
+    provider: "tada"
+  },
+  "Mega Ace": {
+    id: 257,
+    name: "Mega Ace",
+    image: "/images/tada/Mega Ace.jpg",
+    bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
+    basePayout: 91,
+    category: "Cards",
+    provider: "tada"
+  },
+  "3 Lucky Baozhu": {
+    id: 258,
+    name: "3 Lucky Baozhu",
+    image: "/images/tada/3 Lucky Baozhu.jpg",
+    bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
+    basePayout: 94,
+    category: "Asian",
+    provider: "tada"
+  },
+  "Agent Ace": {
+    id: 259,
+    name: "Agent Ace",
+    image: "/images/tada/Agent Ace.jpg",
+    bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
+    basePayout: 88,
+    category: "Action",
+    provider: "tada"
+  },
+  "Bubble Beauty": {
+    id: 260,
+    name: "Bubble Beauty",
+    image: "/images/tada/Bubble Beauty.jpg",
+    bets: ["R$ 0,20", "R$ 0,50", "R$ 1,00"],
+    basePayout: 86,
+    category: "Fantasy",
     provider: "tada"
   },
   "Devil Fire Twins": {

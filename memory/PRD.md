@@ -30,6 +30,26 @@ O usuário é brasileiro e prefere comunicação em **Português do Brasil**.
 
 ## O Que Foi Implementado
 
+### Data: 18/03/2026 - Adição de 14 Novos Slots Tada Gaming
+- **Novos Jogos Adicionados**:
+  1. Lucky Coming
+  2. Lucky Doggy
+  3. Lucky Goldbricks
+  4. Lucky Macaw
+  5. Magic Lamp
+  6. Mayan Empire
+  7. Medusa
+  8. Mega Ace
+  9. 3 Lucky Baozhu
+  10. Agent Ace
+  11. Bubble Beauty
+  (Lucky Jaguar, Lucky Jaguar 2, Lucky Jaguar 500 já existiam)
+- **Total Tada Gaming**: 41 jogos disponíveis
+- **Imagens**: Baixadas e configuradas para cada novo slot
+- **Arquivos Atualizados**:
+  - `/app/frontend/src/data/mockData.js` - Novos slots no TADA_ORDER e tadaGamesData
+  - `/app/frontend/public/images/tada/` - Novas imagens dos slots
+
 ### Data: 01/03/2026 - Atualização de Logotipos
 - **Alteração**: Substituição dos logotipos de plataformas no footer
 - **Logos Removidos**: AGJOGO, BGJOGO, FGJOGO, HGJOGO (e outros)
