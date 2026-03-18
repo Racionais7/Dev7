@@ -67,4 +67,4 @@ O usuário é brasileiro e prefere comunicação em **Português do Brasil**.
 ⚠️ **IMPORTANTE**: Todos os dados de jogos são mocked. Não há chamadas de API reais.
 
 ## URLs
-- Frontend Preview: https://github-portfolio-17.preview.emergentagent.com
+- Frontend Preview: https://github-preview-live.preview.emergentagent.com
