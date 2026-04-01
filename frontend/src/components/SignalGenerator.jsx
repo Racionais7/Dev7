@@ -558,9 +558,9 @@ const SignalGenerator = ({ slot, onBack, platformLink }) => {
   };
 
   const getButtonText = () => {
-    if (signalState === 'ENTRY_DIRECT') return 'Entrar agora';
-    if (signalState === 'ENTRY_LIGHT') return 'Jogar leve';
-    if (signalState === 'OBSERVATION') return 'Observar 1 rodada';
+    if (signalState === 'ENTRY_DIRECT') return 'IR PARA PLATAFORMA';
+    if (signalState === 'ENTRY_LIGHT') return 'IR PARA PLATAFORMA';
+    if (signalState === 'OBSERVATION') return 'IR PARA PLATAFORMA';
     if (signalState === 'REANALYSIS') return 'Aguardando análise';
     return 'Analisando...';
   };

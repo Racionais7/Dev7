@@ -10,9 +10,10 @@ export const providers = {
   revenge: "Revenge"
 };
 
-// Links de cadastro por plataforma - FG JOGO
+// Links de cadastro por plataforma
 export const platformLinks = {
-  FGJOGO: "https://fgjogo7.com/?ch=230004&ic=140225696#/register"
+  FGJOGO: "https://fgjogo7.com/?ch=230004&ic=140225696#/register",
+  HGJOGO: "https://hgjogo7.com/en/?ch=110006&ic=140396339#/register"
 };
 
 // Imagem da plataforma FG JOGO
