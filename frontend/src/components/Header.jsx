@@ -1,5 +1,4 @@
 import React from 'react';
-import { platformImage } from '../data/mockData';
 
 const Header = ({ selectedPlatform, onBackToPlatforms }) => {
   return (
@@ -18,16 +17,14 @@ const Header = ({ selectedPlatform, onBackToPlatforms }) => {
           </button>
 
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center shadow-lg shadow-red-500/20">
-              <span className="text-white font-bold text-sm">FG</span>
-            </div>
+            <img src="/assets/platforms/hgjogo_cta.jpg" alt="HG JOGO" className="w-10 h-10 rounded-lg object-cover" />
             <span className="text-lg font-bold">
-              <span className="text-white">FG</span>
-              <span className="text-red-500"> JOGO</span>
+              <span className="text-white">HG</span>
+              <span className="text-cyan-400"> JOGO</span>
             </span>
           </div>
 
-          <img src={platformImage} alt="Platform" className="w-9 h-9 rounded-lg object-cover opacity-80" />
+          <img src="/assets/platforms/hgjogo_cta.jpg" alt="HG JOGO" className="w-9 h-9 rounded-lg object-cover opacity-80" />
         </div>
       </div>
     </header>
