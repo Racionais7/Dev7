@@ -805,8 +805,8 @@ const PlatformSelector = ({ onPlatformSelect }) => {
           <div className="py-3 px-4 sm:px-6 border-t border-white/5">
             <div className="max-w-7xl mx-auto flex items-center justify-between text-xs text-gray-600">
               <div className="flex items-center gap-1">
-                <span className="font-bold text-white">FG</span>
-                <span className="font-bold text-red-500">JOGO</span>
+                <span className="font-bold text-white">HG</span>
+                <span className="font-bold text-cyan-400">JOGO</span>
                 <span className="ml-2">© 2026</span>
               </div>
               <div className="flex items-center gap-1.5">
