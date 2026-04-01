@@ -683,7 +683,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                           <div className="absolute inset-0 animate-glass-reflection pointer-events-none" style={{
                             background: 'linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%)'
                           }} />
-                          <img src="/assets/platforms/hgjogo_new.png" alt="HG JOGO" className="w-full h-full object-cover" />
+                          <img src="/assets/platforms/hgjogo_cta.jpg" alt="HG JOGO" className="w-full h-full object-cover" />
                         </div>
                         <div className="absolute -inset-2 rounded-2xl border-2 border-emerald-500/40 animate-icon-glow-pulse" />
                       </div>
