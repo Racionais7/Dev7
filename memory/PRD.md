@@ -6,6 +6,9 @@ Plataforma de sinais para slots de cassino online com estilo premium. A aplicaç
 ## Língua do Usuário
 O usuário é brasileiro e prefere comunicação em **Português do Brasil**.
 
+## Plataforma Atual
+- **HG JOGO** - https://hgjogo7.com/en/?ch=110006&ic=140396339#/register
+
 ## Arquitetura
 ```
 /app/
@@ -29,6 +32,16 @@ O usuário é brasileiro e prefere comunicação em **Português do Brasil**.
 ```
 
 ## O Que Foi Implementado
+
+### Data: 01/04/2026 - Mudança de Plataforma para HG JOGO
+- **Alteração Principal**: Plataforma mudada de FG JOGO para HG JOGO
+- **Logo**: Logo do lobo HG JOGO (fornecido pelo usuário)
+- **Link de Registro**: https://hgjogo7.com/en/?ch=110006&ic=140396339#/register
+- **Arquivos Atualizados**:
+  - `/app/frontend/src/components/PlatformSelector.jsx` - Atualizado para HG JOGO
+  - `/app/frontend/public/assets/platforms/hgjogo.jpg` - Novo logo salvo
+- **Mudanças no Footer**: Removidos todos os outros logos, apenas HG JOGO
+- **Copyright**: Atualizado para "HG JOGO © 2026"
 
 ### Data: 18/03/2026 - Adição de 14 Novos Slots Tada Gaming
 - **Novos Jogos Adicionados**:

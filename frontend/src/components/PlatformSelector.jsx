@@ -11,16 +11,11 @@ const gameProviders = [
 ];
 
 const platformLogos = [
-  { name: 'AGJOGO', logo: '/assets/platforms/agjogo.png' },
-  { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png' },
-  { name: 'YGJOGO', logo: '/assets/platforms/ygjogo.png' },
-  { name: 'MGJOGO', logo: '/assets/platforms/mgjogo.png' },
-  { name: 'HGJOGO', logo: '/assets/platforms/hgjogo.png' },
-  { name: 'EGJOGO', logo: '/assets/platforms/egjogo.png' },
-  { name: 'FGJOGO', logo: '/assets/platforms/fgjogo.png' },
-  { name: 'WGJOGO', logo: '/assets/platforms/wgjogo.png' },
-  { name: 'BGJOGO', logo: '/assets/platforms/bgjogo.png' }
+  { name: 'HGJOGO', logo: '/assets/platforms/hgjogo.jpg' }
 ];
+
+// HG JOGO Platform Link
+const HGJOGO_REGISTER_URL = 'https://hgjogo7.com/en/?ch=110006&ic=140396339#/register';
 
 const responsibilityBadges = [
   { name: 'Responsible Gambling', icon: 'RG' },
@@ -646,8 +641,10 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                   filter: 'blur(30px)'
                 }} />
                 
-                <button
-                  onClick={() => onPlatformSelect('FGJOGO')}
+                <a
+                  href={HGJOGO_REGISTER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   data-testid="platform-select-btn"
                   className="w-full block group relative"
                 >
@@ -676,27 +673,19 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                       
                       {/* Platform Icon */}
                       <div className="relative mb-4">
-                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-red-500/20 to-violet-500/15 border border-white/15 overflow-hidden animate-icon-float">
+                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-violet-500/20 to-pink-500/15 border border-white/15 overflow-hidden animate-icon-float">
                           <div className="absolute inset-0 animate-glass-reflection pointer-events-none" style={{
                             background: 'linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%)'
                           }} />
-                          
-                          {platformImage ? (
-                            <img src={platformImage} alt="Platform" className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-red-900/40 to-violet-900/30">
-                              <span className="text-lg font-black text-white">FG</span>
-                              <span className="text-lg font-black text-red-500">JOGO</span>
-                            </div>
-                          )}
+                          <img src="/assets/platforms/hgjogo.jpg" alt="HG JOGO" className="w-full h-full object-cover" />
                         </div>
-                        <div className="absolute -inset-2 rounded-2xl border-2 border-red-500/40 animate-icon-glow-pulse" />
+                        <div className="absolute -inset-2 rounded-2xl border-2 border-violet-500/40 animate-icon-glow-pulse" />
                       </div>
                       
                       {/* Large CTA Button - Premium Glass Style */}
                       <div className="relative w-full max-w-sm mb-4">
-                        <button 
-                          className="w-full py-4 sm:py-5 px-8 rounded-xl text-lg sm:text-xl font-bold tracking-wide transition-all duration-200 ease-out flex items-center justify-center gap-3 text-[#F1F5FF] hover:scale-[1.04] active:scale-[0.97] group"
+                        <span 
+                          className="w-full py-4 sm:py-5 px-8 rounded-xl text-lg sm:text-xl font-bold tracking-wide transition-all duration-200 ease-out flex items-center justify-center gap-3 text-[#F1F5FF] hover:scale-[1.04] active:scale-[0.97] cursor-pointer"
                           style={{
                             background: 'rgba(40, 28, 18, 0.5)',
                             backdropFilter: 'blur(14px)',
@@ -704,20 +693,12 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                             border: '1px solid rgba(251, 191, 36, 0.3)',
                             boxShadow: 'inset 0 1px 0 rgba(251, 191, 36, 0.15), 0 8px 24px rgba(0, 0, 0, 0.3)'
                           }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.background = 'rgba(50, 38, 22, 0.6)';
-                            e.currentTarget.style.boxShadow = '0 12px 40px rgba(251, 191, 36, 0.2), 0 0 0 1px rgba(251, 191, 36, 0.35), inset 0 1px 0 rgba(251, 191, 36, 0.2)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.background = 'rgba(40, 28, 18, 0.5)';
-                            e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(251, 191, 36, 0.15), 0 8px 24px rgba(0, 0, 0, 0.3)';
-                          }}
                         >
                           <span>COMEÇAR AGORA</span>
                           <svg className="w-6 h-6 sm:w-7 sm:h-7 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                           </svg>
-                        </button>
+                        </span>
                       </div>
                       
                       {/* Text under button */}
@@ -732,7 +713,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                       </div>
                     </div>
                   </div>
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -789,32 +770,22 @@ const PlatformSelector = ({ onPlatformSelect }) => {
             </div>
           </div>
           
-          {/* LINE 3: Platform Logos Grid */}
+          {/* LINE 3: Platform Logo - HG JOGO */}
           <div className="py-6 bg-[#08080e]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
-              <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-3 max-w-4xl mx-auto">
-                {platformLogos.map((p, idx) => (
-                  <div 
-                    key={p.name}
-                    className={`aspect-square flex items-center justify-center overflow-hidden transition-all duration-300 ${footerVisible ? 'opacity-100' : 'opacity-0'}`}
-                    style={{ transitionDelay: `${400 + idx * 50}ms` }}
-                  >
-                    {p.logo ? (
-                      <img 
-                        src={p.logo} 
-                        alt={p.name} 
-                        className="w-full h-full object-contain hover:scale-105 transition-all" 
-                      />
-                    ) : p.name === 'FGJOGO' ? (
-                      <div className="flex flex-col items-center">
-                        <span className="text-[8px] sm:text-[9px] font-bold text-white">FG</span>
-                        <span className="text-[8px] sm:text-[9px] font-bold text-red-500">JOGO</span>
-                      </div>
-                    ) : (
-                      <span className="text-[8px] sm:text-[9px] font-bold text-gray-600">{p.name}</span>
-                    )}
-                  </div>
-                ))}
+              <div className="flex justify-center">
+                <a 
+                  href={HGJOGO_REGISTER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-24 h-24 sm:w-32 sm:h-32 hover:scale-105 transition-all"
+                >
+                  <img 
+                    src="/assets/platforms/hgjogo.jpg" 
+                    alt="HG JOGO" 
+                    className="w-full h-full object-contain rounded-xl" 
+                  />
+                </a>
               </div>
             </div>
           </div>
@@ -823,8 +794,8 @@ const PlatformSelector = ({ onPlatformSelect }) => {
           <div className="py-3 px-4 sm:px-6 border-t border-white/5">
             <div className="max-w-7xl mx-auto flex items-center justify-between text-xs text-gray-600">
               <div className="flex items-center gap-1">
-                <span className="font-bold text-white">FG</span>
-                <span className="font-bold text-red-500">JOGO</span>
+                <span className="font-bold text-white">HG</span>
+                <span className="font-bold text-cyan-400">JOGO</span>
                 <span className="ml-2">© 2026</span>
               </div>
               <div className="flex items-center gap-1.5">
