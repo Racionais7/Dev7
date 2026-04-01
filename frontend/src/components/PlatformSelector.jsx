@@ -11,10 +11,18 @@ const gameProviders = [
 ];
 
 const platformLogos = [
-  { name: 'HGJOGO', logo: '/assets/platforms/hgjogo.jpg' }
+  { name: 'AGJOGO', logo: '/assets/platforms/agjogo.png' },
+  { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png' },
+  { name: 'YGJOGO', logo: '/assets/platforms/ygjogo.png' },
+  { name: 'MGJOGO', logo: '/assets/platforms/mgjogo.png' },
+  { name: 'HGJOGO', logo: '/assets/platforms/hgjogo.png' },
+  { name: 'EGJOGO', logo: '/assets/platforms/egjogo.png' },
+  { name: 'FGJOGO', logo: '/assets/platforms/fgjogo.png' },
+  { name: 'WGJOGO', logo: '/assets/platforms/wgjogo.png' },
+  { name: 'BGJOGO', logo: '/assets/platforms/bgjogo.png' }
 ];
 
-// HG JOGO Platform Link
+// HG JOGO Platform Link (para usar no futuro se necessário)
 const HGJOGO_REGISTER_URL = 'https://hgjogo7.com/en/?ch=110006&ic=140396339#/register';
 
 const responsibilityBadges = [
@@ -637,31 +645,29 @@ const PlatformSelector = ({ onPlatformSelect }) => {
               <div className="relative w-full max-w-2xl mx-auto px-4">
                 {/* Breathing glow background - Large focal effect */}
                 <div className="absolute -inset-8 sm:-inset-12 rounded-3xl animate-breathing-glow pointer-events-none" style={{
-                  background: 'radial-gradient(ellipse at center, rgba(239, 68, 68, 0.25) 0%, rgba(124, 58, 237, 0.15) 40%, transparent 70%)',
+                  background: 'radial-gradient(ellipse at center, rgba(16, 185, 129, 0.25) 0%, rgba(124, 58, 237, 0.15) 40%, transparent 70%)',
                   filter: 'blur(30px)'
                 }} />
                 
-                <a
-                  href={HGJOGO_REGISTER_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => onPlatformSelect('HGJOGO')}
                   data-testid="platform-select-btn"
                   className="w-full block group relative"
                 >
                   {/* Animated neon border - Breathing pulse */}
                   <div className="absolute -inset-[3px] rounded-2xl animate-cta-breathing-border" style={{
-                    background: 'linear-gradient(90deg, #ef4444, #7c3aed, #3b82f6, #7c3aed, #ef4444)',
+                    background: 'linear-gradient(90deg, #10b981, #7c3aed, #3b82f6, #7c3aed, #10b981)',
                     backgroundSize: '400% 100%'
                   }} />
                   
                   {/* Additional glow layer */}
                   <div className="absolute -inset-4 rounded-3xl animate-focal-pulse pointer-events-none" style={{
-                    background: 'radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, transparent 70%)',
+                    background: 'radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%)',
                     filter: 'blur(15px)'
                   }} />
                   
                   {/* Main Card - Larger and more prominent */}
-                  <div className="relative rounded-2xl bg-gradient-to-br from-[#12121a] to-[#0a0a12] p-5 sm:p-6 border border-red-500/30 group-hover:border-red-400/50 transition-all duration-300 group-hover:translate-y-[-6px] group-hover:shadow-2xl group-hover:shadow-red-500/30 overflow-hidden">
+                  <div className="relative rounded-2xl bg-gradient-to-br from-[#12121a] to-[#0a0a12] p-5 sm:p-6 border border-emerald-500/30 group-hover:border-emerald-400/50 transition-all duration-300 group-hover:translate-y-[-6px] group-hover:shadow-2xl group-hover:shadow-emerald-500/30 overflow-hidden">
                     
                     {/* Shine sweep effect */}
                     <div className="absolute inset-0 animate-cta-shine-loop pointer-events-none" style={{
@@ -671,15 +677,15 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                     {/* Content Layout */}
                     <div className="relative flex flex-col items-center text-center">
                       
-                      {/* Platform Icon */}
+                      {/* Platform Icon - HG JOGO */}
                       <div className="relative mb-4">
-                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-violet-500/20 to-pink-500/15 border border-white/15 overflow-hidden animate-icon-float">
+                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-violet-500/15 border border-white/15 overflow-hidden animate-icon-float">
                           <div className="absolute inset-0 animate-glass-reflection pointer-events-none" style={{
                             background: 'linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%)'
                           }} />
-                          <img src="/assets/platforms/hgjogo.jpg" alt="HG JOGO" className="w-full h-full object-cover" />
+                          <img src="/assets/platforms/hgjogo_new.png" alt="HG JOGO" className="w-full h-full object-cover" />
                         </div>
-                        <div className="absolute -inset-2 rounded-2xl border-2 border-violet-500/40 animate-icon-glow-pulse" />
+                        <div className="absolute -inset-2 rounded-2xl border-2 border-emerald-500/40 animate-icon-glow-pulse" />
                       </div>
                       
                       {/* Large CTA Button - Premium Glass Style */}
@@ -687,11 +693,11 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                         <span 
                           className="w-full py-4 sm:py-5 px-8 rounded-xl text-lg sm:text-xl font-bold tracking-wide transition-all duration-200 ease-out flex items-center justify-center gap-3 text-[#F1F5FF] hover:scale-[1.04] active:scale-[0.97] cursor-pointer"
                           style={{
-                            background: 'rgba(40, 28, 18, 0.5)',
+                            background: 'rgba(16, 78, 60, 0.5)',
                             backdropFilter: 'blur(14px)',
                             WebkitBackdropFilter: 'blur(14px)',
-                            border: '1px solid rgba(251, 191, 36, 0.3)',
-                            boxShadow: 'inset 0 1px 0 rgba(251, 191, 36, 0.15), 0 8px 24px rgba(0, 0, 0, 0.3)'
+                            border: '1px solid rgba(16, 185, 129, 0.3)',
+                            boxShadow: 'inset 0 1px 0 rgba(16, 185, 129, 0.15), 0 8px 24px rgba(0, 0, 0, 0.3)'
                           }}
                         >
                           <span>COMEÇAR AGORA</span>
@@ -702,7 +708,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                       </div>
                       
                       {/* Text under button */}
-                      <p className="text-sm sm:text-base text-amber-400/90 font-semibold mb-2 animate-text-glow">
+                      <p className="text-sm sm:text-base text-emerald-400/90 font-semibold mb-2 animate-text-glow">
                         Entrar antes do próximo sinal
                       </p>
                       
@@ -713,7 +719,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                       </div>
                     </div>
                   </div>
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -770,22 +776,27 @@ const PlatformSelector = ({ onPlatformSelect }) => {
             </div>
           </div>
           
-          {/* LINE 3: Platform Logo - HG JOGO */}
+          {/* LINE 3: Platform Logos Grid */}
           <div className="py-6 bg-[#08080e]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
-              <div className="flex justify-center">
-                <a 
-                  href={HGJOGO_REGISTER_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-24 h-24 sm:w-32 sm:h-32 hover:scale-105 transition-all"
-                >
-                  <img 
-                    src="/assets/platforms/hgjogo.jpg" 
-                    alt="HG JOGO" 
-                    className="w-full h-full object-contain rounded-xl" 
-                  />
-                </a>
+              <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-3 max-w-4xl mx-auto">
+                {platformLogos.map((p, idx) => (
+                  <div 
+                    key={p.name}
+                    className={`aspect-square flex items-center justify-center overflow-hidden transition-all duration-300 ${footerVisible ? 'opacity-100' : 'opacity-0'}`}
+                    style={{ transitionDelay: `${400 + idx * 50}ms` }}
+                  >
+                    {p.logo ? (
+                      <img 
+                        src={p.logo} 
+                        alt={p.name} 
+                        className="w-full h-full object-contain hover:scale-105 transition-all" 
+                      />
+                    ) : (
+                      <span className="text-[8px] sm:text-[9px] font-bold text-gray-600">{p.name}</span>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -794,8 +805,8 @@ const PlatformSelector = ({ onPlatformSelect }) => {
           <div className="py-3 px-4 sm:px-6 border-t border-white/5">
             <div className="max-w-7xl mx-auto flex items-center justify-between text-xs text-gray-600">
               <div className="flex items-center gap-1">
-                <span className="font-bold text-white">HG</span>
-                <span className="font-bold text-cyan-400">JOGO</span>
+                <span className="font-bold text-white">FG</span>
+                <span className="font-bold text-red-500">JOGO</span>
                 <span className="ml-2">© 2026</span>
               </div>
               <div className="flex items-center gap-1.5">
