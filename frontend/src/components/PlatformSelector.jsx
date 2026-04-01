@@ -698,7 +698,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                 {/* FG JOGO */}
                 <div className="relative flex-1">
                   <div className="absolute -inset-4 rounded-3xl animate-breathing-glow pointer-events-none" style={{
-                    background: 'radial-gradient(ellipse at center, rgba(239, 68, 68, 0.2) 0%, transparent 70%)',
+                    background: 'radial-gradient(ellipse at center, rgba(168, 85, 247, 0.2) 0%, transparent 70%)',
                     filter: 'blur(20px)'
                   }} />
                   
@@ -708,31 +708,28 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                     className="w-full block group relative"
                   >
                     <div className="absolute -inset-[2px] rounded-2xl animate-cta-breathing-border" style={{
-                      background: 'linear-gradient(90deg, #ef4444, #dc2626, #ef4444)',
+                      background: 'linear-gradient(90deg, #a855f7, #ec4899, #a855f7)',
                       backgroundSize: '200% 100%'
                     }} />
                     
-                    <div className="relative rounded-2xl bg-gradient-to-br from-[#12121a] to-[#0a0a12] p-5 border border-red-500/30 group-hover:border-red-400/50 transition-all duration-300 group-hover:translate-y-[-4px] group-hover:shadow-xl group-hover:shadow-red-500/20 overflow-hidden">
+                    <div className="relative rounded-2xl bg-gradient-to-br from-[#12121a] to-[#0a0a12] p-5 border border-purple-500/30 group-hover:border-purple-400/50 transition-all duration-300 group-hover:translate-y-[-4px] group-hover:shadow-xl group-hover:shadow-purple-500/20 overflow-hidden">
                       <div className="relative flex flex-col items-center text-center">
                         <div className="relative mb-3">
-                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-gradient-to-br from-red-500/20 to-orange-500/15 border border-white/15 overflow-hidden flex items-center justify-center">
-                            <div className="flex flex-col items-center">
-                              <span className="text-xl font-black text-white">FG</span>
-                              <span className="text-xs font-bold text-red-500">JOGO</span>
-                            </div>
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden">
+                            <img src="/assets/platforms/fgjogo_logo.png" alt="FG JOGO" className="w-full h-full object-cover" />
                           </div>
                         </div>
                         
                         <h3 className="text-lg sm:text-xl font-bold mb-1">
                           <span className="text-white">FG</span>
-                          <span className="text-red-500"> JOGO</span>
+                          <span className="text-pink-500"> JOGO</span>
                         </h3>
                         
                         <span 
                           className="w-full py-3 px-6 rounded-lg text-base font-bold flex items-center justify-center gap-2 text-white mt-3"
                           style={{
-                            background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(220, 38, 38, 0.3) 100%)',
-                            border: '1px solid rgba(239, 68, 68, 0.4)'
+                            background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%)',
+                            border: '1px solid rgba(168, 85, 247, 0.4)'
                           }}
                         >
                           <span>ENTRAR</span>
@@ -834,10 +831,10 @@ const PlatformSelector = ({ onPlatformSelect }) => {
           {/* Copyright */}
           <div className="py-3 px-4 sm:px-6 border-t border-white/5">
             <div className="max-w-7xl mx-auto flex items-center justify-between text-xs text-gray-600">
-              <div className="flex items-center gap-1">
-                <span className="font-bold text-white">HG</span>
-                <span className="font-bold text-cyan-400">JOGO</span>
-                <span className="ml-2">© 2026</span>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🍄</span>
+                <span className="font-bold text-red-500">MARIO</span>
+                <span className="ml-1">© 2026</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
