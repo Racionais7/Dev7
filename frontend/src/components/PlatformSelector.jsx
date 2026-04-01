@@ -638,88 +638,118 @@ const PlatformSelector = ({ onPlatformSelect }) => {
             </div>
 
             {/* ════════════════════════════════════════════════════════════════════════
-                CTA SECTION - MAIN FOCAL POINT WITH BREATHING GLOW
+                CTA SECTION - DUAS PLATAFORMAS
             ════════════════════════════════════════════════════════════════════════ */}
             <div className={`mt-8 sm:mt-12 transition-all duration-700 delay-200 ${ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              {/* Main CTA Container with Breathing Glow */}
-              <div className="relative w-full max-w-2xl mx-auto px-4">
-                {/* Breathing glow background - Large focal effect */}
-                <div className="absolute -inset-8 sm:-inset-12 rounded-3xl animate-breathing-glow pointer-events-none" style={{
-                  background: 'radial-gradient(ellipse at center, rgba(16, 185, 129, 0.25) 0%, rgba(124, 58, 237, 0.15) 40%, transparent 70%)',
-                  filter: 'blur(30px)'
-                }} />
+              
+              {/* Título da seção */}
+              <h2 className="text-center text-xl sm:text-2xl font-bold text-white mb-6">Escolha sua Plataforma</h2>
+              
+              {/* Grid com 2 plataformas */}
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 max-w-4xl mx-auto px-4">
                 
-                <button
-                  onClick={() => onPlatformSelect('HGJOGO')}
-                  data-testid="platform-select-btn"
-                  className="w-full block group relative"
-                >
-                  {/* Animated neon border - Breathing pulse */}
-                  <div className="absolute -inset-[3px] rounded-2xl animate-cta-breathing-border" style={{
-                    background: 'linear-gradient(90deg, #10b981, #7c3aed, #3b82f6, #7c3aed, #10b981)',
-                    backgroundSize: '400% 100%'
+                {/* HG JOGO */}
+                <div className="relative flex-1">
+                  <div className="absolute -inset-4 rounded-3xl animate-breathing-glow pointer-events-none" style={{
+                    background: 'radial-gradient(ellipse at center, rgba(16, 185, 129, 0.2) 0%, transparent 70%)',
+                    filter: 'blur(20px)'
                   }} />
                   
-                  {/* Additional glow layer */}
-                  <div className="absolute -inset-4 rounded-3xl animate-focal-pulse pointer-events-none" style={{
-                    background: 'radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%)',
-                    filter: 'blur(15px)'
-                  }} />
-                  
-                  {/* Main Card - Larger and more prominent */}
-                  <div className="relative rounded-2xl bg-gradient-to-br from-[#12121a] to-[#0a0a12] p-5 sm:p-6 border border-emerald-500/30 group-hover:border-emerald-400/50 transition-all duration-300 group-hover:translate-y-[-6px] group-hover:shadow-2xl group-hover:shadow-emerald-500/30 overflow-hidden">
-                    
-                    {/* Shine sweep effect */}
-                    <div className="absolute inset-0 animate-cta-shine-loop pointer-events-none" style={{
-                      background: 'linear-gradient(110deg, transparent 20%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.05) 60%, transparent 80%)'
+                  <button
+                    onClick={() => onPlatformSelect('HGJOGO')}
+                    data-testid="platform-select-btn"
+                    className="w-full block group relative"
+                  >
+                    <div className="absolute -inset-[2px] rounded-2xl animate-cta-breathing-border" style={{
+                      background: 'linear-gradient(90deg, #10b981, #06b6d4, #10b981)',
+                      backgroundSize: '200% 100%'
                     }} />
                     
-                    {/* Content Layout */}
-                    <div className="relative flex flex-col items-center text-center">
-                      
-                      {/* Platform Icon - HG JOGO */}
-                      <div className="relative mb-4">
-                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-violet-500/15 border border-white/15 overflow-hidden animate-icon-float">
-                          <div className="absolute inset-0 animate-glass-reflection pointer-events-none" style={{
-                            background: 'linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%)'
-                          }} />
-                          <img src="/assets/platforms/hgjogo_cta.jpg" alt="HG JOGO" className="w-full h-full object-cover" />
+                    <div className="relative rounded-2xl bg-gradient-to-br from-[#12121a] to-[#0a0a12] p-5 border border-emerald-500/30 group-hover:border-emerald-400/50 transition-all duration-300 group-hover:translate-y-[-4px] group-hover:shadow-xl group-hover:shadow-emerald-500/20 overflow-hidden">
+                      <div className="relative flex flex-col items-center text-center">
+                        <div className="relative mb-3">
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/15 border border-white/15 overflow-hidden">
+                            <img src="/assets/platforms/hgjogo_cta.jpg" alt="HG JOGO" className="w-full h-full object-cover" />
+                          </div>
                         </div>
-                        <div className="absolute -inset-2 rounded-2xl border-2 border-emerald-500/40 animate-icon-glow-pulse" />
-                      </div>
-                      
-                      {/* Large CTA Button - Premium Glass Style */}
-                      <div className="relative w-full max-w-sm mb-4">
+                        
+                        <h3 className="text-lg sm:text-xl font-bold mb-1">
+                          <span className="text-white">HG</span>
+                          <span className="text-cyan-400"> JOGO</span>
+                        </h3>
+                        
                         <span 
-                          className="w-full py-4 sm:py-5 px-8 rounded-xl text-lg sm:text-xl font-bold tracking-wide transition-all duration-200 ease-out flex items-center justify-center gap-3 text-[#F1F5FF] hover:scale-[1.04] active:scale-[0.97] cursor-pointer"
+                          className="w-full py-3 px-6 rounded-lg text-base font-bold flex items-center justify-center gap-2 text-white mt-3"
                           style={{
-                            background: 'rgba(16, 78, 60, 0.5)',
-                            backdropFilter: 'blur(14px)',
-                            WebkitBackdropFilter: 'blur(14px)',
-                            border: '1px solid rgba(16, 185, 129, 0.3)',
-                            boxShadow: 'inset 0 1px 0 rgba(16, 185, 129, 0.15), 0 8px 24px rgba(0, 0, 0, 0.3)'
+                            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(6, 182, 212, 0.3) 100%)',
+                            border: '1px solid rgba(16, 185, 129, 0.4)'
                           }}
                         >
-                          <span>COMEÇAR AGORA</span>
-                          <svg className="w-6 h-6 sm:w-7 sm:h-7 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          <span>ENTRAR</span>
+                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                           </svg>
                         </span>
                       </div>
-                      
-                      {/* Text under button */}
-                      <p className="text-sm sm:text-base text-emerald-400/90 font-semibold mb-2 animate-text-glow">
-                        Entrar antes do próximo sinal
-                      </p>
-                      
-                      {/* Secondary info */}
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                        <span>Ambiente seguro • Alta performance • Online 24h</span>
+                    </div>
+                  </button>
+                </div>
+                
+                {/* FG JOGO */}
+                <div className="relative flex-1">
+                  <div className="absolute -inset-4 rounded-3xl animate-breathing-glow pointer-events-none" style={{
+                    background: 'radial-gradient(ellipse at center, rgba(239, 68, 68, 0.2) 0%, transparent 70%)',
+                    filter: 'blur(20px)'
+                  }} />
+                  
+                  <button
+                    onClick={() => onPlatformSelect('FGJOGO')}
+                    data-testid="platform-select-fg-btn"
+                    className="w-full block group relative"
+                  >
+                    <div className="absolute -inset-[2px] rounded-2xl animate-cta-breathing-border" style={{
+                      background: 'linear-gradient(90deg, #ef4444, #dc2626, #ef4444)',
+                      backgroundSize: '200% 100%'
+                    }} />
+                    
+                    <div className="relative rounded-2xl bg-gradient-to-br from-[#12121a] to-[#0a0a12] p-5 border border-red-500/30 group-hover:border-red-400/50 transition-all duration-300 group-hover:translate-y-[-4px] group-hover:shadow-xl group-hover:shadow-red-500/20 overflow-hidden">
+                      <div className="relative flex flex-col items-center text-center">
+                        <div className="relative mb-3">
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-gradient-to-br from-red-500/20 to-orange-500/15 border border-white/15 overflow-hidden flex items-center justify-center">
+                            <div className="flex flex-col items-center">
+                              <span className="text-xl font-black text-white">FG</span>
+                              <span className="text-xs font-bold text-red-500">JOGO</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <h3 className="text-lg sm:text-xl font-bold mb-1">
+                          <span className="text-white">FG</span>
+                          <span className="text-red-500"> JOGO</span>
+                        </h3>
+                        
+                        <span 
+                          className="w-full py-3 px-6 rounded-lg text-base font-bold flex items-center justify-center gap-2 text-white mt-3"
+                          style={{
+                            background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(220, 38, 38, 0.3) 100%)',
+                            border: '1px solid rgba(239, 68, 68, 0.4)'
+                          }}
+                        >
+                          <span>ENTRAR</span>
+                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </span>
                       </div>
                     </div>
-                  </div>
-                </button>
+                  </button>
+                </div>
+              </div>
+              
+              {/* Info abaixo */}
+              <div className="flex items-center justify-center gap-2 text-xs text-gray-500 mt-6">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Ambiente seguro • Alta performance • Online 24h</span>
               </div>
             </div>
           </div>
