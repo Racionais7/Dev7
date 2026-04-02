@@ -716,7 +716,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                       <div className="relative flex flex-col items-center text-center">
                         <div className="relative mb-3">
                           <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden">
-                            <img src="/assets/platforms/fgjogo_logo.png" alt="FG JOGO" className="w-full h-full object-cover" />
+                            <img src="/assets/platforms/fgjogo_cta.jpg" alt="FG JOGO" className="w-full h-full object-cover" />
                           </div>
                         </div>
                         
