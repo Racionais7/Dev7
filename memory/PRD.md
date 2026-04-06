@@ -33,6 +33,19 @@ O usuário é brasileiro e prefere comunicação em **Português do Brasil**.
 
 ## O Que Foi Implementado
 
+### Data: 06/04/2026 - Efeito de Órbita de Logos
+- **Componente criado**: `OrbitingLogos.jsx` usando framer-motion
+- **Funcionalidades**:
+  - 9 logos de plataformas orbitando ao redor do Mario holográfico
+  - Efeito de profundidade 3D (logos menores/mais transparentes quando "atrás")
+  - Trilha de energia neon (roxo #7c3aed / azul #3b82f6)
+  - Logos mantêm orientação vertical
+  - 16 partículas de energia seguindo a órbita
+  - Responsivo: raio de órbita adapta para mobile/tablet/desktop
+- **Arquivos Atualizados**:
+  - `/app/frontend/src/components/OrbitingLogos.jsx` - Novo componente
+  - `/app/frontend/src/components/PlatformSelector.jsx` - Integração do componente
+
 ### Data: 06/04/2026 - Migração do Repositório
 - **Repositório Original**: Racionais7/Dev7 (GitHub)
 - **Ação**: Código clonado e migrado para ambiente Emergent
