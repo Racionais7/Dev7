@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { platformImage } from '../data/mockData';
+import OrbitingLogos from './OrbitingLogos';
 
 // Data
 const gameProviders = [
@@ -375,100 +376,8 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                     }}
                   />
                   
-                  {/* ═══════ ORBITING ITEMS (Parallax with different speeds) ═══════ */}
-                  
-                  {/* Golden Coin - fastest orbit (18s) */}
-                  <div 
-                    className="absolute w-[240px] h-[240px] sm:w-[300px] sm:h-[300px] lg:w-[360px] lg:h-[360px] animate-orbit-coin-parallax"
-                    style={{
-                      transform: `translateX(${mousePosition.x * 4}px) translateY(${mousePosition.y * 4}px)`,
-                      transition: 'transform 0.3s ease-out'
-                    }}
-                  >
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                      <div className="relative animate-coin-3d-spin">
-                        <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" viewBox="0 0 24 24" fill="none" style={{ filter: 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.7))' }}>
-                          <circle cx="12" cy="12" r="10" fill="url(#coinGold)" stroke="#fbbf24" strokeWidth="1.2" />
-                          <text x="12" y="16" textAnchor="middle" fill="#92400e" fontSize="9" fontWeight="bold">$</text>
-                          <defs>
-                            <radialGradient id="coinGold">
-                              <stop offset="0%" stopColor="#fde047" />
-                              <stop offset="100%" stopColor="#f59e0b" />
-                            </radialGradient>
-                          </defs>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Super Star - medium orbit (25s) */}
-                  <div 
-                    className="absolute w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] lg:w-[380px] lg:h-[380px] animate-orbit-star-parallax"
-                    style={{
-                      transform: `translateX(${mousePosition.x * 6}px) translateY(${mousePosition.y * 6}px)`,
-                      transition: 'transform 0.35s ease-out'
-                    }}
-                  >
-                    <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2">
-                      <div className="relative animate-star-pulse-premium">
-                        <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" viewBox="0 0 24 24" fill="none" style={{ filter: 'drop-shadow(0 0 8px rgba(250, 204, 21, 0.7))' }}>
-                          <path d="M12 2L14.5 8.5L21 9.5L16 14L17.5 21L12 17.5L6.5 21L8 14L3 9.5L9.5 8.5L12 2Z" fill="url(#starYellow)" stroke="#facc15" strokeWidth="0.8" />
-                          <ellipse cx="9" cy="11" rx="1.2" ry="1.5" fill="#1f2937" />
-                          <ellipse cx="15" cy="11" rx="1.2" ry="1.5" fill="#1f2937" />
-                          <defs>
-                            <linearGradient id="starYellow" x1="0%" y1="0%" x2="100%" y2="100%">
-                              <stop offset="0%" stopColor="#fef08a" />
-                              <stop offset="100%" stopColor="#facc15" />
-                            </linearGradient>
-                          </defs>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* 1-UP Mushroom - slowest orbit (35s) */}
-                  <div 
-                    className="absolute w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] lg:w-[400px] lg:h-[400px] animate-orbit-mushroom-parallax"
-                    style={{
-                      transform: `translateX(${mousePosition.x * 8}px) translateY(${mousePosition.y * 8}px)`,
-                      transition: 'transform 0.4s ease-out'
-                    }}
-                  >
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
-                      <div className="relative animate-mushroom-bob">
-                        <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" viewBox="0 0 24 24" fill="none" style={{ filter: 'drop-shadow(0 0 8px rgba(16, 185, 129, 0.7))' }}>
-                          <ellipse cx="12" cy="10" rx="9" ry="7" fill="url(#mushroom1up)" stroke="#10b981" strokeWidth="0.8" />
-                          <circle cx="8" cy="8" r="2" fill="white" />
-                          <circle cx="16" cy="8" r="2" fill="white" />
-                          <circle cx="12" cy="12" r="1.5" fill="white" />
-                          <rect x="8" y="15" width="8" height="6" rx="1" fill="#fef3c7" stroke="#10b981" strokeWidth="0.4" />
-                          <defs>
-                            <linearGradient id="mushroom1up" x1="0%" y1="0%" x2="100%" y2="100%">
-                              <stop offset="0%" stopColor="#34d399" />
-                              <stop offset="100%" stopColor="#10b981" />
-                            </linearGradient>
-                          </defs>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Ambient particles */}
-                  {[...Array(8)].map((_, i) => (
-                    <div
-                      key={`holo-p-${i}`}
-                      className="absolute rounded-full animate-particle-ambient"
-                      style={{
-                        width: `${2 + Math.random() * 2}px`,
-                        height: `${2 + Math.random() * 2}px`,
-                        background: ['#7c3aed', '#3b82f6', '#60a5fa', '#a78bfa'][i % 4],
-                        boxShadow: `0 0 6px ${['#7c3aed', '#3b82f6', '#60a5fa', '#a78bfa'][i % 4]}`,
-                        left: `${25 + Math.random() * 50}%`,
-                        top: `${25 + Math.random() * 50}%`,
-                        animationDelay: `${i * 0.6}s`
-                      }}
-                    />
-                  ))}
+                  {/* ═══════ ORBITING PLATFORM LOGOS ═══════ */}
+                  <OrbitingLogos mousePosition={mousePosition} glitchActive={glitchActive} />
                 </div>
               </div>
               
