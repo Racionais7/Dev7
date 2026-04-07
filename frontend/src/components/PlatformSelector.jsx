@@ -242,7 +242,8 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                     className={`absolute w-[100px] h-[130px] sm:w-[120px] sm:h-[160px] lg:w-[140px] lg:h-[190px] flex items-center justify-center pointer-events-none ${glitchActive ? 'animate-glitch-spark' : ''}`}
                     style={{
                       transform: `translateX(${mousePosition.x * 2}px) translateY(${mousePosition.y * 2}px)`,
-                      transition: glitchActive ? 'none' : 'transform 0.2s ease-out'
+                      transition: glitchActive ? 'none' : 'transform 0.2s ease-out',
+                      zIndex: 10, // Mario stays in middle layer - between front and back logos
                     }}
                   >
                     {/* Mario holographic figure with breathing + floating */}
