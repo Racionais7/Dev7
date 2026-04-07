@@ -33,6 +33,19 @@ O usuário é brasileiro e prefere comunicação em **Português do Brasil**.
 
 ## O Que Foi Implementado
 
+### Data: 07/04/2026 - Efeito de Órbita Estilo JogoClub.vip
+- **Componente atualizado**: `OrbitingLogos.jsx` - estilo limpo e profissional
+- **Funcionalidades**:
+  - Órbita circular 2D com borda tracejada teal (#2dd4bf)
+  - 9 logos posicionadas em pontos fixos do círculo
+  - Contra-rotação: logos mantêm orientação vertical durante a órbita
+  - Rotação suave de 20 segundos para volta completa
+  - Partículas flutuantes ao redor
+  - Efeito glow teal nas bordas das logos
+  - Mario centralizado com animação de flutuar preservada
+- **Estilo**: Inspirado no jogoclub.vip com cores teal/verde água
+- **100% Responsivo**: Desktop, tablet e mobile
+
 ### Data: 06/04/2026 - Efeito de Órbita de Logos
 - **Componente criado**: `OrbitingLogos.jsx` usando framer-motion
 - **Funcionalidades**:
