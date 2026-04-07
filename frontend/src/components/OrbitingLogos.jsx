@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Platform logos configuration
 const orbitingPlatforms = [
@@ -14,55 +14,86 @@ const orbitingPlatforms = [
 ];
 
 const OrbitingLogos = () => {
+  const [dimensions, setDimensions] = useState({ 
+    radius: 220, 
+    logoSize: 70 
+  });
+
+  // Responsive dimensions
+  useEffect(() => {
+    const updateDimensions = () => {
+      const width = window.innerWidth;
+      if (width < 480) {
+        // Mobile small
+        setDimensions({ radius: 115, logoSize: 42 });
+      } else if (width < 640) {
+        // Mobile
+        setDimensions({ radius: 135, logoSize: 50 });
+      } else if (width < 1024) {
+        // Tablet
+        setDimensions({ radius: 170, logoSize: 58 });
+      } else {
+        // Desktop
+        setDimensions({ radius: 220, logoSize: 70 });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
   const logoCount = orbitingPlatforms.length;
-  
-  // Responsive orbit radius
-  const orbitRadiusSm = 100; // Mobile
-  const orbitRadiusMd = 130; // Tablet
-  const orbitRadiusLg = 160; // Desktop
-  
-  const logoSize = 42; // Logo container size
+  const { radius: ORBIT_RADIUS, logoSize: LOGO_SIZE } = dimensions;
+  const ORBIT_DURATION = 30; // Seconds for one complete rotation
+  const CONTAINER_SIZE = (ORBIT_RADIUS + LOGO_SIZE) * 2 + 20; // Extra space for logos
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <div 
+      className="absolute flex items-center justify-center pointer-events-none"
+      style={{
+        // Center the orbit container
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: `${CONTAINER_SIZE}px`,
+        height: `${CONTAINER_SIZE}px`,
+      }}
+    >
       
-      {/* Outer glow ring */}
+      {/* Subtle outer glow */}
       <div 
-        className="absolute rounded-full animate-pulse-glow"
+        className="absolute rounded-full animate-pulse-subtle"
         style={{
-          width: 'clamp(240px, 50vw, 380px)',
-          height: 'clamp(240px, 50vw, 380px)',
-          background: 'radial-gradient(circle, rgba(45, 212, 191, 0.06) 0%, transparent 70%)',
+          width: `${ORBIT_RADIUS * 2 + 60}px`,
+          height: `${ORBIT_RADIUS * 2 + 60}px`,
+          background: 'radial-gradient(circle, rgba(124, 58, 237, 0.05) 0%, transparent 60%)',
           filter: 'blur(20px)',
         }}
       />
 
-      {/* Main orbit container - this rotates */}
+      {/* Orbit circle indicator (dashed) */}
       <div 
-        className="absolute rounded-full animate-orbit-spin"
+        className="absolute rounded-full animate-orbit-spin-slow"
         style={{
-          width: 'clamp(220px, 45vw, 350px)',
-          height: 'clamp(220px, 45vw, 350px)',
-          border: '1px dashed rgba(45, 212, 191, 0.25)',
-          boxShadow: `
-            0 0 30px rgba(45, 212, 191, 0.08),
-            inset 0 0 30px rgba(45, 212, 191, 0.05)
-          `,
+          width: `${ORBIT_RADIUS * 2}px`,
+          height: `${ORBIT_RADIUS * 2}px`,
+          border: '1px dashed rgba(124, 58, 237, 0.15)',
+        }}
+      />
+
+      {/* Main orbit container for logos - this rotates */}
+      <div 
+        className="absolute animate-orbit-spin"
+        style={{
+          width: `${ORBIT_RADIUS * 2}px`,
+          height: `${ORBIT_RADIUS * 2}px`,
         }}
       >
-        {/* Inner dashed ring */}
-        <div 
-          className="absolute inset-4 rounded-full"
-          style={{
-            border: '1px dashed rgba(45, 212, 191, 0.15)',
-          }}
-        />
-
         {/* Orbiting logos - positioned at fixed points on the circle */}
         {orbitingPlatforms.map((platform, index) => {
           // Calculate angle for each logo (evenly distributed)
           const angle = (360 / logoCount) * index;
-          const radian = (angle * Math.PI) / 180;
           
           return (
             <div
@@ -72,14 +103,14 @@ const OrbitingLogos = () => {
                 // Position at center of container
                 left: '50%',
                 top: '50%',
-                // Size of logo container
-                width: `${logoSize}px`,
-                height: `${logoSize}px`,
+                // Size of logo
+                width: `${LOGO_SIZE}px`,
+                height: `${LOGO_SIZE}px`,
                 // Offset to orbit edge and center the logo
                 transform: `
                   translate(-50%, -50%)
                   rotate(${angle}deg)
-                  translateY(calc(-1 * clamp(${orbitRadiusSm}px, 22vw, ${orbitRadiusLg}px)))
+                  translateY(-${ORBIT_RADIUS}px)
                 `,
               }}
             >
@@ -87,52 +118,36 @@ const OrbitingLogos = () => {
               <div 
                 className="w-full h-full animate-counter-spin"
                 style={{
-                  // Counter-rotate includes the initial angle offset
                   '--counter-angle': `-${angle}deg`,
                 }}
               >
-                {/* Logo container with glow */}
-                <div 
-                  className="relative w-full h-full rounded-full overflow-hidden transition-all duration-300 hover:scale-110"
+                {/* Logo image - NO background, NO border, just the PNG with glow */}
+                <img 
+                  src={platform.logo} 
+                  alt={platform.name}
+                  className="w-full h-full object-contain"
                   style={{
-                    background: 'rgba(10, 10, 10, 0.95)',
-                    border: '1px solid rgba(45, 212, 191, 0.4)',
-                    boxShadow: `
-                      0 0 15px rgba(45, 212, 191, 0.2),
-                      0 0 30px rgba(45, 212, 191, 0.1),
-                      inset 0 0 10px rgba(45, 212, 191, 0.05)
+                    // Soft white/neon glow
+                    filter: `
+                      drop-shadow(0 0 5px rgba(255, 255, 255, 0.3))
+                      drop-shadow(0 0 12px rgba(124, 58, 237, 0.25))
                     `,
                   }}
-                >
-                  <img 
-                    src={platform.logo} 
-                    alt={platform.name}
-                    className="w-full h-full object-contain p-1.5"
-                    loading="lazy"
-                    draggable={false}
-                  />
-                  
-                  {/* Subtle shine effect */}
-                  <div 
-                    className="absolute inset-0 rounded-full pointer-events-none"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%)',
-                    }}
-                  />
-                </div>
+                  loading="lazy"
+                  draggable={false}
+                />
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Floating particles */}
-      {[...Array(12)].map((_, i) => {
-        const angle = (360 / 12) * i;
-        const distance = 100 + Math.random() * 60;
-        const size = 2 + Math.random() * 2;
-        const delay = Math.random() * 5;
-        const duration = 3 + Math.random() * 2;
+      {/* Floating particles for depth */}
+      {[...Array(8)].map((_, i) => {
+        const angle = (360 / 8) * i + 22.5;
+        const distance = ORBIT_RADIUS + LOGO_SIZE/2 + 15 + (i % 3) * 10;
+        const size = 2 + (i % 3);
+        const delay = i * 0.5;
         
         return (
           <div
@@ -148,11 +163,10 @@ const OrbitingLogos = () => {
                 rotate(${angle}deg)
                 translateY(-${distance}px)
               `,
-              background: i % 2 === 0 ? '#2dd4bf' : '#7c3aed',
-              opacity: 0.4,
-              boxShadow: `0 0 6px ${i % 2 === 0 ? '#2dd4bf' : '#7c3aed'}`,
+              background: i % 2 === 0 ? '#a855f7' : '#3b82f6',
+              opacity: 0.3,
+              boxShadow: `0 0 5px ${i % 2 === 0 ? '#a855f7' : '#3b82f6'}`,
               animationDelay: `${delay}s`,
-              animationDuration: `${duration}s`,
             }}
           />
         );
@@ -160,13 +174,18 @@ const OrbitingLogos = () => {
 
       {/* CSS Animations */}
       <style>{`
-        /* Main orbit rotation - 20 seconds for full rotation */
+        /* Main orbit rotation - 30 seconds for full rotation (smooth) */
         @keyframes orbit-spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
         .animate-orbit-spin { 
-          animation: orbit-spin 20s linear infinite; 
+          animation: orbit-spin ${ORBIT_DURATION}s linear infinite; 
+        }
+
+        /* Slower spin for the dashed circle */
+        .animate-orbit-spin-slow { 
+          animation: orbit-spin ${ORBIT_DURATION * 2}s linear infinite; 
         }
 
         /* Counter rotation to keep logos upright */
@@ -175,28 +194,22 @@ const OrbitingLogos = () => {
           to { transform: rotate(calc(var(--counter-angle) - 360deg)); }
         }
         .animate-counter-spin { 
-          animation: counter-spin 20s linear infinite; 
+          animation: counter-spin ${ORBIT_DURATION}s linear infinite; 
         }
 
-        /* Pulse glow effect */
-        @keyframes pulse-glow {
-          0%, 100% { opacity: 0.6; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.05); }
+        /* Subtle pulse for outer glow */
+        @keyframes pulse-subtle {
+          0%, 100% { opacity: 0.5; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.03); }
         }
-        .animate-pulse-glow { 
-          animation: pulse-glow 4s ease-in-out infinite; 
+        .animate-pulse-subtle { 
+          animation: pulse-subtle 4s ease-in-out infinite; 
         }
 
         /* Floating particles */
         @keyframes float-particle {
-          0%, 100% { 
-            opacity: 0.2; 
-            transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(var(--distance, -100px)) scale(0.8);
-          }
-          50% { 
-            opacity: 0.6; 
-            transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(calc(var(--distance, -100px) - 15px)) scale(1.2);
-          }
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.5; }
         }
         .animate-float-particle { 
           animation: float-particle 3s ease-in-out infinite; 
