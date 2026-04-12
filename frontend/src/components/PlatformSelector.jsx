@@ -170,7 +170,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
           <div className="max-w-7xl mx-auto">
             
             {/* Hero - Centered Icon */}
-            <div className="flex flex-col items-center justify-center min-h-[35vh] sm:min-h-[40vh] mb-8 sm:mb-10">
+            <div className="flex flex-col items-center justify-center min-h-[55vh] sm:min-h-[60vh] mb-8 sm:mb-10">
               
               {/* ════════ CENTERED ARCANE CORE ════════ */}
               <div 
@@ -383,7 +383,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
               </div>
               
               {/* Subtitle below icon */}
-              <p className={`mt-6 text-gray-500 text-xs sm:text-sm text-center transition-all duration-700 delay-300 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              <p className={`mt-32 sm:mt-40 lg:mt-44 text-gray-500 text-xs sm:text-sm text-center transition-all duration-700 delay-300 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 Análise profissional de padrões
               </p>
             </div>

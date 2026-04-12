@@ -62,7 +62,7 @@ O usuário é brasileiro e prefere comunicação em **Português do Brasil**.
 ### Data: 06/04/2026 - Migração do Repositório
 - **Repositório Original**: Racionais7/Dev7 (GitHub)
 - **Ação**: Código clonado e migrado para ambiente Emergent
-- **Status**: Site funcionando em https://site-reportorio.preview.emergentagent.com
+- **Status**: Site funcionando em https://dev7-site-share.preview.emergentagent.com
 
 ### Funcionalidades Existentes
 - Persistência de sinais com localStorage
@@ -96,4 +96,4 @@ O usuário é brasileiro e prefere comunicação em **Português do Brasil**.
 ⚠️ **IMPORTANTE**: Todos os dados de jogos são mocked. Não há chamadas de API reais.
 
 ## URLs
-- Frontend Preview: https://site-reportorio.preview.emergentagent.com
+- Frontend Preview: https://dev7-site-share.preview.emergentagent.com
