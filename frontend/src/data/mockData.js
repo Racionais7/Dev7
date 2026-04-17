@@ -2214,7 +2214,12 @@ const jdbGamesData = {
   "Lantern Wealth": { id: 532, name: "Lantern Wealth", image: "/images/jdb/Lantern Wealth.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 94, category: "Asian", provider: "jdb" },
   "Legendary 5": { id: 533, name: "Legendary 5", image: "/images/jdb/Legendary 5.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 92, category: "Mythical", provider: "jdb" },
   "Lucky Diamond": { id: 534, name: "Lucky Diamond", image: "/images/jdb/Lucky Diamond.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 89, category: "Gems", provider: "jdb" },
-  "Lucky Dragons": { id: 535, name: "Lucky Dragons", image: "/images/jdb/Lucky Dragons.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 95, category: "Dragon", provider: "jdb" }
+  "Lucky Dragons": { id: 535, name: "Lucky Dragons", image: "/images/jdb/Lucky Dragons.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 95, category: "Dragon", provider: "jdb" },
+  "Lucky Seven": { id: 536, name: "Lucky Seven", image: "/images/jdb/Lucky Seven.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 88, category: "Classic", provider: "jdb" },
+  "Magic Ace": { id: 537, name: "Magic Ace", image: "/images/jdb/Magic Ace.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 91, category: "Cards", provider: "jdb" },
+  "Mahjong": { id: 538, name: "Mahjong", image: "/images/jdb/Mahjong.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 90, category: "Asian", provider: "jdb" },
+  "Marvelous IV": { id: 539, name: "Marvelous IV", image: "/images/jdb/Marvelous IV.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 94, category: "Action", provider: "jdb" },
+  "Maya Gold Crazy": { id: 540, name: "Maya Gold Crazy", image: "/images/jdb/Maya Gold Crazy.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 93, category: "Ancient", provider: "jdb" }
 };
 
 export const slotsData = {
