@@ -2170,7 +2170,12 @@ const JDB_ORDER = [
   "Glamorous Girl",
   "Go Lai Fu",
   "Golden Disco",
-  "Kingsman"
+  "Kingsman",
+  "Kong",
+  "Lantern Wealth",
+  "Legendary 5",
+  "Lucky Diamond",
+  "Lucky Dragons"
 ];
 
 // JDB GAMES - 28 jogos reais
@@ -2204,7 +2209,12 @@ const jdbGamesData = {
   "Glamorous Girl": { id: 527, name: "Glamorous Girl", image: "/images/jdb/Glamorous Girl.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 92, category: "Fantasy", provider: "jdb" },
   "Go Lai Fu": { id: 528, name: "Go Lai Fu", image: "/images/jdb/Go Lai Fu.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 95, category: "Asian", provider: "jdb" },
   "Golden Disco": { id: 529, name: "Golden Disco", image: "/images/jdb/Golden Disco.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 91, category: "Party", provider: "jdb" },
-  "Kingsman": { id: 530, name: "Kingsman", image: "/images/jdb/Kingsman.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 93, category: "Action", provider: "jdb" }
+  "Kingsman": { id: 530, name: "Kingsman", image: "/images/jdb/Kingsman.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 93, category: "Action", provider: "jdb" },
+  "Kong": { id: 531, name: "Kong", image: "/images/jdb/Kong.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 90, category: "Animal", provider: "jdb" },
+  "Lantern Wealth": { id: 532, name: "Lantern Wealth", image: "/images/jdb/Lantern Wealth.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 94, category: "Asian", provider: "jdb" },
+  "Legendary 5": { id: 533, name: "Legendary 5", image: "/images/jdb/Legendary 5.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 92, category: "Mythical", provider: "jdb" },
+  "Lucky Diamond": { id: 534, name: "Lucky Diamond", image: "/images/jdb/Lucky Diamond.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 89, category: "Gems", provider: "jdb" },
+  "Lucky Dragons": { id: 535, name: "Lucky Dragons", image: "/images/jdb/Lucky Dragons.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 95, category: "Dragon", provider: "jdb" }
 };
 
 export const slotsData = {
