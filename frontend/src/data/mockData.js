@@ -2141,160 +2141,66 @@ const fachaiGamesData = {
 
 // JDB - Ordem estratégica fixa (15 jogos)
 const JDB_ORDER = [
-  "Treasure King",
-  "Dragon Master",
-  "Lucky Diamond",
-  "Money Vault",
-  "Gold Rush",
-  "Fortune Panda",
-  "Majestic King",
-  "Thunder God",
-  "JDB Fishing",
-  "Flirting Scholar Legend",
-  "Open Sesame",
+  "Banana Saga",
+  "Beauty and the Kingdom",
+  "Big Three Dragons",
   "Billionaire",
-  "Formosa Bear",
+  "Birds Party",
+  "Birds Party Deluxe",
+  "Blossom of Wealth",
+  "Book of Mystery",
+  "Caishen Coming",
+  "CooCoo Farm",
+  "Double Wilds",
+  "Dragon",
+  "Dragon Soar",
   "Dragon Warrior",
-  "Winning Mask"
+  "Dragons Gate",
+  "Dragons World",
+  "Elemental Link Fire",
+  "Elemental Link Water",
+  "Flirting Scholar Tang",
+  "Formosa Bear",
+  "Fortune Horse",
+  "Fortune Neko",
+  "Fortune Treasure",
+  "Four Treasures",
+  "Fruity Bonanza",
+  "Funky King Kong",
+  "Glamorous Girl",
+  "Go Lai Fu"
 ];
 
-// JDB GAMES - Dados completos
+// JDB GAMES - 28 jogos reais
 const jdbGamesData = {
-  "Treasure King": {
-    id: 501,
-    name: "Treasure King",
-    image: "/images/jdb/Treasure King.jpg",
-    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
-    basePayout: 92,
-    category: "Treasure",
-    provider: "jdb"
-  },
-  "Dragon Master": {
-    id: 502,
-    name: "Dragon Master",
-    image: "/images/jdb/Dragon Master.jpg",
-    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
-    basePayout: 94,
-    category: "Dragon",
-    provider: "jdb"
-  },
-  "Lucky Diamond": {
-    id: 503,
-    name: "Lucky Diamond",
-    image: "/images/jdb/Lucky Diamond.jpg",
-    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
-    basePayout: 90,
-    category: "Gems",
-    provider: "jdb"
-  },
-  "Money Vault": {
-    id: 504,
-    name: "Money Vault",
-    image: "/images/jdb/Money Vault.jpg",
-    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
-    basePayout: 91,
-    category: "Money",
-    provider: "jdb"
-  },
-  "Gold Rush": {
-    id: 505,
-    name: "Gold Rush",
-    image: "/images/jdb/Gold Rush.jpg",
-    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
-    basePayout: 93,
-    category: "Gold",
-    provider: "jdb"
-  },
-  "Fortune Panda": {
-    id: 506,
-    name: "Fortune Panda",
-    image: "/images/jdb/Fortune Panda.jpg",
-    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
-    basePayout: 89,
-    category: "Animal",
-    provider: "jdb"
-  },
-  "Majestic King": {
-    id: 507,
-    name: "Majestic King",
-    image: "/images/jdb/Majestic King.jpg",
-    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
-    basePayout: 95,
-    category: "Royal",
-    provider: "jdb"
-  },
-  "Thunder God": {
-    id: 508,
-    name: "Thunder God",
-    image: "/images/jdb/Thunder God.jpg",
-    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
-    basePayout: 94,
-    category: "Mythical",
-    provider: "jdb"
-  },
-  "JDB Fishing": {
-    id: 509,
-    name: "JDB Fishing",
-    image: "/images/jdb/JDB Fishing.jpg",
-    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
-    basePayout: 87,
-    category: "Fishing",
-    provider: "jdb"
-  },
-  "Flirting Scholar Legend": {
-    id: 510,
-    name: "Flirting Scholar Legend",
-    image: "/images/jdb/Flirting Scholar Legend.jpg",
-    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
-    basePayout: 91,
-    category: "Asian",
-    provider: "jdb"
-  },
-  "Open Sesame": {
-    id: 511,
-    name: "Open Sesame",
-    image: "/images/jdb/Open Sesame.jpg",
-    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
-    basePayout: 93,
-    category: "Adventure",
-    provider: "jdb"
-  },
-  "Billionaire": {
-    id: 512,
-    name: "Billionaire",
-    image: "/images/jdb/Billionaire.jpg",
-    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
-    basePayout: 90,
-    category: "Money",
-    provider: "jdb"
-  },
-  "Formosa Bear": {
-    id: 513,
-    name: "Formosa Bear",
-    image: "/images/jdb/Formosa Bear.jpg",
-    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
-    basePayout: 88,
-    category: "Animal",
-    provider: "jdb"
-  },
-  "Dragon Warrior": {
-    id: 514,
-    name: "Dragon Warrior",
-    image: "/images/jdb/Dragon Warrior.jpg",
-    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
-    basePayout: 95,
-    category: "Dragon",
-    provider: "jdb"
-  },
-  "Winning Mask": {
-    id: 515,
-    name: "Winning Mask",
-    image: "/images/jdb/Winning Mask.jpg",
-    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
-    basePayout: 92,
-    category: "Mystery",
-    provider: "jdb"
-  }
+  "Banana Saga": { id: 501, name: "Banana Saga", image: "/images/jdb/Banana Saga.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 89, category: "Adventure", provider: "jdb" },
+  "Beauty and the Kingdom": { id: 502, name: "Beauty and the Kingdom", image: "/images/jdb/Beauty and the Kingdom.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 93, category: "Fantasy", provider: "jdb" },
+  "Big Three Dragons": { id: 503, name: "Big Three Dragons", image: "/images/jdb/Big Three Dragons.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 91, category: "Dragon", provider: "jdb" },
+  "Billionaire": { id: 504, name: "Billionaire", image: "/images/jdb/Billionaire.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 90, category: "Money", provider: "jdb" },
+  "Birds Party": { id: 505, name: "Birds Party", image: "/images/jdb/Birds Party.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 87, category: "Animal", provider: "jdb" },
+  "Birds Party Deluxe": { id: 506, name: "Birds Party Deluxe", image: "/images/jdb/Birds Party Deluxe.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 88, category: "Animal", provider: "jdb" },
+  "Blossom of Wealth": { id: 507, name: "Blossom of Wealth", image: "/images/jdb/Blossom of Wealth.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 94, category: "Fortune", provider: "jdb" },
+  "Book of Mystery": { id: 508, name: "Book of Mystery", image: "/images/jdb/Book of Mystery.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 92, category: "Adventure", provider: "jdb" },
+  "Caishen Coming": { id: 509, name: "Caishen Coming", image: "/images/jdb/Caishen Coming.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 95, category: "Asian", provider: "jdb" },
+  "CooCoo Farm": { id: 510, name: "CooCoo Farm", image: "/images/jdb/CooCoo Farm.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 86, category: "Farm", provider: "jdb" },
+  "Double Wilds": { id: 511, name: "Double Wilds", image: "/images/jdb/Double Wilds.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 90, category: "Classic", provider: "jdb" },
+  "Dragon": { id: 512, name: "Dragon", image: "/images/jdb/Dragon.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 93, category: "Dragon", provider: "jdb" },
+  "Dragon Soar": { id: 513, name: "Dragon Soar", image: "/images/jdb/Dragon Soar.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 94, category: "Dragon", provider: "jdb" },
+  "Dragon Warrior": { id: 514, name: "Dragon Warrior", image: "/images/jdb/Dragon Warrior.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 95, category: "Dragon", provider: "jdb" },
+  "Dragons Gate": { id: 515, name: "Dragons Gate", image: "/images/jdb/Dragons Gate.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 91, category: "Dragon", provider: "jdb" },
+  "Dragons World": { id: 516, name: "Dragons World", image: "/images/jdb/Dragons World.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 93, category: "Dragon", provider: "jdb" },
+  "Elemental Link Fire": { id: 517, name: "Elemental Link Fire", image: "/images/jdb/Elemental Link Fire.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 92, category: "Fantasy", provider: "jdb" },
+  "Elemental Link Water": { id: 518, name: "Elemental Link Water", image: "/images/jdb/Elemental Link Water.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 92, category: "Fantasy", provider: "jdb" },
+  "Flirting Scholar Tang": { id: 519, name: "Flirting Scholar Tang", image: "/images/jdb/Flirting Scholar Tang.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 90, category: "Asian", provider: "jdb" },
+  "Formosa Bear": { id: 520, name: "Formosa Bear", image: "/images/jdb/Formosa Bear.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 88, category: "Animal", provider: "jdb" },
+  "Fortune Horse": { id: 521, name: "Fortune Horse", image: "/images/jdb/Fortune Horse.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 94, category: "Fortune", provider: "jdb" },
+  "Fortune Neko": { id: 522, name: "Fortune Neko", image: "/images/jdb/Fortune Neko.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 91, category: "Fortune", provider: "jdb" },
+  "Fortune Treasure": { id: 523, name: "Fortune Treasure", image: "/images/jdb/Fortune Treasure.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 93, category: "Fortune", provider: "jdb" },
+  "Four Treasures": { id: 524, name: "Four Treasures", image: "/images/jdb/Four Treasures.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 90, category: "Treasure", provider: "jdb" },
+  "Fruity Bonanza": { id: 525, name: "Fruity Bonanza", image: "/images/jdb/Fruity Bonanza.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 87, category: "Fruit", provider: "jdb" },
+  "Funky King Kong": { id: 526, name: "Funky King Kong", image: "/images/jdb/Funky King Kong.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 89, category: "Animal", provider: "jdb" },
+  "Glamorous Girl": { id: 527, name: "Glamorous Girl", image: "/images/jdb/Glamorous Girl.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 92, category: "Fantasy", provider: "jdb" },
+  "Go Lai Fu": { id: 528, name: "Go Lai Fu", image: "/images/jdb/Go Lai Fu.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 95, category: "Asian", provider: "jdb" }
 };
 
 export const slotsData = {
