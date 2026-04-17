@@ -95,6 +95,20 @@ const ProviderLogos = {
       alt="Revenge Games" 
       className="h-6 w-auto object-contain"
     />
+  ),
+  fachai: () => (
+    <img 
+      src="/assets/providers/fachai.png" 
+      alt="FA CHAI" 
+      className="h-6 w-auto object-contain"
+    />
+  ),
+  jdb: () => (
+    <img 
+      src="/assets/providers/jdb.png" 
+      alt="JDB" 
+      className="h-6 w-auto object-contain"
+    />
   )
 };
 
@@ -110,7 +124,7 @@ const ProviderSelector = ({ selectedProvider, onProviderChange }) => {
     <section className="py-4 px-4 sm:px-6 border-b border-white/[0.03]">
       <div className="max-w-7xl mx-auto">
         {/* Provider Cards Grid - Clean Launcher Style */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
           {providers.map((provider) => {
             const LogoComponent = ProviderLogos[provider.id];
             

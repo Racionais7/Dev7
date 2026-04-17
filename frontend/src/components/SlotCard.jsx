@@ -82,7 +82,9 @@ const SlotCard = ({ slot, onSelect, isSelected }) => {
       return <PragmaticLogoSmall className="h-3.5 w-auto opacity-60" />;
     }
     const name = slot.provider === 'tada' ? 'Tada' :
-                 slot.provider === 'spirit' ? 'Spirit' : 'Revenge';
+                 slot.provider === 'spirit' ? 'Spirit' : 
+                 slot.provider === 'fachai' ? 'FA CHAI' :
+                 slot.provider === 'jdb' ? 'JDB' : 'Revenge';
     return <span className="text-[10px] text-gray-500 tracking-wider">{name}</span>;
   };
 

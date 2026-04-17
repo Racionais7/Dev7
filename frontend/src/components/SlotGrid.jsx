@@ -17,7 +17,7 @@ const systemActions = [
 
 // Generate initial system log entries
 const generateInitialLogs = () => {
-  const providers = ['PG Soft', 'Pragmatic', 'TaDa', 'Spirit'];
+  const providers = ['PG Soft', 'Pragmatic', 'TaDa', 'Spirit', 'FA CHAI', 'JDB'];
   const logs = [];
   const now = Date.now();
   
@@ -39,7 +39,7 @@ const SlotGrid = ({ slots, onSlotSelect, selectedSlot, selectedProvider, provide
 
   // Update system log periodically
   useEffect(() => {
-    const providers = ['PG Soft', 'Pragmatic', 'TaDa', 'Spirit'];
+    const providers = ['PG Soft', 'Pragmatic', 'TaDa', 'Spirit', 'FA CHAI', 'JDB'];
     
     const interval = setInterval(() => {
       if (Math.random() > 0.4) {

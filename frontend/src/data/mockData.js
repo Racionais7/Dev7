@@ -7,7 +7,9 @@ export const providers = {
   pragmatic: "Pragmatic Play",
   spirit: "Spirit Gaming",
   tada: "Tada Gaming",
-  revenge: "Revenge"
+  revenge: "Revenge",
+  fachai: "FA CHAI",
+  jdb: "JDB"
 };
 
 // Links de cadastro por plataforma
@@ -2039,12 +2041,330 @@ function getOrderedGames(orderList, gamesData) {
 // EXPORTAR DADOS ORDENADOS
 // ═══════════════════════════════════════════════════════════════════════════════
 
+// FA CHAI - Ordem estratégica fixa (15 jogos)
+const FACHAI_ORDER = [
+  "Golden Land",
+  "Chinese New Year",
+  "Lucky Fortune Cat",
+  "Dragon Gold",
+  "Fa Chai Fishing",
+  "Lucky Number",
+  "Party Night",
+  "Treasure Bowl",
+  "Rich Man",
+  "Money Tree",
+  "Golden Wheel",
+  "Phoenix Rises",
+  "Super Bingo",
+  "Crazy Pusher",
+  "Boxing King"
+];
+
+// FA CHAI GAMES - Dados completos
+const fachaiGamesData = {
+  "Golden Land": {
+    id: 401,
+    name: "Golden Land",
+    image: "/images/fachai/Golden Land.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 91,
+    category: "Gold",
+    provider: "fachai"
+  },
+  "Chinese New Year": {
+    id: 402,
+    name: "Chinese New Year",
+    image: "/images/fachai/Chinese New Year.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 93,
+    category: "Festival",
+    provider: "fachai"
+  },
+  "Lucky Fortune Cat": {
+    id: 403,
+    name: "Lucky Fortune Cat",
+    image: "/images/fachai/Lucky Fortune Cat.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 90,
+    category: "Fortune",
+    provider: "fachai"
+  },
+  "Dragon Gold": {
+    id: 404,
+    name: "Dragon Gold",
+    image: "/images/fachai/Dragon Gold.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 94,
+    category: "Dragon",
+    provider: "fachai"
+  },
+  "Fa Chai Fishing": {
+    id: 405,
+    name: "Fa Chai Fishing",
+    image: "/images/fachai/Fa Chai Fishing.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 87,
+    category: "Fishing",
+    provider: "fachai"
+  },
+  "Lucky Number": {
+    id: 406,
+    name: "Lucky Number",
+    image: "/images/fachai/Lucky Number.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 89,
+    category: "Classic",
+    provider: "fachai"
+  },
+  "Party Night": {
+    id: 407,
+    name: "Party Night",
+    image: "/images/fachai/Party Night.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 88,
+    category: "Party",
+    provider: "fachai"
+  },
+  "Treasure Bowl": {
+    id: 408,
+    name: "Treasure Bowl",
+    image: "/images/fachai/Treasure Bowl.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 92,
+    category: "Treasure",
+    provider: "fachai"
+  },
+  "Rich Man": {
+    id: 409,
+    name: "Rich Man",
+    image: "/images/fachai/Rich Man.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 90,
+    category: "Money",
+    provider: "fachai"
+  },
+  "Money Tree": {
+    id: 410,
+    name: "Money Tree",
+    image: "/images/fachai/Money Tree.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 91,
+    category: "Money",
+    provider: "fachai"
+  },
+  "Golden Wheel": {
+    id: 411,
+    name: "Golden Wheel",
+    image: "/images/fachai/Golden Wheel.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 93,
+    category: "Gold",
+    provider: "fachai"
+  },
+  "Phoenix Rises": {
+    id: 412,
+    name: "Phoenix Rises",
+    image: "/images/fachai/Phoenix Rises.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 95,
+    category: "Mythical",
+    provider: "fachai"
+  },
+  "Super Bingo": {
+    id: 413,
+    name: "Super Bingo",
+    image: "/images/fachai/Super Bingo.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 86,
+    category: "Classic",
+    provider: "fachai"
+  },
+  "Crazy Pusher": {
+    id: 414,
+    name: "Crazy Pusher",
+    image: "/images/fachai/Crazy Pusher.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 88,
+    category: "Action",
+    provider: "fachai"
+  },
+  "Boxing King": {
+    id: 415,
+    name: "Boxing King",
+    image: "/images/fachai/Boxing King.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 92,
+    category: "Sports",
+    provider: "fachai"
+  }
+};
+
+// JDB - Ordem estratégica fixa (15 jogos)
+const JDB_ORDER = [
+  "Treasure King",
+  "Dragon Master",
+  "Lucky Diamond",
+  "Money Vault",
+  "Gold Rush",
+  "Fortune Panda",
+  "Majestic King",
+  "Thunder God",
+  "JDB Fishing",
+  "Flirting Scholar Legend",
+  "Open Sesame",
+  "Billionaire",
+  "Formosa Bear",
+  "Dragon Warrior",
+  "Winning Mask"
+];
+
+// JDB GAMES - Dados completos
+const jdbGamesData = {
+  "Treasure King": {
+    id: 501,
+    name: "Treasure King",
+    image: "/images/jdb/Treasure King.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 92,
+    category: "Treasure",
+    provider: "jdb"
+  },
+  "Dragon Master": {
+    id: 502,
+    name: "Dragon Master",
+    image: "/images/jdb/Dragon Master.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 94,
+    category: "Dragon",
+    provider: "jdb"
+  },
+  "Lucky Diamond": {
+    id: 503,
+    name: "Lucky Diamond",
+    image: "/images/jdb/Lucky Diamond.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 90,
+    category: "Gems",
+    provider: "jdb"
+  },
+  "Money Vault": {
+    id: 504,
+    name: "Money Vault",
+    image: "/images/jdb/Money Vault.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 91,
+    category: "Money",
+    provider: "jdb"
+  },
+  "Gold Rush": {
+    id: 505,
+    name: "Gold Rush",
+    image: "/images/jdb/Gold Rush.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 93,
+    category: "Gold",
+    provider: "jdb"
+  },
+  "Fortune Panda": {
+    id: 506,
+    name: "Fortune Panda",
+    image: "/images/jdb/Fortune Panda.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 89,
+    category: "Animal",
+    provider: "jdb"
+  },
+  "Majestic King": {
+    id: 507,
+    name: "Majestic King",
+    image: "/images/jdb/Majestic King.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 95,
+    category: "Royal",
+    provider: "jdb"
+  },
+  "Thunder God": {
+    id: 508,
+    name: "Thunder God",
+    image: "/images/jdb/Thunder God.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 94,
+    category: "Mythical",
+    provider: "jdb"
+  },
+  "JDB Fishing": {
+    id: 509,
+    name: "JDB Fishing",
+    image: "/images/jdb/JDB Fishing.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 87,
+    category: "Fishing",
+    provider: "jdb"
+  },
+  "Flirting Scholar Legend": {
+    id: 510,
+    name: "Flirting Scholar Legend",
+    image: "/images/jdb/Flirting Scholar Legend.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 91,
+    category: "Asian",
+    provider: "jdb"
+  },
+  "Open Sesame": {
+    id: 511,
+    name: "Open Sesame",
+    image: "/images/jdb/Open Sesame.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 93,
+    category: "Adventure",
+    provider: "jdb"
+  },
+  "Billionaire": {
+    id: 512,
+    name: "Billionaire",
+    image: "/images/jdb/Billionaire.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 90,
+    category: "Money",
+    provider: "jdb"
+  },
+  "Formosa Bear": {
+    id: 513,
+    name: "Formosa Bear",
+    image: "/images/jdb/Formosa Bear.jpg",
+    bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"],
+    basePayout: 88,
+    category: "Animal",
+    provider: "jdb"
+  },
+  "Dragon Warrior": {
+    id: 514,
+    name: "Dragon Warrior",
+    image: "/images/jdb/Dragon Warrior.jpg",
+    bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"],
+    basePayout: 95,
+    category: "Dragon",
+    provider: "jdb"
+  },
+  "Winning Mask": {
+    id: 515,
+    name: "Winning Mask",
+    image: "/images/jdb/Winning Mask.jpg",
+    bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"],
+    basePayout: 92,
+    category: "Mystery",
+    provider: "jdb"
+  }
+};
+
 export const slotsData = {
   pg: getOrderedGames(PG_SOFT_ORDER, pgGamesData),
   pragmatic: getOrderedGames(PRAGMATIC_ORDER, pragmaticGamesData),
   spirit: getOrderedGames(SPIRIT_ORDER, spiritGamesData),
   tada: getOrderedGames(TADA_ORDER, tadaGamesData),
-  revenge: getOrderedGames(REVENGE_ORDER, revengeGamesData)
+  revenge: getOrderedGames(REVENGE_ORDER, revengeGamesData),
+  fachai: getOrderedGames(FACHAI_ORDER, fachaiGamesData),
+  jdb: getOrderedGames(JDB_ORDER, jdbGamesData)
 };
 
 // Provider ranking priority (ordem de exibição)
@@ -2053,7 +2373,9 @@ export const providerRankingOrder = [
   { id: 'pragmatic', name: 'Pragmatic Play', rank: 2 },
   { id: 'tada', name: 'Tada Gaming', rank: 3 },
   { id: 'spirit', name: 'Spirit Gaming', rank: 4 },
-  { id: 'revenge', name: 'Revenge', rank: 5 }
+  { id: 'revenge', name: 'Revenge', rank: 5 },
+  { id: 'fachai', name: 'FA CHAI', rank: 6 },
+  { id: 'jdb', name: 'JDB', rank: 7 }
 ];
 
 // Função para gerar payout dinâmico

@@ -8,7 +8,9 @@ const gameProviders = [
   { name: 'PP', fullName: 'Pragmatic Play', color: '#3B82F6', logo: '/providers/pragmatic-play.png' },
   { name: 'Spirit', fullName: 'Spirit Gaming', color: '#8B5CF6', logo: '/providers/spirit.png' },
   { name: 'Tada', fullName: 'Tada Gaming', color: '#EC4899', logo: '/providers/tada.png' },
-  { name: 'Reeveme', fullName: 'Reeveme', color: '#10B981', logo: '/providers/reeveme.png' }
+  { name: 'Reeveme', fullName: 'Reeveme', color: '#10B981', logo: '/providers/reeveme.png' },
+  { name: 'FC', fullName: 'FA CHAI', color: '#3B5998', logo: '/providers/fachai.png' },
+  { name: 'JDB', fullName: 'JDB', color: '#F97316', logo: '/providers/jdb.png' }
 ];
 
 const platformLogos = [
@@ -430,7 +432,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                 {/* PROVIDERS - Fixed centered grid */}
                 <div className="flex-1 max-w-3xl">
                   {/* Desktop: 5 columns */}
-                  <div className="hidden lg:grid grid-cols-5 gap-3">
+                  <div className="hidden lg:grid grid-cols-7 gap-3">
                     {gameProviders.map((provider) => (
                       <div key={provider.name} className="group relative min-h-[100px] transition-all duration-300 hover:translate-y-[-3px]">
                         <div 
@@ -455,7 +457,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                   </div>
                   
                   {/* Tablet: 3 columns */}
-                  <div className="hidden sm:grid lg:hidden grid-cols-3 gap-3">
+                  <div className="hidden sm:grid lg:hidden grid-cols-4 gap-3">
                     {gameProviders.map((provider) => (
                       <div key={`tab-${provider.name}`} className="group relative min-h-[90px]">
                         <div className="h-full rounded-xl bg-[#0c0c14]/80 border border-white/5 group-hover:border-white/15 p-3 flex flex-col items-center justify-center transition-all">
