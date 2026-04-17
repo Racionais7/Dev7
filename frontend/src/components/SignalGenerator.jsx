@@ -180,7 +180,9 @@ const SignalGenerator = ({ slot, onBack, platformLink }) => {
   const providerName = slot?.provider === 'pg' ? 'PG Soft' : 
                        slot?.provider === 'pragmatic' ? 'Pragmatic' :
                        slot?.provider === 'tada' ? 'Tada' :
-                       slot?.provider === 'spirit' ? 'Spirit' : 'Revenge';
+                       slot?.provider === 'spirit' ? 'Spirit' :
+                       slot?.provider === 'fachai' ? 'FA CHAI' :
+                       slot?.provider === 'jdb' ? 'JDB' : 'Revenge';
 
   // State configurations - ALL states are actionable
   const stateConfig = {

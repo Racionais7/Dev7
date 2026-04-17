@@ -1,24 +1,24 @@
 # Signal Analytics - PRD (Product Requirements Document)
 
 ## Original Problem Statement
-Plataforma de sinais para slots de cassino online com estilo premium. A aplicação deve fornecer sinais comportamentais para jogos de diferentes provedores (PG Soft, Pragmatic Play, Tada Gaming, Spirit Gaming, Reeveme).
+Plataforma de sinais para slots de cassino online com estilo premium. A aplicação deve fornecer sinais comportamentais para jogos de diferentes provedores.
 
 ## Lingua do Usuario
 O usuario e brasileiro e prefere comunicacao em **Portugues do Brasil**.
 
-## Plataforma Atual
+## Plataformas
 - **HG JOGO** - https://hgjogo7.com/en/?ch=110006&ic=140396339#/register
 - **FG JOGO** - https://fgjogo7.com/?ch=230004&ic=140225696#/register
 
 ## Arquitetura
 ```
 /app/
-├── backend/         # FastAPI backend (configurado, endpoint basico)
+├── backend/         # FastAPI backend (configurado basico)
 ├── frontend/        # React frontend
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── PlatformSelector.jsx   # Seletor de plataforma inicial
-│   │   │   ├── ProviderSelector.jsx   # Launcher de provedores
+│   │   │   ├── ProviderSelector.jsx   # Launcher de provedores (7 tabs)
 │   │   │   ├── SignalGenerator.jsx    # Gerador de sinais com persistencia
 │   │   │   ├── SlotCard.jsx           # Cards de slots com estilo premium
 │   │   │   ├── SlotGrid.jsx           # Grid de slots
@@ -27,7 +27,7 @@ O usuario e brasileiro e prefere comunicacao em **Portugues do Brasil**.
 │   │   │   ├── OrbitingLogos.jsx      # Orbita de logos das plataformas
 │   │   │   └── WhatsAppButton.jsx     # Botao WhatsApp flutuante
 │   │   ├── data/
-│   │   │   └── mockData.js            # Dados mock de jogos (200+)
+│   │   │   └── mockData.js            # Dados mock de jogos (230+)
 │   │   ├── App.js                     # Componente principal
 │   │   └── ...
 │   └── ...
@@ -36,31 +36,27 @@ O usuario e brasileiro e prefere comunicacao em **Portugues do Brasil**.
 
 ## O Que Foi Implementado
 
+### Data: 09/01/2026 - Adição de Provedores FA CHAI e JDB
+- **Feature**: Adicionados 2 novos provedores de jogos: FA CHAI e JDB
+- **FA CHAI**: 15 jogos mockados (Golden Land, Chinese New Year, Lucky Fortune Cat, etc.)
+- **JDB**: 15 jogos mockados (Treasure King, Dragon Master, Lucky Diamond, etc.)
+- **Logos**: Imagens fornecidas pelo usuario salvas em /frontend/public/providers/ e /assets/providers/
+- **Arquivos atualizados**: mockData.js, ProviderSelector.jsx, PlatformSelector.jsx, SlotCard.jsx, SlotGrid.jsx, SignalGenerator.jsx
+- **Total provedores**: 7 (PG Soft, Pragmatic Play, Tada, Spirit, Revenge, FA CHAI, JDB)
+
 ### Data: 09/01/2026 - Restauracao do Repositorio
-- **Acao**: Repositorio existente restaurado e configurado no ambiente Emergent
-- **Fix**: Arquivos .env faltando - criados backend/.env e frontend/.env
-- **Teste**: 100% pass - backend e frontend verificados (iteration_9.json)
-
-### Data: 08/01/2026 - Bug Fix: Sobreposicao de Texto
-- **Bug**: Texto "Analise profissional de padroes" estava sobrepondo com os logos orbitantes
-- **Fix**: Aumentou min-height do hero section e margin-top do texto
-
-### Data: 07/04/2026 - Efeito de Orbita Estilo JogoClub.vip
-- **Componente atualizado**: OrbitingLogos.jsx
-
-### Data: 06/04/2026 - Migracao do Repositorio
-- **Repositorio Original**: Racionais7/Dev7 (GitHub)
+- Arquivos .env criados (estavam faltando)
+- Backend e frontend restaurados e funcionando
 
 ### Funcionalidades Existentes
 - Persistencia de sinais com localStorage
-- UI/UX Premium com estilo cinematico (animacoes, hologramas, Mario 3D)
+- UI/UX Premium com estilo cinematico
 - Sistema de cooldown de sinais
-- Providers: PG Soft, Pragmatic Play, Spirit Gaming, Tada Gaming, Reeveme
+- 7 Provedores: PG Soft, Pragmatic Play, Spirit Gaming, Tada Gaming, Reeveme, FA CHAI, JDB
 - Animacao de intro do Mario
 - Botao do WhatsApp
-- 200+ jogos disponiveis
+- 230+ jogos disponiveis
 - Seletor de plataforma (HG JOGO, FG JOGO)
-- Gerador de sinais com graficos e dados em tempo real
 
 ## Tecnologias
 - **Frontend**: React 19, Tailwind CSS, Craco, Framer Motion, Sonner
@@ -74,16 +70,14 @@ O usuario e brasileiro e prefere comunicacao em **Portugues do Brasil**.
 - Aguardando feedback do usuario
 
 ### P1 (Media Prioridade)
-- Adicionar links clicaveis nos logos das plataformas
+- Adicionar imagens reais dos jogos FA CHAI e JDB
 
-### P2 (Baixa Prioridade / Futura)
-- Adicionar mais provedores de jogos
+### P2 (Baixa Prioridade)
 - Implementar backend real para sinais
 - Sistema de login para usuarios VIP
-- Analytics de uso dos sinais
 
 ## Dados MOCKED
-IMPORTANTE: Todos os dados de jogos sao mocked. Nao ha chamadas de API reais.
+Todos os dados de jogos sao mocked. Imagens dos jogos FA CHAI e JDB sao paths mockados sem imagens reais.
 
 ## URLs
 - Frontend Preview: https://4e4e49ff-46a9-49bc-8e91-b4336ef63b7c.preview.emergentagent.com
