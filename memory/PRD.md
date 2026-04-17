@@ -83,4 +83,4 @@ O usuario e brasileiro e prefere comunicacao em **Portugues do Brasil**.
 IMPORTANTE: Todos os dados de jogos sao mocked. Nao ha chamadas de API reais.
 
 ## URLs
-- Frontend Preview: https://dev7-site-share.preview.emergentagent.com
+- Frontend Preview: https://share-site-3.preview.emergentagent.com

@@ -1,0 +1,37 @@
+{
+  "total_tests": 5,
+  "passed_tests": 5,
+  "success_rate": 100.0,
+  "results": [
+    {
+      "test": "API Health Check",
+      "status": "PASSED",
+      "details": "Status: 200, Message: Hello World",
+      "timestamp": "2026-04-17T00:23:51.029862"
+    },
+    {
+      "test": "POST /api/status",
+      "status": "PASSED",
+      "details": "Created status check with ID: 138c8ff9-4f06-4c18-baf3-b28b574e5ef9",
+      "timestamp": "2026-04-17T00:23:51.219105"
+    },
+    {
+      "test": "GET /api/status",
+      "status": "PASSED",
+      "details": "Retrieved 1 status checks",
+      "timestamp": "2026-04-17T00:23:51.338513"
+    },
+    {
+      "test": "CORS Configuration",
+      "status": "PASSED",
+      "details": "CORS headers present: {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH', 'Access-Control-Allow-Headers': '*'}",
+      "timestamp": "2026-04-17T00:23:51.409228"
+    },
+    {
+      "test": "API Response Time",
+      "status": "PASSED",
+      "details": "Response time: 0.14s",
+      "timestamp": "2026-04-17T00:23:51.554369"
+    }
+  ]
+}
