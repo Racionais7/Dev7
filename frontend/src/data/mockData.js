@@ -2168,7 +2168,9 @@ const JDB_ORDER = [
   "Fruity Bonanza",
   "Funky King Kong",
   "Glamorous Girl",
-  "Go Lai Fu"
+  "Go Lai Fu",
+  "Golden Disco",
+  "Kingsman"
 ];
 
 // JDB GAMES - 28 jogos reais
@@ -2200,7 +2202,9 @@ const jdbGamesData = {
   "Fruity Bonanza": { id: 525, name: "Fruity Bonanza", image: "/images/jdb/Fruity Bonanza.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 87, category: "Fruit", provider: "jdb" },
   "Funky King Kong": { id: 526, name: "Funky King Kong", image: "/images/jdb/Funky King Kong.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 89, category: "Animal", provider: "jdb" },
   "Glamorous Girl": { id: 527, name: "Glamorous Girl", image: "/images/jdb/Glamorous Girl.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 92, category: "Fantasy", provider: "jdb" },
-  "Go Lai Fu": { id: 528, name: "Go Lai Fu", image: "/images/jdb/Go Lai Fu.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 95, category: "Asian", provider: "jdb" }
+  "Go Lai Fu": { id: 528, name: "Go Lai Fu", image: "/images/jdb/Go Lai Fu.jpg", bets: ["R$ 0,50", "R$ 2,50", "R$ 4,00"], basePayout: 95, category: "Asian", provider: "jdb" },
+  "Golden Disco": { id: 529, name: "Golden Disco", image: "/images/jdb/Golden Disco.jpg", bets: ["R$ 0,50", "R$ 2,00", "R$ 4,00"], basePayout: 91, category: "Party", provider: "jdb" },
+  "Kingsman": { id: 530, name: "Kingsman", image: "/images/jdb/Kingsman.jpg", bets: ["R$ 0,50", "R$ 3,00", "R$ 4,00"], basePayout: 93, category: "Action", provider: "jdb" }
 };
 
 export const slotsData = {
