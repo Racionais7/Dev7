@@ -121,20 +121,35 @@ const OrbitingLogos = () => {
                   '--counter-angle': `-${angle}deg`,
                 }}
               >
-                {/* Logo image - clickable link to platform */}
+                {/* Logo image - clickable link to platform with tooltip */}
                 <a
                   href={platform.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full h-full pointer-events-auto cursor-pointer transition-transform duration-200 hover:scale-110"
+                  className="orbit-logo-link block w-full h-full pointer-events-auto cursor-pointer relative group"
                   data-testid={`orbit-logo-${platform.name.toLowerCase()}`}
                 >
+                  {/* Tooltip - "Abrir XGJOGO" */}
+                  <div className="orbit-tooltip absolute left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none z-50"
+                    style={{ bottom: `${LOGO_SIZE + 8}px` }}
+                  >
+                    <div className="px-3 py-1.5 rounded-md bg-emerald-500/90 backdrop-blur-sm text-white text-xs font-bold whitespace-nowrap shadow-lg shadow-emerald-500/30">
+                      Abrir {platform.name}
+                    </div>
+                    {/* Arrow */}
+                    <div className="w-0 h-0 mx-auto" style={{
+                      borderLeft: '6px solid transparent',
+                      borderRight: '6px solid transparent',
+                      borderTop: '6px solid rgba(16, 185, 129, 0.9)',
+                    }} />
+                  </div>
+                  {/* Circle border on hover */}
+                  <div className="absolute inset-[-6px] rounded-full border-2 border-transparent group-hover:border-emerald-400/70 transition-all duration-200 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.4)]" />
                   <img 
                     src={platform.logo} 
                     alt={platform.name}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain transition-transform duration-200 group-hover:scale-110"
                     style={{
-                      // Soft white/neon glow
                       filter: `
                         drop-shadow(0 0 5px rgba(255, 255, 255, 0.3))
                         drop-shadow(0 0 12px rgba(124, 58, 237, 0.25))
