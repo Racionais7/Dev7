@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 
 // Platform logos configuration
 const orbitingPlatforms = [
-  { name: 'AGJOGO', logo: '/assets/platforms/agjogo.png' },
-  { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png' },
-  { name: 'YGJOGO', logo: '/assets/platforms/ygjogo.png' },
-  { name: 'MGJOGO', logo: '/assets/platforms/mgjogo.png' },
-  { name: 'HGJOGO', logo: '/assets/platforms/hgjogo.png' },
-  { name: 'EGJOGO', logo: '/assets/platforms/egjogo.png' },
-  { name: 'FGJOGO', logo: '/assets/platforms/fgjogo.png' },
-  { name: 'WGJOGO', logo: '/assets/platforms/wgjogo.png' },
-  { name: 'BGJOGO', logo: '/assets/platforms/bgjogo.png' },
+  { name: 'AGJOGO', logo: '/assets/platforms/agjogo.png', link: 'http://agmarioai.agjogo7.com/?referralCode=lpy4931' },
+  { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png', link: 'https://dgjogo7.com/?ch=740005&ic=6010775244#/register' },
+  { name: 'YGJOGO', logo: '/assets/platforms/ygjogo.png', link: 'https://ygjogo7.com/?ch=550005&ic=601074331#/register' },
+  { name: 'MGJOGO', logo: '/assets/platforms/mgjogo.png', link: 'https://mgjogo7.com/?ch=350001&ic=140492914#/register' },
+  { name: 'HGJOGO', logo: '/assets/platforms/hgjogo.png', link: 'https://hgjogo7.com/en/?ch=110006&ic=140396339#/register' },
+  { name: 'EGJOGO', logo: '/assets/platforms/egjogo.png', link: 'https://egjogo7.com/?ch=380004&ic=140492360#/register' },
+  { name: 'FGJOGO', logo: '/assets/platforms/fgjogo.png', link: 'https://fgjogo7.com/?ch=230004&ic=140225696#/register' },
+  { name: 'WGJOGO', logo: '/assets/platforms/wgjogo.png', link: 'http://wgmarioai.wgjogo7.com/?referralCode=mwc9216' },
+  { name: 'BGJOGO', logo: '/assets/platforms/bgjogo.png', link: 'https://www.bgjogo7.com/register?r=tay1201' },
 ];
 
 const OrbitingLogos = () => {
@@ -121,21 +121,29 @@ const OrbitingLogos = () => {
                   '--counter-angle': `-${angle}deg`,
                 }}
               >
-                {/* Logo image - NO background, NO border, just the PNG with glow */}
-                <img 
-                  src={platform.logo} 
-                  alt={platform.name}
-                  className="w-full h-full object-contain"
-                  style={{
-                    // Soft white/neon glow
-                    filter: `
-                      drop-shadow(0 0 5px rgba(255, 255, 255, 0.3))
-                      drop-shadow(0 0 12px rgba(124, 58, 237, 0.25))
-                    `,
-                  }}
-                  loading="lazy"
-                  draggable={false}
-                />
+                {/* Logo image - clickable link to platform */}
+                <a
+                  href={platform.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full h-full pointer-events-auto cursor-pointer transition-transform duration-200 hover:scale-110"
+                  data-testid={`orbit-logo-${platform.name.toLowerCase()}`}
+                >
+                  <img 
+                    src={platform.logo} 
+                    alt={platform.name}
+                    className="w-full h-full object-contain"
+                    style={{
+                      // Soft white/neon glow
+                      filter: `
+                        drop-shadow(0 0 5px rgba(255, 255, 255, 0.3))
+                        drop-shadow(0 0 12px rgba(124, 58, 237, 0.25))
+                      `,
+                    }}
+                    loading="lazy"
+                    draggable={false}
+                  />
+                </a>
               </div>
             </div>
           );
