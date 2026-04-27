@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const WhatsAppButton = ({ groupLink = "https://chat.whatsapp.com/JYQ5DpfR0yfJQt9lVeFuN6" }) => {
+const WhatsAppButton = ({ groupLink = "https://chat.whatsapp.com/Ic0otXeVUrl3rItVa0kiVP?mode=gi_t" }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
