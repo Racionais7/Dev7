@@ -119,19 +119,25 @@ const ProviderLogos = {
   )
 };
 
-const ProviderSelector = ({ selectedProvider, onProviderChange }) => {
+const ProviderSelector = ({ selectedProvider, selectedPlatform, onProviderChange }) => {
   // Simple provider data
-  const providers = providerRankingOrder.map(p => ({
-    id: p.id,
-    name: p.name,
-    hasGames: (slotsData[p.id]?.length || 0) > 0
-  }));
+  // Micro Gaming só está disponível na plataforma VG JOGO
+  const providers = providerRankingOrder
+    .filter(p => !(p.id === 'microgaming' && selectedPlatform !== 'VGJOGO'))
+    .map(p => ({
+      id: p.id,
+      name: p.name,
+      hasGames: (slotsData[p.id]?.length || 0) > 0
+    }));
+
+  // Ajusta colunas dinamicamente conforme número de provedoras
+  const lgCols = providers.length >= 8 ? 'lg:grid-cols-8' : 'lg:grid-cols-7';
 
   return (
     <section className="py-4 px-4 sm:px-6 border-b border-white/[0.03]">
       <div className="max-w-7xl mx-auto">
         {/* Provider Cards Grid - Clean Launcher Style */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+        <div className={`grid grid-cols-2 sm:grid-cols-4 ${lgCols} gap-2`}>
           {providers.map((provider) => {
             const LogoComponent = ProviderLogos[provider.id];
             

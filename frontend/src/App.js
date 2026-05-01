@@ -157,7 +157,7 @@ function App() {
             </div>
           </section>
 
-          <ProviderSelector selectedProvider={selectedProvider} onProviderChange={(id) => { setSelectedProvider(id); setSelectedSlot(null); }} />
+          <ProviderSelector selectedProvider={selectedProvider} selectedPlatform={selectedPlatform} onProviderChange={(id) => { setSelectedProvider(id); setSelectedSlot(null); }} />
           <SlotGrid slots={currentSlots} onSlotSelect={(slot) => { setSelectedSlot(slot); setShowSignalGenerator(true); }} selectedSlot={selectedSlot} selectedProvider={selectedProvider} providerName={providerName} />
 
           {/* Footer with Responsible Gambling */}
