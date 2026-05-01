@@ -84,7 +84,8 @@ const SlotCard = ({ slot, onSelect, isSelected }) => {
     const name = slot.provider === 'tada' ? 'Tada' :
                  slot.provider === 'spirit' ? 'Spirit' : 
                  slot.provider === 'fachai' ? 'FA CHAI' :
-                 slot.provider === 'jdb' ? 'JDB' : 'Revenge';
+                 slot.provider === 'jdb' ? 'JDB' :
+                 slot.provider === 'microgaming' ? 'Micro Gaming' : 'Revenge';
     return <span className="text-[10px] text-gray-500 tracking-wider">{name}</span>;
   };
 

@@ -109,6 +109,13 @@ const ProviderLogos = {
       alt="JDB" 
       className="h-6 w-auto object-contain"
     />
+  ),
+  microgaming: () => (
+    <img 
+      src="/assets/providers/microgaming.png" 
+      alt="Micro Gaming" 
+      className="h-6 w-auto object-contain"
+    />
   )
 };
 
@@ -124,7 +131,7 @@ const ProviderSelector = ({ selectedProvider, onProviderChange }) => {
     <section className="py-4 px-4 sm:px-6 border-b border-white/[0.03]">
       <div className="max-w-7xl mx-auto">
         {/* Provider Cards Grid - Clean Launcher Style */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
           {providers.map((provider) => {
             const LogoComponent = ProviderLogos[provider.id];
             
