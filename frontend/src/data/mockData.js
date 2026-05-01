@@ -14,6 +14,7 @@ export const providers = {
 
 // Links de cadastro por plataforma
 export const platformLinks = {
+  VGJOGO: "https://vgjogo7.com/?ch=170000&ic=1247404",
   FGJOGO: "https://fgjogo7.com/?ch=230004&ic=140225696#/register",
   HGJOGO: "https://hgjogo7.com/en/?ch=110006&ic=140396339#/register"
 };

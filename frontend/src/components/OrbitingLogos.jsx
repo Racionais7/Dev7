@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 // Platform logos configuration
 const orbitingPlatforms = [
+  { name: 'VGJOGO', logo: '/assets/platforms/vgjogo.png', link: 'https://vgjogo7.com/?ch=170000&ic=1247404' },
   { name: 'AGJOGO', logo: '/assets/platforms/agjogo.png', link: 'http://agmarioai.agjogo7.com/?referralCode=lpy4931' },
   { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png', link: 'https://dgjogo7.com/?ch=740005&ic=6010775244#/register' },
   { name: 'YGJOGO', logo: '/assets/platforms/ygjogo.png', link: 'https://ygjogo7.com/?ch=550005&ic=601074331#/register' },

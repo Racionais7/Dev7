@@ -14,6 +14,7 @@ const gameProviders = [
 ];
 
 const platformLogos = [
+  { name: 'VGJOGO', logo: '/assets/platforms/vgjogo.png' },
   { name: 'AGJOGO', logo: '/assets/platforms/agjogo.png' },
   { name: 'DGJOGO', logo: '/assets/platforms/dgjogo.png' },
   { name: 'YGJOGO', logo: '/assets/platforms/ygjogo.png' },
@@ -557,8 +558,55 @@ const PlatformSelector = ({ onPlatformSelect }) => {
               {/* Título da seção */}
               <h2 className="text-center text-xl sm:text-2xl font-bold text-white mb-6">Escolha sua Plataforma</h2>
               
-              {/* Grid com 2 plataformas */}
+              {/* Grid com 3 plataformas */}
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 max-w-4xl mx-auto px-4">
+                
+                {/* VG JOGO */}
+                <div className="relative flex-1">
+                  <div className="absolute -inset-4 rounded-3xl animate-breathing-glow pointer-events-none" style={{
+                    background: 'radial-gradient(ellipse at center, rgba(139, 92, 246, 0.22) 0%, transparent 70%)',
+                    filter: 'blur(20px)'
+                  }} />
+                  
+                  <button
+                    onClick={() => onPlatformSelect('VGJOGO')}
+                    data-testid="platform-select-vg-btn"
+                    className="w-full block group relative"
+                  >
+                    <div className="absolute -inset-[2px] rounded-2xl animate-cta-breathing-border" style={{
+                      background: 'linear-gradient(90deg, #8b5cf6, #a855f7, #8b5cf6)',
+                      backgroundSize: '200% 100%'
+                    }} />
+                    
+                    <div className="relative rounded-2xl bg-gradient-to-br from-[#12121a] to-[#0a0a12] p-5 border border-violet-500/30 group-hover:border-violet-400/50 transition-all duration-300 group-hover:translate-y-[-4px] group-hover:shadow-xl group-hover:shadow-violet-500/20 overflow-hidden">
+                      <div className="relative flex flex-col items-center text-center">
+                        <div className="relative mb-3">
+                          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-black flex items-center justify-center">
+                            <img src="/assets/platforms/vgjogo_cta.jpg" alt="VG JOGO" className="w-full h-full object-cover" />
+                          </div>
+                        </div>
+                        
+                        <h3 className="text-lg sm:text-xl font-bold mb-1">
+                          <span className="text-white">VG</span>
+                          <span className="text-violet-400"> JOGO</span>
+                        </h3>
+                        
+                        <span 
+                          className="w-full py-3 px-6 rounded-lg text-base font-bold flex items-center justify-center gap-2 text-white mt-3"
+                          style={{
+                            background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(168, 85, 247, 0.3) 100%)',
+                            border: '1px solid rgba(139, 92, 246, 0.4)'
+                          }}
+                        >
+                          <span>ENTRAR</span>
+                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                </div>
                 
                 {/* HG JOGO */}
                 <div className="relative flex-1">
@@ -718,7 +766,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
           {/* LINE 3: Platform Logos Grid */}
           <div className="py-6 bg-[#08080e]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
-              <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-3 max-w-4xl mx-auto">
+              <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-10 gap-3 max-w-4xl mx-auto">
                 {platformLogos.map((p, idx) => (
                   <div 
                     key={p.name}

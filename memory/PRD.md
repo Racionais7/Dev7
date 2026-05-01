@@ -19,7 +19,7 @@
 - Total: 260+ jogos
 
 ## URLs
-- Frontend: https://4e4e49ff-46a9-49bc-8e91-b4336ef63b7c.preview.emergentagent.com
+- Frontend: https://platform-vgjogo-add.preview.emergentagent.com
 
 ## Dados MOCKED
 - Nomes dos jogos: REAIS (extraídos das screenshots do usuário)

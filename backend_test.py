@@ -6,7 +6,7 @@ import json
 from datetime import datetime
 
 class CasinoSignalAPITester:
-    def __init__(self, base_url="https://4e4e49ff-46a9-49bc-8e91-b4336ef63b7c.preview.emergentagent.com"):
+    def __init__(self, base_url="https://platform-vgjogo-add.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0
