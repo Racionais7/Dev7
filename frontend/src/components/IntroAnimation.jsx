@@ -3,6 +3,8 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 // Mario sprites
 const SPR = {
   idle:       '/assets/mario_game/mario-idle.png',
+  walk1:      '/assets/mario_game/mario-walk1.png',
+  walk2:      '/assets/mario_game/mario-walk2.png',
   jump:       '/assets/mario_game/mario-jump.png',
   hit:        '/assets/mario_game/mario-hit.png',
   block:      '/assets/mario_game/qblock.png',
@@ -14,24 +16,45 @@ const SPR = {
   coin4:      '/assets/mario_game/coin-4.png',
 };
 
-// Mario jump cycle timing (ms)
-const JUMP_CYCLE = 1700;
-const T_CROUCH   = 120;
-const T_PEAK     = 480;   // impact point
-const T_LAND     = 900;
-const T_IDLE_END = 1100;
-const T_GLINT    = 1350;  // block regenerates with glint
+// ═══════ SCENE LAYOUT (Mario walks right, jumps at each of 3 blocks) ═══════
+const STAGE_W = 340;
+const STAGE_H = 180;
+const GROUND_Y = 158;
+const MARIO_SIZE = 52;
+const BLOCK_SIZE = 42;
+const COIN_SIZE = 24;
+const BLOCK_Y = 14;
+const MARIO_BASE_Y = GROUND_Y - MARIO_SIZE;   // Mario top when on ground
+const MARIO_PEAK_Y = BLOCK_Y + BLOCK_SIZE + 2; // Mario top when head below block
+const JUMP_HEIGHT  = MARIO_BASE_Y - MARIO_PEAK_Y;
 
-// Positions inside the 220x200 stage
-const STAGE_W = 220;
-const STAGE_H = 200;
-const GROUND_Y = 178;
-const MARIO_SIZE = 70;
-const BLOCK_SIZE = 58;
-const COIN_SIZE = 30;
-const BLOCK_Y = 18;
-const MARIO_BASE_Y = GROUND_Y - MARIO_SIZE;  // Mario top when on ground
-const MARIO_PEAK_Y = BLOCK_Y + BLOCK_SIZE;   // Mario top when head near block
+// 3 blocks across the stage
+const BLOCK_X = [75, 162, 250];
+
+// Choreographed sequence (one full cycle)
+const SEQ = [
+  { type: 'walk', from: 25,  to: 75,  dur: 550 },
+  { type: 'jump', at: 75,    block: 0, dur: 600 },
+  { type: 'walk', from: 75,  to: 162, dur: 780 },
+  { type: 'jump', at: 162,   block: 1, dur: 600 },
+  { type: 'walk', from: 162, to: 250, dur: 780 },
+  { type: 'jump', at: 250,   block: 2, dur: 600 },
+  { type: 'walk', from: 250, to: 320, dur: 550 },
+  { type: 'wait', dur: 900 },
+];
+const CYCLE_DUR = SEQ.reduce((s, p) => s + p.dur, 0);
+
+// Return current phase + time within phase for a given elapsed cycle time
+function currentPhase(elapsed) {
+  let acc = 0;
+  for (let i = 0; i < SEQ.length; i++) {
+    const p = SEQ[i];
+    if (elapsed < acc + p.dur) return { ...p, idx: i, localT: elapsed - acc };
+    acc += p.dur;
+  }
+  const last = SEQ[SEQ.length - 1];
+  return { ...last, idx: SEQ.length - 1, localT: last.dur };
+}
 
 const easeOutQuad = (t) => 1 - (1 - t) * (1 - t);
 const easeInQuad  = (t) => t * t;
@@ -41,19 +64,22 @@ const IntroAnimation = ({ onComplete }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [logs, setLogs] = useState([]);
 
-  // Mario scene state
+  // Mario scene state (3 blocks)
   const [marioSprite, setMarioSprite] = useState(SPR.idle);
-  const [blockSprite, setBlockSprite] = useState(SPR.block);
+  const [blockSprites, setBlockSprites] = useState([SPR.block, SPR.block, SPR.block]);
   const [coinFrame, setCoinFrame] = useState(0);
-  const [coinVisible, setCoinVisible] = useState(false);
-  const [scoreVisible, setScoreVisible] = useState(false);
+  const [activeCoin, setActiveCoin] = useState(-1);   // -1 = hidden, 0/1/2 = which block
+  const [activeScore, setActiveScore] = useState(-1);
 
   // Refs for GPU-accelerated transforms
   const marioRef = useRef(null);
-  const blockRef = useRef(null);
+  const shadowRef = useRef(null);
+  const block0Ref = useRef(null);
+  const block1Ref = useRef(null);
+  const block2Ref = useRef(null);
   const coinRef = useRef(null);
   const scoreRef = useRef(null);
-  const marioState = useRef({ raf: 0, startTime: 0, lastPhase: '', impactTime: 0 });
+  const marioState = useRef({ raf: 0, startTime: 0, lastIdx: -1, impactTime: 0, lastWalkFrame: -1, didImpact: false });
 
   // System loading steps - always defined and non-empty
   const steps = useMemo(() => [
@@ -72,121 +98,164 @@ const IntroAnimation = ({ onComplete }) => {
     return 'Sincronizando...';
   };
 
-  // ═══════ MARIO JUMP CYCLE (requestAnimationFrame driven) ═══════
+  // ═══════ MARIO WALK-AND-JUMP CYCLE (RAF, sequences 3 blocks) ═══════
   useEffect(() => {
     const st = marioState.current;
     st.startTime = performance.now();
 
+    const blockRefs = [block0Ref, block1Ref, block2Ref];
+
     const tick = (now) => {
-      const elapsed = (now - st.startTime) % JUMP_CYCLE;
+      const elapsed = (now - st.startTime) % CYCLE_DUR;
+      const phase = currentPhase(elapsed);
 
-      // Determine phase, mario position & sprite
-      let phase = '';
-      let marioY = MARIO_BASE_Y;
-      let marioScaleY = 1;
-      let marioScaleX = 1;
-
-      if (elapsed < T_CROUCH) {
-        phase = 'crouch';
-        marioY = MARIO_BASE_Y + 3;
-        marioScaleY = 0.9;
-        marioScaleX = 1.08;
-      } else if (elapsed < T_PEAK) {
-        phase = 'jump_up';
-        const p = (elapsed - T_CROUCH) / (T_PEAK - T_CROUCH);
-        const ep = easeOutQuad(p);
-        marioY = MARIO_BASE_Y - ep * (MARIO_BASE_Y - MARIO_PEAK_Y);
-        marioScaleY = 1.05;
-      } else if (elapsed < T_LAND - 80) {
-        phase = 'fall';
-        const p = (elapsed - T_PEAK) / ((T_LAND - 80) - T_PEAK);
-        const ep = easeInQuad(p);
-        marioY = MARIO_PEAK_Y + ep * (MARIO_BASE_Y - MARIO_PEAK_Y);
-      } else if (elapsed < T_LAND) {
-        phase = 'land';
-        marioY = MARIO_BASE_Y + 4;
-        marioScaleY = 0.78;
-        marioScaleX = 1.15;
-      } else if (elapsed < T_IDLE_END) {
-        phase = 'recover';
-        marioY = MARIO_BASE_Y;
-      } else {
-        phase = 'idle';
-        marioY = MARIO_BASE_Y;
+      // Detect cycle restart → regenerate blocks
+      if (phase.idx < st.lastIdx) {
+        // Trigger glint then back to normal
+        setBlockSprites([SPR.blockGlint, SPR.blockGlint, SPR.blockGlint]);
+        setTimeout(() => setBlockSprites([SPR.block, SPR.block, SPR.block]), 250);
       }
 
-      // Apply Mario transform (GPU)
-      if (marioRef.current) {
-        const xOffset = STAGE_W / 2 - MARIO_SIZE / 2;
-        marioRef.current.style.transform =
-          `translate3d(${xOffset}px, ${marioY}px, 0) scale(${marioScaleX}, ${marioScaleY})`;
-      }
+      // ── Phase: WALK ──
+      let marioX = 25, marioY = MARIO_BASE_Y;
+      let marioScaleY = 1, marioScaleX = 1;
+      let nextSprite = null;
 
-      // Sprite swap on phase transition
-      if (phase !== st.lastPhase) {
-        if (phase === 'crouch' || phase === 'idle' || phase === 'recover') {
-          setMarioSprite(SPR.idle);
-        } else if (phase === 'jump_up' || phase === 'fall') {
-          setMarioSprite(SPR.jump);
-        } else if (phase === 'land') {
-          setMarioSprite(SPR.hit);
+      if (phase.type === 'walk') {
+        const p = phase.localT / phase.dur;
+        marioX = phase.from + p * (phase.to - phase.from);
+        marioY = MARIO_BASE_Y;
+        // Walk cycle: alternate idle/walk1/walk2 every 100ms
+        const walkIdx = Math.floor(phase.localT / 110) % 4;
+        const walkMap = [SPR.walk1, SPR.idle, SPR.walk2, SPR.idle];
+        nextSprite = walkMap[walkIdx];
+        if (walkIdx !== st.lastWalkFrame) {
+          st.lastWalkFrame = walkIdx;
         }
+        if (phase.idx !== st.lastIdx) {
+          st.didImpact = false;
+        }
+      }
+      // ── Phase: JUMP (at a block) ──
+      else if (phase.type === 'jump') {
+        marioX = phase.at;
+        const p = phase.localT / phase.dur;
 
-        // IMPACT: fall phase just started after jump_up → we hit the block
-        if (phase === 'fall' && st.lastPhase === 'jump_up') {
-          st.impactTime = now;
-          setBlockSprite(SPR.blockEmpty);
-          setCoinVisible(true);
-          setScoreVisible(true);
-          // Block bump anim (restart)
-          if (blockRef.current) {
-            blockRef.current.classList.remove('intro-block-bump');
-            void blockRef.current.offsetWidth;
-            blockRef.current.classList.add('intro-block-bump');
+        if (p < 0.15) {
+          // Crouch / anticipate
+          marioY = MARIO_BASE_Y + 2;
+          marioScaleY = 0.9;
+          marioScaleX = 1.08;
+          nextSprite = SPR.idle;
+        } else if (p < 0.48) {
+          // Ascent
+          const pp = (p - 0.15) / 0.33;
+          marioY = MARIO_BASE_Y - easeOutQuad(pp) * JUMP_HEIGHT;
+          nextSprite = SPR.jump;
+          marioScaleY = 1.05;
+        } else if (p < 0.52) {
+          // IMPACT at peak
+          marioY = MARIO_PEAK_Y;
+          nextSprite = SPR.jump;
+          // Trigger impact once
+          if (!st.didImpact && phase.idx !== st.lastIdx || !st.didImpact) {
+            const bi = phase.block;
+            st.impactTime = now;
+            st.didImpact = true;
+            // Block turns empty + coin + score
+            setBlockSprites((prev) => prev.map((s, i) => (i === bi ? SPR.blockEmpty : s)));
+            setActiveCoin(bi);
+            setActiveScore(bi);
+            // Bump animation
+            const br = blockRefs[bi];
+            if (br && br.current) {
+              br.current.classList.remove('intro-block-bump');
+              void br.current.offsetWidth;
+              br.current.classList.add('intro-block-bump');
+            }
           }
+        } else if (p < 0.88) {
+          // Fall
+          const pp = (p - 0.52) / 0.36;
+          marioY = MARIO_PEAK_Y + easeInQuad(pp) * JUMP_HEIGHT;
+          nextSprite = SPR.jump;
+        } else {
+          // Landing squash
+          marioY = MARIO_BASE_Y + 3;
+          marioScaleY = 0.82;
+          marioScaleX = 1.12;
+          nextSprite = SPR.hit;
         }
-
-        // End of cycle → regenerate block
-        if (phase === 'idle' && st.lastPhase === 'recover') {
-          setTimeout(() => setBlockSprite(SPR.blockGlint), 150);
-          setTimeout(() => setBlockSprite(SPR.block), 380);
-        }
-
-        st.lastPhase = phase;
+      }
+      // ── Phase: WAIT (rest) ──
+      else {
+        marioX = 320;
+        marioY = MARIO_BASE_Y;
+        nextSprite = SPR.idle;
       }
 
-      // Coin animation (600ms from impact)
-      if (coinVisible && coinRef.current) {
+      // Apply Mario transform
+      if (marioRef.current) {
+        marioRef.current.style.transform =
+          `translate3d(${marioX - MARIO_SIZE / 2}px, ${marioY}px, 0) scale(${marioScaleX}, ${marioScaleY})`;
+      }
+
+      // Shadow follows Mario X and shrinks as Mario rises
+      if (shadowRef.current) {
+        const airHeight = MARIO_BASE_Y - marioY;
+        const jumpProgress = Math.max(0, Math.min(1, airHeight / JUMP_HEIGHT));
+        const shadowScale = 1 - jumpProgress * 0.55;
+        const shadowOpacity = 0.7 - jumpProgress * 0.45;
+        shadowRef.current.style.transform =
+          `translate3d(${marioX - 18}px, ${GROUND_Y - 1}px, 0) scale(${shadowScale}, ${shadowScale * 0.8})`;
+        shadowRef.current.style.opacity = shadowOpacity;
+      }
+
+      // Sprite swap if changed
+      if (nextSprite && nextSprite !== marioSprite) {
+        setMarioSprite(nextSprite);
+      }
+
+      // Phase index tracking (after all logic)
+      if (phase.idx !== st.lastIdx) {
+        if (phase.type !== 'jump') st.didImpact = false;
+        st.lastIdx = phase.idx;
+      }
+
+      // ── Coin animation (lives for 700ms from impact) ──
+      if (activeCoin >= 0 && coinRef.current) {
         const cElapsed = now - st.impactTime;
-        const cDur = 650;
+        const cDur = 700;
         if (cElapsed < cDur) {
           const p = cElapsed / cDur;
           const riseP = Math.min(p / 0.65, 1);
-          const riseY = -easeOutQuad(riseP) * 50;
+          const riseY = -easeOutQuad(riseP) * 48;
           const opacity = p < 0.7 ? 1 : (1 - (p - 0.7) / 0.3);
-          const cx = STAGE_W / 2 - COIN_SIZE / 2;
-          coinRef.current.style.transform = `translate3d(${cx}px, ${BLOCK_Y + 6 + riseY}px, 0)`;
+          const cx = BLOCK_X[activeCoin] - COIN_SIZE / 2;
+          coinRef.current.style.transform =
+            `translate3d(${cx}px, ${BLOCK_Y + 4 + riseY}px, 0)`;
           coinRef.current.style.opacity = opacity;
           const cf = Math.floor(cElapsed / 55) % 4;
           if (cf !== coinFrame) setCoinFrame(cf);
         } else {
-          setCoinVisible(false);
+          setActiveCoin(-1);
         }
       }
 
-      // +100 score animation (700ms from impact)
-      if (scoreVisible && scoreRef.current) {
+      // ── +100 score animation (800ms) ──
+      if (activeScore >= 0 && scoreRef.current) {
         const sElapsed = now - st.impactTime;
-        const sDur = 750;
+        const sDur = 800;
         if (sElapsed < sDur) {
           const p = sElapsed / sDur;
-          const rise = -easeOutQuad(p) * 38;
+          const rise = -easeOutQuad(p) * 36;
           const opacity = p < 0.75 ? 1 : (1 - (p - 0.75) / 0.25);
-          const sx = STAGE_W / 2 - 18;
-          scoreRef.current.style.transform = `translate3d(${sx}px, ${BLOCK_Y - 4 + rise}px, 0)`;
+          const sx = BLOCK_X[activeScore] - 18;
+          scoreRef.current.style.transform =
+            `translate3d(${sx}px, ${BLOCK_Y - 4 + rise}px, 0)`;
           scoreRef.current.style.opacity = opacity;
         } else {
-          setScoreVisible(false);
+          setActiveScore(-1);
         }
       }
 
@@ -195,7 +264,7 @@ const IntroAnimation = ({ onComplete }) => {
 
     st.raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(st.raf);
-  }, [coinVisible, scoreVisible, coinFrame]);
+  }, [activeCoin, activeScore, coinFrame, marioSprite]);
 
   const coinSprites = [SPR.coin1, SPR.coin2, SPR.coin3, SPR.coin4];
 
@@ -439,28 +508,35 @@ const IntroAnimation = ({ onComplete }) => {
             }}
           />
 
-          {/* ? Block */}
-          <img
-            ref={blockRef}
-            src={blockSprite}
-            alt=""
-            data-testid="intro-qblock"
-            className="absolute intro-block-base"
-            style={{
-              left: 0,
-              top: 0,
-              width: `${BLOCK_SIZE}px`,
-              height: `${BLOCK_SIZE}px`,
-              transform: `translate3d(${STAGE_W / 2 - BLOCK_SIZE / 2}px, ${BLOCK_Y}px, 0)`,
-              imageRendering: 'pixelated',
-              filter: 'drop-shadow(0 0 8px rgba(251,191,36,0.55)) drop-shadow(0 3px 0 rgba(0,0,0,0.5))',
-              willChange: 'transform',
-            }}
-            draggable={false}
-          />
+          {/* ═══ 3 × ? BLOCKS ═══ */}
+          {[0, 1, 2].map((i) => {
+            const refMap = [block0Ref, block1Ref, block2Ref];
+            return (
+              <img
+                key={`block-${i}`}
+                ref={refMap[i]}
+                src={blockSprites[i]}
+                alt=""
+                data-testid={`intro-qblock-${i}`}
+                className="absolute intro-block-base"
+                style={{
+                  left: 0,
+                  top: 0,
+                  width: `${BLOCK_SIZE}px`,
+                  height: `${BLOCK_SIZE}px`,
+                  transform: `translate3d(${BLOCK_X[i] - BLOCK_SIZE / 2}px, ${BLOCK_Y}px, 0)`,
+                  imageRendering: 'pixelated',
+                  filter: 'drop-shadow(0 0 8px rgba(251,191,36,0.55)) drop-shadow(0 3px 0 rgba(0,0,0,0.5))',
+                  willChange: 'transform',
+                  '--block-x': `${BLOCK_X[i] - BLOCK_SIZE / 2}px`,
+                }}
+                draggable={false}
+              />
+            );
+          })}
 
-          {/* Coin (appears on impact) */}
-          {coinVisible && (
+          {/* Coin (appears on impact over the hit block) */}
+          {activeCoin >= 0 && (
             <img
               ref={coinRef}
               src={coinSprites[coinFrame]}
@@ -482,7 +558,7 @@ const IntroAnimation = ({ onComplete }) => {
           )}
 
           {/* +100 floating score */}
-          {scoreVisible && (
+          {activeScore >= 0 && (
             <div
               ref={scoreRef}
               className="absolute pointer-events-none"
@@ -491,7 +567,7 @@ const IntroAnimation = ({ onComplete }) => {
                 left: 0,
                 top: 0,
                 fontFamily: '"Press Start 2P", monospace',
-                fontSize: '11px',
+                fontSize: '10px',
                 color: '#fde047',
                 textShadow: '2px 2px 0 #000, 0 0 8px rgba(251,191,36,0.95)',
                 letterSpacing: '0.5px',
@@ -502,13 +578,13 @@ const IntroAnimation = ({ onComplete }) => {
             </div>
           )}
 
-          {/* Impact sparks (tiny, CSS-only, appear when block is empty) */}
-          {coinVisible && (
+          {/* Impact sparks (appear above hit block) */}
+          {activeCoin >= 0 && (
             <div
               className="absolute intro-spark-burst pointer-events-none"
               style={{
-                left: `${STAGE_W / 2 - 20}px`,
-                top: `${BLOCK_Y - 4}px`,
+                left: `${BLOCK_X[activeCoin] - 20}px`,
+                top: `${BLOCK_Y - 6}px`,
                 width: '40px',
                 height: '16px',
               }}
@@ -540,16 +616,18 @@ const IntroAnimation = ({ onComplete }) => {
             draggable={false}
           />
 
-          {/* Mario shadow — grows with distance from ground */}
+          {/* Mario shadow — follows him horizontally, shrinks when he jumps */}
           <div
-            className="absolute pointer-events-none intro-mario-shadow"
+            ref={shadowRef}
+            className="absolute pointer-events-none"
             style={{
-              left: `${STAGE_W / 2 - 22}px`,
-              top: `${GROUND_Y - 2}px`,
-              width: '44px',
+              left: 0,
+              top: 0,
+              width: '36px',
               height: '6px',
-              background: 'radial-gradient(ellipse, rgba(0,0,0,0.55) 0%, transparent 70%)',
+              background: 'radial-gradient(ellipse, rgba(0,0,0,0.6) 0%, transparent 70%)',
               filter: 'blur(2px)',
+              willChange: 'transform, opacity',
             }}
           />
         </div>
@@ -668,15 +746,15 @@ const IntroAnimation = ({ onComplete }) => {
         .animate-blink { animation: blink 1s step-end infinite; }
 
         /* ═══ MARIO INTRO SCENE animations ═══ */
-        /* Block bumps up when Mario's head hits it */
+        /* Block bumps up when Mario's head hits it (uses --block-x for horizontal pos) */
         .intro-block-bump {
           animation: intro-block-bump 320ms cubic-bezier(0.22, 1, 0.36, 1);
         }
         @keyframes intro-block-bump {
-          0%   { transform: translate3d(${STAGE_W / 2 - BLOCK_SIZE / 2}px, ${BLOCK_Y}px, 0); }
-          40%  { transform: translate3d(${STAGE_W / 2 - BLOCK_SIZE / 2}px, ${BLOCK_Y - 12}px, 0); }
-          70%  { transform: translate3d(${STAGE_W / 2 - BLOCK_SIZE / 2}px, ${BLOCK_Y - 5}px, 0); }
-          100% { transform: translate3d(${STAGE_W / 2 - BLOCK_SIZE / 2}px, ${BLOCK_Y}px, 0); }
+          0%   { transform: translate3d(var(--block-x), ${BLOCK_Y}px, 0); }
+          40%  { transform: translate3d(var(--block-x), ${BLOCK_Y - 12}px, 0); }
+          70%  { transform: translate3d(var(--block-x), ${BLOCK_Y - 5}px, 0); }
+          100% { transform: translate3d(var(--block-x), ${BLOCK_Y}px, 0); }
         }
 
         /* Spark burst around block at impact */
@@ -687,18 +765,6 @@ const IntroAnimation = ({ onComplete }) => {
           0%   { opacity: 0; transform: scale(0.6); }
           40%  { opacity: 1; transform: scale(1.3); }
           100% { opacity: 0; transform: scale(1.5); }
-        }
-
-        /* Mario shadow pulses with jump cycle (pure CSS mimics the JS jump phases) */
-        .intro-mario-shadow {
-          animation: intro-shadow-pulse ${JUMP_CYCLE}ms cubic-bezier(0.22, 1, 0.36, 1) infinite;
-        }
-        @keyframes intro-shadow-pulse {
-          0%   { opacity: 0.6; transform: scale(1, 1); }
-          ${((T_PEAK / JUMP_CYCLE) * 100).toFixed(1)}% { opacity: 0.2; transform: scale(0.5, 0.7); }
-          ${((T_LAND / JUMP_CYCLE) * 100).toFixed(1)}% { opacity: 0.75; transform: scale(1.25, 1); }
-          ${((T_IDLE_END / JUMP_CYCLE) * 100).toFixed(1)}% { opacity: 0.6; transform: scale(1, 1); }
-          100% { opacity: 0.6; transform: scale(1, 1); }
         }
 
         /* Background sparkles floating */
