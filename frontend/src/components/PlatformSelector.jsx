@@ -240,6 +240,44 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                       boxShadow: '0 0 50px rgba(124, 58, 237, 0.35), inset 0 0 30px rgba(59, 130, 246, 0.2)'
                     }}
                   />
+
+                  {/* ═══════ IMPACT SPARKS - appear when Mario headbutts the platform on top of orbit ═══════ */}
+                  <div
+                    className="absolute pointer-events-none animate-mario-orbit-impact"
+                    data-testid="mario-orbit-impact"
+                    style={{
+                      top: 'calc(50% - 145px)',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      zIndex: 11,
+                    }}
+                  >
+                    {/* Pixel-art "POW" burst */}
+                    <div className="relative flex flex-col items-center">
+                      {/* Stars flying out */}
+                      <div className="absolute -top-2 -left-6 text-amber-300 text-[14px] animate-star-fly-left">★</div>
+                      <div className="absolute -top-3 left-0 text-yellow-200 text-[18px] animate-star-fly-up">✦</div>
+                      <div className="absolute -top-2 left-6 text-amber-300 text-[14px] animate-star-fly-right">★</div>
+                      {/* Shockwave ring */}
+                      <div
+                        className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full border-2 border-amber-300/80 animate-shockwave"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Sub-sized sm/lg adjust for impact position */}
+                  <style>{`
+                    @media (min-width: 640px) {
+                      [data-testid="mario-orbit-impact"] {
+                        top: calc(50% - 175px) !important;
+                      }
+                    }
+                    @media (min-width: 1024px) {
+                      [data-testid="mario-orbit-impact"] {
+                        top: calc(50% - 210px) !important;
+                      }
+                    }
+                  `}</style>
                   
                   {/* ═══════ MARIO 3D HOLOGRAM - PREMIUM ANIMATIONS ═══════ */}
                   <div 
@@ -250,21 +288,23 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                       zIndex: 10, // Mario stays in middle layer - between front and back logos
                     }}
                   >
-                    {/* Mario pixel art figure with breathing + floating */}
-                    <div className="animate-mario-float w-full h-full flex items-center justify-center">
-                      <img
-                        src="/assets/mario/mario-pixel-clean.png"
-                        alt="Mario"
-                        data-testid="mario-pixel-hologram"
-                        className={`w-full h-full object-contain animate-mario-breathe ${glitchActive ? '' : 'animate-mario-shimmer'}`}
-                        style={{
-                          imageRendering: 'pixelated',
-                          filter: glitchActive
-                            ? 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.9)) brightness(1.6) hue-rotate(30deg)'
-                            : 'drop-shadow(0 0 10px rgba(124, 58, 237, 0.85)) drop-shadow(0 0 22px rgba(59, 130, 246, 0.55)) drop-shadow(0 0 4px rgba(167, 139, 250, 0.9))'
-                        }}
-                        draggable={false}
-                      />
+                    {/* Mario pixel art figure with breathing + floating + orbit-jump */}
+                    <div className="animate-mario-orbit-jump w-full h-full">
+                      <div className="animate-mario-float w-full h-full flex items-center justify-center">
+                        <img
+                          src="/assets/mario/mario-pixel-clean.png"
+                          alt="Mario"
+                          data-testid="mario-pixel-hologram"
+                          className={`w-full h-full object-contain animate-mario-breathe ${glitchActive ? '' : 'animate-mario-shimmer'}`}
+                          style={{
+                            imageRendering: 'pixelated',
+                            filter: glitchActive
+                              ? 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.9)) brightness(1.6) hue-rotate(30deg)'
+                              : 'drop-shadow(0 0 10px rgba(124, 58, 237, 0.85)) drop-shadow(0 0 22px rgba(59, 130, 246, 0.55)) drop-shadow(0 0 4px rgba(167, 139, 250, 0.9))'
+                          }}
+                          draggable={false}
+                        />
+                      </div>
                     </div>
                     
                     {/* Scanline effect over Mario - passes every 2-3s */}
@@ -1052,6 +1092,81 @@ const PlatformSelector = ({ onPlatformSelect }) => {
           50% { transform: translateY(-8px); }
         }
         .animate-mario-float { animation: mario-float 5s ease-in-out infinite; }
+
+        /* ═══════ MARIO ORBIT HEADBUTT JUMP ═══════ */
+        /* Every 4.5s Mario does a big vertical jump to reach the orbiting platforms (top of circle).
+           Jump distance scales with breakpoint: 150px mobile / 185px tablet / 220px desktop. */
+        @keyframes mario-orbit-jump {
+          0%, 55%, 100% { transform: translateY(0) scale(1, 1); }
+          60%           { transform: translateY(-10px) scale(1.06, 0.94); }  /* pre-squat */
+          75%           { transform: translateY(-150px) scale(0.96, 1.06); } /* peak = impact */
+          80%           { transform: translateY(-142px) scale(1, 1); }
+          92%           { transform: translateY(-28px) scale(1, 1); }
+          98%           { transform: translateY(0) scale(1.1, 0.9); }        /* landing squash */
+        }
+        .animate-mario-orbit-jump {
+          animation: mario-orbit-jump 4.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+        }
+        @media (min-width: 640px) {
+          @keyframes mario-orbit-jump {
+            0%, 55%, 100% { transform: translateY(0) scale(1, 1); }
+            60%           { transform: translateY(-10px) scale(1.06, 0.94); }
+            75%           { transform: translateY(-185px) scale(0.96, 1.06); }
+            80%           { transform: translateY(-175px) scale(1, 1); }
+            92%           { transform: translateY(-30px) scale(1, 1); }
+            98%           { transform: translateY(0) scale(1.1, 0.9); }
+          }
+        }
+        @media (min-width: 1024px) {
+          @keyframes mario-orbit-jump {
+            0%, 55%, 100% { transform: translateY(0) scale(1, 1); }
+            60%           { transform: translateY(-12px) scale(1.06, 0.94); }
+            75%           { transform: translateY(-220px) scale(0.96, 1.06); }
+            80%           { transform: translateY(-208px) scale(1, 1); }
+            92%           { transform: translateY(-35px) scale(1, 1); }
+            98%           { transform: translateY(0) scale(1.1, 0.9); }
+          }
+        }
+
+        /* Impact sparks appear only at peak of jump (~75% of 4.5s = at 3.375s) */
+        @keyframes mario-orbit-impact {
+          0%, 72%, 82%, 100% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+          75%                { opacity: 1; transform: translateX(-50%) scale(1.2); }
+          80%                { opacity: 0.6; transform: translateX(-50%) scale(1); }
+        }
+        .animate-mario-orbit-impact {
+          animation: mario-orbit-impact 4.5s ease-out infinite;
+        }
+
+        /* Stars flying out on impact */
+        @keyframes star-fly-left {
+          0%, 72%, 100% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
+          75%           { opacity: 1; transform: translate(-14px, -6px) rotate(-20deg); }
+          82%           { opacity: 0; transform: translate(-24px, 4px) rotate(-40deg); }
+        }
+        .animate-star-fly-left { animation: star-fly-left 4.5s ease-out infinite; }
+
+        @keyframes star-fly-up {
+          0%, 72%, 100% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+          75%           { opacity: 1; transform: translate(0, -14px) scale(1.4); }
+          82%           { opacity: 0; transform: translate(0, -22px) scale(0.9); }
+        }
+        .animate-star-fly-up { animation: star-fly-up 4.5s ease-out infinite; }
+
+        @keyframes star-fly-right {
+          0%, 72%, 100% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
+          75%           { opacity: 1; transform: translate(14px, -6px) rotate(20deg); }
+          82%           { opacity: 0; transform: translate(24px, 4px) rotate(40deg); }
+        }
+        .animate-star-fly-right { animation: star-fly-right 4.5s ease-out infinite; }
+
+        /* Shockwave ring expanding on impact */
+        @keyframes shockwave {
+          0%, 72%, 100% { opacity: 0; transform: translateX(-50%) scale(0.3); }
+          75%           { opacity: 0.9; transform: translateX(-50%) scale(1); }
+          82%           { opacity: 0; transform: translateX(-50%) scale(2.2); }
+        }
+        .animate-shockwave { animation: shockwave 4.5s ease-out infinite; }
         
         /* Premium scanline - passes every 2.5s with brightness */
         @keyframes scanline-premium {
