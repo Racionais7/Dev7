@@ -4,7 +4,6 @@ import OrbitingLogos from './OrbitingLogos';
 import MarioPlayScene from './MarioPlayScene';
 import MarioBackground from './MarioBackground';
 import MarioBlockEntrar from './MarioBlockEntrar';
-import MarioHUD from './MarioHUD';
 import GoombaPatrol from './GoombaPatrol';
 import KonamiEasterEgg from './KonamiEasterEgg';
 
@@ -169,11 +168,6 @@ const PlatformSelector = ({ onPlatformSelect }) => {
       <KonamiEasterEgg />
 
       <div className="relative z-10">
-
-        {/* Classic SMB HUD - MARIO | score | COINS | WORLD | TIME */}
-        <div className={`pt-3 px-4 sm:px-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
-          <MarioHUD />
-        </div>
 
         {/* ════════════════════════════════════════════════════════════════════════
             HEADER - Clean minimal
