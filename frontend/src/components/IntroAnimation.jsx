@@ -81,6 +81,22 @@ const IntroAnimation = ({ onComplete }) => {
   const scoreRef = useRef(null);
   const marioState = useRef({ raf: 0, startTime: 0, lastIdx: -1, impactTime: 0, lastWalkFrame: -1, didImpact: false });
 
+  // Refs mirror state so RAF loop can read latest values without re-running useEffect
+  const activeCoinRef = useRef(-1);
+  const activeScoreRef = useRef(-1);
+  const coinFrameRef = useRef(0);
+
+  const showCoin = (bi) => { activeCoinRef.current = bi; setActiveCoin(bi); };
+  const hideCoin = () => { activeCoinRef.current = -1; setActiveCoin(-1); };
+  const showScore = (bi) => { activeScoreRef.current = bi; setActiveScore(bi); };
+  const hideScore = () => { activeScoreRef.current = -1; setActiveScore(-1); };
+  const setCoinFrameSync = (f) => {
+    if (coinFrameRef.current !== f) {
+      coinFrameRef.current = f;
+      setCoinFrame(f);
+    }
+  };
+
   // System loading steps - always defined and non-empty
   const steps = useMemo(() => [
     { message: 'Conectando ao servidor...', duration: 800 },
@@ -158,14 +174,14 @@ const IntroAnimation = ({ onComplete }) => {
           marioY = MARIO_PEAK_Y;
           nextSprite = SPR.jump;
           // Trigger impact once
-          if (!st.didImpact && phase.idx !== st.lastIdx || !st.didImpact) {
+          if (!st.didImpact) {
             const bi = phase.block;
             st.impactTime = now;
             st.didImpact = true;
             // Block turns empty + coin + score
             setBlockSprites((prev) => prev.map((s, i) => (i === bi ? SPR.blockEmpty : s)));
-            setActiveCoin(bi);
-            setActiveScore(bi);
+            showCoin(bi);
+            showScore(bi);
             // Bump animation
             const br = blockRefs[bi];
             if (br && br.current) {
@@ -211,8 +227,8 @@ const IntroAnimation = ({ onComplete }) => {
         shadowRef.current.style.opacity = shadowOpacity;
       }
 
-      // Sprite swap if changed
-      if (nextSprite && nextSprite !== marioSprite) {
+      // Sprite swap (React dedupes same-value setState, so no need to compare)
+      if (nextSprite) {
         setMarioSprite(nextSprite);
       }
 
@@ -223,7 +239,8 @@ const IntroAnimation = ({ onComplete }) => {
       }
 
       // ── Coin animation (lives for 700ms from impact) ──
-      if (activeCoin >= 0 && coinRef.current) {
+      const ac = activeCoinRef.current;
+      if (ac >= 0 && coinRef.current) {
         const cElapsed = now - st.impactTime;
         const cDur = 700;
         if (cElapsed < cDur) {
@@ -231,31 +248,32 @@ const IntroAnimation = ({ onComplete }) => {
           const riseP = Math.min(p / 0.65, 1);
           const riseY = -easeOutQuad(riseP) * 48;
           const opacity = p < 0.7 ? 1 : (1 - (p - 0.7) / 0.3);
-          const cx = BLOCK_X[activeCoin] - COIN_SIZE / 2;
+          const cx = BLOCK_X[ac] - COIN_SIZE / 2;
           coinRef.current.style.transform =
             `translate3d(${cx}px, ${BLOCK_Y + 4 + riseY}px, 0)`;
           coinRef.current.style.opacity = opacity;
           const cf = Math.floor(cElapsed / 55) % 4;
-          if (cf !== coinFrame) setCoinFrame(cf);
+          setCoinFrameSync(cf);
         } else {
-          setActiveCoin(-1);
+          hideCoin();
         }
       }
 
       // ── +100 score animation (800ms) ──
-      if (activeScore >= 0 && scoreRef.current) {
+      const as = activeScoreRef.current;
+      if (as >= 0 && scoreRef.current) {
         const sElapsed = now - st.impactTime;
         const sDur = 800;
         if (sElapsed < sDur) {
           const p = sElapsed / sDur;
           const rise = -easeOutQuad(p) * 36;
           const opacity = p < 0.75 ? 1 : (1 - (p - 0.75) / 0.25);
-          const sx = BLOCK_X[activeScore] - 18;
+          const sx = BLOCK_X[as] - 18;
           scoreRef.current.style.transform =
             `translate3d(${sx}px, ${BLOCK_Y - 4 + rise}px, 0)`;
           scoreRef.current.style.opacity = opacity;
         } else {
-          setActiveScore(-1);
+          hideScore();
         }
       }
 
@@ -264,7 +282,7 @@ const IntroAnimation = ({ onComplete }) => {
 
     st.raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(st.raf);
-  }, [activeCoin, activeScore, coinFrame, marioSprite]);
+  }, []);
 
   const coinSprites = [SPR.coin1, SPR.coin2, SPR.coin3, SPR.coin4];
 
