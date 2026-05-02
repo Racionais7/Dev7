@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { platformImage } from '../data/mockData';
 import OrbitingLogos from './OrbitingLogos';
-import MarioHeroScene from './MarioHeroScene';
+import MarioPlayScene from './MarioPlayScene';
 
 // Data
 const gameProviders = [
@@ -242,8 +242,8 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                     }}
                   />
 
-                  {/* ═══════ MARIO CINEMATIC SCENE (agency-grade) ═══════ */}
-                  <MarioHeroScene glitchActive={glitchActive} mousePosition={mousePosition} />
+                  {/* ═══════ MARIO PLAY SCENE (NES-style cycle: walk→jump→hit block→coin) ═══════ */}
+                  <MarioPlayScene glitchActive={glitchActive} />
                   
                   {/* ═══════ HOLOGRAPHIC FLOOR RING WITH MARIO SHADOW ═══════ */}
                   <div 
