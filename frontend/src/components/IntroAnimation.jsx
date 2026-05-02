@@ -1,9 +1,59 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+
+// Mario sprites
+const SPR = {
+  idle:       '/assets/mario_game/mario-idle.png',
+  jump:       '/assets/mario_game/mario-jump.png',
+  hit:        '/assets/mario_game/mario-hit.png',
+  block:      '/assets/mario_game/qblock.png',
+  blockGlint: '/assets/mario_game/qblock-glint.png',
+  blockEmpty: '/assets/mario_game/qblock-empty.png',
+  coin1:      '/assets/mario_game/coin-1.png',
+  coin2:      '/assets/mario_game/coin-2.png',
+  coin3:      '/assets/mario_game/coin-3.png',
+  coin4:      '/assets/mario_game/coin-4.png',
+};
+
+// Mario jump cycle timing (ms)
+const JUMP_CYCLE = 1700;
+const T_CROUCH   = 120;
+const T_PEAK     = 480;   // impact point
+const T_LAND     = 900;
+const T_IDLE_END = 1100;
+const T_GLINT    = 1350;  // block regenerates with glint
+
+// Positions inside the 220x200 stage
+const STAGE_W = 220;
+const STAGE_H = 200;
+const GROUND_Y = 178;
+const MARIO_SIZE = 70;
+const BLOCK_SIZE = 58;
+const COIN_SIZE = 30;
+const BLOCK_Y = 18;
+const MARIO_BASE_Y = GROUND_Y - MARIO_SIZE;  // Mario top when on ground
+const MARIO_PEAK_Y = BLOCK_Y + BLOCK_SIZE;   // Mario top when head near block
+
+const easeOutQuad = (t) => 1 - (1 - t) * (1 - t);
+const easeInQuad  = (t) => t * t;
 
 const IntroAnimation = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const [logs, setLogs] = useState([]);
+
+  // Mario scene state
+  const [marioSprite, setMarioSprite] = useState(SPR.idle);
+  const [blockSprite, setBlockSprite] = useState(SPR.block);
+  const [coinFrame, setCoinFrame] = useState(0);
+  const [coinVisible, setCoinVisible] = useState(false);
+  const [scoreVisible, setScoreVisible] = useState(false);
+
+  // Refs for GPU-accelerated transforms
+  const marioRef = useRef(null);
+  const blockRef = useRef(null);
+  const coinRef = useRef(null);
+  const scoreRef = useRef(null);
+  const marioState = useRef({ raf: 0, startTime: 0, lastPhase: '', impactTime: 0 });
 
   // System loading steps - always defined and non-empty
   const steps = useMemo(() => [
@@ -21,6 +71,133 @@ const IntroAnimation = ({ onComplete }) => {
     }
     return 'Sincronizando...';
   };
+
+  // ═══════ MARIO JUMP CYCLE (requestAnimationFrame driven) ═══════
+  useEffect(() => {
+    const st = marioState.current;
+    st.startTime = performance.now();
+
+    const tick = (now) => {
+      const elapsed = (now - st.startTime) % JUMP_CYCLE;
+
+      // Determine phase, mario position & sprite
+      let phase = '';
+      let marioY = MARIO_BASE_Y;
+      let marioScaleY = 1;
+      let marioScaleX = 1;
+
+      if (elapsed < T_CROUCH) {
+        phase = 'crouch';
+        marioY = MARIO_BASE_Y + 3;
+        marioScaleY = 0.9;
+        marioScaleX = 1.08;
+      } else if (elapsed < T_PEAK) {
+        phase = 'jump_up';
+        const p = (elapsed - T_CROUCH) / (T_PEAK - T_CROUCH);
+        const ep = easeOutQuad(p);
+        marioY = MARIO_BASE_Y - ep * (MARIO_BASE_Y - MARIO_PEAK_Y);
+        marioScaleY = 1.05;
+      } else if (elapsed < T_LAND - 80) {
+        phase = 'fall';
+        const p = (elapsed - T_PEAK) / ((T_LAND - 80) - T_PEAK);
+        const ep = easeInQuad(p);
+        marioY = MARIO_PEAK_Y + ep * (MARIO_BASE_Y - MARIO_PEAK_Y);
+      } else if (elapsed < T_LAND) {
+        phase = 'land';
+        marioY = MARIO_BASE_Y + 4;
+        marioScaleY = 0.78;
+        marioScaleX = 1.15;
+      } else if (elapsed < T_IDLE_END) {
+        phase = 'recover';
+        marioY = MARIO_BASE_Y;
+      } else {
+        phase = 'idle';
+        marioY = MARIO_BASE_Y;
+      }
+
+      // Apply Mario transform (GPU)
+      if (marioRef.current) {
+        const xOffset = STAGE_W / 2 - MARIO_SIZE / 2;
+        marioRef.current.style.transform =
+          `translate3d(${xOffset}px, ${marioY}px, 0) scale(${marioScaleX}, ${marioScaleY})`;
+      }
+
+      // Sprite swap on phase transition
+      if (phase !== st.lastPhase) {
+        if (phase === 'crouch' || phase === 'idle' || phase === 'recover') {
+          setMarioSprite(SPR.idle);
+        } else if (phase === 'jump_up' || phase === 'fall') {
+          setMarioSprite(SPR.jump);
+        } else if (phase === 'land') {
+          setMarioSprite(SPR.hit);
+        }
+
+        // IMPACT: fall phase just started after jump_up → we hit the block
+        if (phase === 'fall' && st.lastPhase === 'jump_up') {
+          st.impactTime = now;
+          setBlockSprite(SPR.blockEmpty);
+          setCoinVisible(true);
+          setScoreVisible(true);
+          // Block bump anim (restart)
+          if (blockRef.current) {
+            blockRef.current.classList.remove('intro-block-bump');
+            void blockRef.current.offsetWidth;
+            blockRef.current.classList.add('intro-block-bump');
+          }
+        }
+
+        // End of cycle → regenerate block
+        if (phase === 'idle' && st.lastPhase === 'recover') {
+          setTimeout(() => setBlockSprite(SPR.blockGlint), 150);
+          setTimeout(() => setBlockSprite(SPR.block), 380);
+        }
+
+        st.lastPhase = phase;
+      }
+
+      // Coin animation (600ms from impact)
+      if (coinVisible && coinRef.current) {
+        const cElapsed = now - st.impactTime;
+        const cDur = 650;
+        if (cElapsed < cDur) {
+          const p = cElapsed / cDur;
+          const riseP = Math.min(p / 0.65, 1);
+          const riseY = -easeOutQuad(riseP) * 50;
+          const opacity = p < 0.7 ? 1 : (1 - (p - 0.7) / 0.3);
+          const cx = STAGE_W / 2 - COIN_SIZE / 2;
+          coinRef.current.style.transform = `translate3d(${cx}px, ${BLOCK_Y + 6 + riseY}px, 0)`;
+          coinRef.current.style.opacity = opacity;
+          const cf = Math.floor(cElapsed / 55) % 4;
+          if (cf !== coinFrame) setCoinFrame(cf);
+        } else {
+          setCoinVisible(false);
+        }
+      }
+
+      // +100 score animation (700ms from impact)
+      if (scoreVisible && scoreRef.current) {
+        const sElapsed = now - st.impactTime;
+        const sDur = 750;
+        if (sElapsed < sDur) {
+          const p = sElapsed / sDur;
+          const rise = -easeOutQuad(p) * 38;
+          const opacity = p < 0.75 ? 1 : (1 - (p - 0.75) / 0.25);
+          const sx = STAGE_W / 2 - 18;
+          scoreRef.current.style.transform = `translate3d(${sx}px, ${BLOCK_Y - 4 + rise}px, 0)`;
+          scoreRef.current.style.opacity = opacity;
+        } else {
+          setScoreVisible(false);
+        }
+      }
+
+      st.raf = requestAnimationFrame(tick);
+    };
+
+    st.raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(st.raf);
+  }, [coinVisible, scoreVisible, coinFrame]);
+
+  const coinSprites = [SPR.coin1, SPR.coin2, SPR.coin3, SPR.coin4];
 
   useEffect(() => {
     let stepIndex = 0;
@@ -235,94 +412,144 @@ const IntroAnimation = ({ onComplete }) => {
       {/* Main content */}
       <div className="relative z-10 w-full max-w-md px-6">
 
-        {/* ═══════ MARIO PIXEL ART SCENE ═══════ */}
-        <div className="relative mb-8 mx-auto" style={{ width: '200px', height: '180px' }} data-testid="mario-jump-scene">
-
-          {/* Question/Brick block (target for Mario to hit) */}
+        {/* ═══════ MARIO NES SCENE (walk-style cycle: jump + hit block + coin) ═══════ */}
+        <div
+          className="relative mb-8 mx-auto"
+          style={{ width: `${STAGE_W}px`, height: `${STAGE_H}px`, imageRendering: 'pixelated' }}
+          data-testid="mario-jump-scene"
+        >
+          {/* Holographic ground line */}
           <div
-            className="absolute left-1/2 -translate-x-1/2 top-0 animate-brick-hit"
+            className="absolute left-0 right-0"
             style={{
-              width: '56px',
-              height: '56px',
-              imageRendering: 'pixelated',
+              top: `${GROUND_Y + 2}px`,
+              height: '3px',
+              background: 'linear-gradient(90deg, transparent 0%, rgba(167,139,250,0.4) 20%, rgba(96,165,250,0.6) 50%, rgba(167,139,250,0.4) 80%, transparent 100%)',
+              boxShadow: '0 0 10px rgba(124,58,237,0.5)',
             }}
-            data-testid="mario-brick-block"
-          >
-            {/* Brick block - pure CSS pixel art */}
-            <div
-              className="relative w-full h-full"
-              style={{
-                background: 'linear-gradient(180deg, #f4a636 0%, #e18620 50%, #c46a10 100%)',
-                border: '3px solid #3a1a05',
-                boxShadow:
-                  'inset 3px 3px 0 rgba(255,220,150,0.55), inset -3px -3px 0 rgba(120,50,0,0.6), 0 0 18px rgba(251,191,36,0.35)',
-                imageRendering: 'pixelated',
-              }}
-            >
-              {/* Rivets (4 corners) */}
-              <div className="absolute top-[4px] left-[4px] w-[6px] h-[6px] bg-[#3a1a05]" />
-              <div className="absolute top-[4px] right-[4px] w-[6px] h-[6px] bg-[#3a1a05]" />
-              <div className="absolute bottom-[4px] left-[4px] w-[6px] h-[6px] bg-[#3a1a05]" />
-              <div className="absolute bottom-[4px] right-[4px] w-[6px] h-[6px] bg-[#3a1a05]" />
-              {/* Question mark */}
-              <div
-                className="absolute inset-0 flex items-center justify-center text-white font-black"
-                style={{
-                  fontFamily: '"Press Start 2P", "Courier New", monospace',
-                  fontSize: '22px',
-                  textShadow: '2px 2px 0 #3a1a05',
-                  letterSpacing: '-1px'
-                }}
-              >
-                ?
-              </div>
-            </div>
-
-            {/* Impact spark stars that appear on hit */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 animate-brick-spark pointer-events-none">
-              <div className="flex gap-1 items-center">
-                <span className="text-amber-300 text-[10px]">✦</span>
-                <span className="text-yellow-200 text-[14px]">★</span>
-                <span className="text-amber-300 text-[10px]">✦</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Mario character (pixel art image) jumping */}
+          />
+          {/* Pixel brick ground strip below */}
           <div
-            className="absolute left-1/2 -translate-x-1/2 bottom-0 animate-mario-jump"
-            style={{ width: '70px', height: '70px' }}
-            data-testid="mario-jumper"
-          >
-            <img
-              src="/assets/mario/mario-pixel-clean.png"
-              alt="Mario"
-              className="w-full h-full object-contain"
-              style={{
-                imageRendering: 'pixelated',
-                filter: 'drop-shadow(0 4px 0 rgba(0,0,0,0.5)) drop-shadow(0 0 10px rgba(239, 68, 68, 0.35))'
-              }}
-              draggable={false}
-            />
-          </div>
-
-          {/* Ground pixel line */}
-          <div
-            className="absolute left-0 right-0 bottom-[-6px] h-[4px]"
+            className="absolute left-0 right-0 bottom-[-4px]"
             style={{
-              background: 'repeating-linear-gradient(90deg, #2a1a0a 0 6px, #1a0f05 6px 12px)',
-              boxShadow: '0 2px 0 #0a0503'
+              height: '4px',
+              background: 'repeating-linear-gradient(90deg, #7c2d12 0 6px, #451a03 6px 12px)',
+              boxShadow: '0 2px 0 #1c0a02',
+              imageRendering: 'pixelated',
             }}
           />
 
-          {/* Mario shadow that moves with jump */}
-          <div
-            className="absolute left-1/2 -translate-x-1/2 bottom-[-4px] animate-mario-shadow"
+          {/* ? Block */}
+          <img
+            ref={blockRef}
+            src={blockSprite}
+            alt=""
+            data-testid="intro-qblock"
+            className="absolute intro-block-base"
             style={{
-              width: '50px',
+              left: 0,
+              top: 0,
+              width: `${BLOCK_SIZE}px`,
+              height: `${BLOCK_SIZE}px`,
+              transform: `translate3d(${STAGE_W / 2 - BLOCK_SIZE / 2}px, ${BLOCK_Y}px, 0)`,
+              imageRendering: 'pixelated',
+              filter: 'drop-shadow(0 0 8px rgba(251,191,36,0.55)) drop-shadow(0 3px 0 rgba(0,0,0,0.5))',
+              willChange: 'transform',
+            }}
+            draggable={false}
+          />
+
+          {/* Coin (appears on impact) */}
+          {coinVisible && (
+            <img
+              ref={coinRef}
+              src={coinSprites[coinFrame]}
+              alt=""
+              aria-hidden
+              data-testid="intro-coin"
+              className="absolute"
+              style={{
+                left: 0,
+                top: 0,
+                width: `${COIN_SIZE}px`,
+                height: `${COIN_SIZE}px`,
+                imageRendering: 'pixelated',
+                filter: 'drop-shadow(0 0 8px rgba(251,191,36,1)) drop-shadow(0 0 16px rgba(253,224,71,0.7))',
+                willChange: 'transform, opacity',
+              }}
+              draggable={false}
+            />
+          )}
+
+          {/* +100 floating score */}
+          {scoreVisible && (
+            <div
+              ref={scoreRef}
+              className="absolute pointer-events-none"
+              data-testid="intro-score-popup"
+              style={{
+                left: 0,
+                top: 0,
+                fontFamily: '"Press Start 2P", monospace',
+                fontSize: '11px',
+                color: '#fde047',
+                textShadow: '2px 2px 0 #000, 0 0 8px rgba(251,191,36,0.95)',
+                letterSpacing: '0.5px',
+                willChange: 'transform, opacity',
+              }}
+            >
+              +100
+            </div>
+          )}
+
+          {/* Impact sparks (tiny, CSS-only, appear when block is empty) */}
+          {coinVisible && (
+            <div
+              className="absolute intro-spark-burst pointer-events-none"
+              style={{
+                left: `${STAGE_W / 2 - 20}px`,
+                top: `${BLOCK_Y - 4}px`,
+                width: '40px',
+                height: '16px',
+              }}
+              aria-hidden
+            >
+              <span className="absolute left-[2px] top-[2px] text-amber-300 text-[10px]">✦</span>
+              <span className="absolute left-1/2 -translate-x-1/2 -top-1 text-yellow-200 text-[13px]">★</span>
+              <span className="absolute right-[2px] top-[2px] text-amber-300 text-[10px]">✦</span>
+            </div>
+          )}
+
+          {/* Mario sprite */}
+          <img
+            ref={marioRef}
+            src={marioSprite}
+            alt="Mario"
+            data-testid="mario-jumper"
+            className="absolute"
+            style={{
+              left: 0,
+              top: 0,
+              width: `${MARIO_SIZE}px`,
+              height: `${MARIO_SIZE}px`,
+              imageRendering: 'pixelated',
+              transformOrigin: 'center bottom',
+              filter: 'drop-shadow(0 3px 0 rgba(0,0,0,0.4)) drop-shadow(0 0 10px rgba(124,58,237,0.35))',
+              willChange: 'transform',
+            }}
+            draggable={false}
+          />
+
+          {/* Mario shadow — grows with distance from ground */}
+          <div
+            className="absolute pointer-events-none intro-mario-shadow"
+            style={{
+              left: `${STAGE_W / 2 - 22}px`,
+              top: `${GROUND_Y - 2}px`,
+              width: '44px',
               height: '6px',
               background: 'radial-gradient(ellipse, rgba(0,0,0,0.55) 0%, transparent 70%)',
-              filter: 'blur(2px)'
+              filter: 'blur(2px)',
             }}
           />
         </div>
@@ -440,46 +667,39 @@ const IntroAnimation = ({ onComplete }) => {
         }
         .animate-blink { animation: blink 1s step-end infinite; }
 
-        /* ═══ MARIO JUMPING ANIMATION ═══ */
-        /* Mario jumps from ground up to the brick and back.
-           Total cycle: 1.2s. The "hit" happens at ~42% when Mario peaks. */
-        @keyframes mario-jump {
-          0%   { transform: translate(-50%, 0) scale(1, 1); }
-          15%  { transform: translate(-50%, -10px) scale(1.08, 0.92); }  /* crouch-ish */
-          42%  { transform: translate(-50%, -92px) scale(0.95, 1.08); }  /* peak = impact */
-          50%  { transform: translate(-50%, -88px) scale(1, 1); }
-          75%  { transform: translate(-50%, -20px) scale(1, 1); }
-          92%  { transform: translate(-50%, 0) scale(1.1, 0.9); }         /* landing squash */
-          100% { transform: translate(-50%, 0) scale(1, 1); }
+        /* ═══ MARIO INTRO SCENE animations ═══ */
+        /* Block bumps up when Mario's head hits it */
+        .intro-block-bump {
+          animation: intro-block-bump 320ms cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .animate-mario-jump { animation: mario-jump 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite; }
+        @keyframes intro-block-bump {
+          0%   { transform: translate3d(${STAGE_W / 2 - BLOCK_SIZE / 2}px, ${BLOCK_Y}px, 0); }
+          40%  { transform: translate3d(${STAGE_W / 2 - BLOCK_SIZE / 2}px, ${BLOCK_Y - 12}px, 0); }
+          70%  { transform: translate3d(${STAGE_W / 2 - BLOCK_SIZE / 2}px, ${BLOCK_Y - 5}px, 0); }
+          100% { transform: translate3d(${STAGE_W / 2 - BLOCK_SIZE / 2}px, ${BLOCK_Y}px, 0); }
+        }
 
-        /* Brick reacts (small bounce up) exactly when Mario reaches peak (~42%) */
-        @keyframes brick-hit {
-          0%, 38% { transform: translateX(-50%) translateY(0); }
-          42%     { transform: translateX(-50%) translateY(-10px); }
-          46%     { transform: translateX(-50%) translateY(-6px); }
-          52%     { transform: translateX(-50%) translateY(0); }
-          100%    { transform: translateX(-50%) translateY(0); }
+        /* Spark burst around block at impact */
+        .intro-spark-burst {
+          animation: intro-spark-burst 500ms ease-out forwards;
         }
-        .animate-brick-hit { animation: brick-hit 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite; }
+        @keyframes intro-spark-burst {
+          0%   { opacity: 0; transform: scale(0.6); }
+          40%  { opacity: 1; transform: scale(1.3); }
+          100% { opacity: 0; transform: scale(1.5); }
+        }
 
-        /* Sparks pop around the brick at hit moment */
-        @keyframes brick-spark {
-          0%, 38%  { opacity: 0; transform: translateX(-50%) scale(0.5); }
-          42%      { opacity: 1; transform: translateX(-50%) scale(1.3); }
-          55%      { opacity: 0.6; transform: translateX(-50%) scale(1); }
-          65%, 100% { opacity: 0; transform: translateX(-50%) scale(0.6); }
+        /* Mario shadow pulses with jump cycle (pure CSS mimics the JS jump phases) */
+        .intro-mario-shadow {
+          animation: intro-shadow-pulse ${JUMP_CYCLE}ms cubic-bezier(0.22, 1, 0.36, 1) infinite;
         }
-        .animate-brick-spark { animation: brick-spark 1.2s ease-out infinite; }
-
-        /* Mario's shadow - shrinks when he jumps, grows when lands */
-        @keyframes mario-shadow {
-          0%, 100% { transform: translateX(-50%) scale(1, 1); opacity: 0.6; }
-          42%      { transform: translateX(-50%) scale(0.45, 0.7); opacity: 0.25; }
-          92%      { transform: translateX(-50%) scale(1.15, 1); opacity: 0.7; }
+        @keyframes intro-shadow-pulse {
+          0%   { opacity: 0.6; transform: scale(1, 1); }
+          ${((T_PEAK / JUMP_CYCLE) * 100).toFixed(1)}% { opacity: 0.2; transform: scale(0.5, 0.7); }
+          ${((T_LAND / JUMP_CYCLE) * 100).toFixed(1)}% { opacity: 0.75; transform: scale(1.25, 1); }
+          ${((T_IDLE_END / JUMP_CYCLE) * 100).toFixed(1)}% { opacity: 0.6; transform: scale(1, 1); }
+          100% { opacity: 0.6; transform: scale(1, 1); }
         }
-        .animate-mario-shadow { animation: mario-shadow 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite; }
 
         /* Background sparkles floating */
         @keyframes mario-sparkle {
