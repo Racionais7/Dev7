@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import useIsMobile from '../hooks/useIsMobile';
 
 // Mario sprites
 const SPR = {
@@ -60,6 +61,7 @@ const easeOutQuad = (t) => 1 - (1 - t) * (1 - t);
 const easeInQuad  = (t) => t * t;
 
 const IntroAnimation = ({ onComplete }) => {
+  const isMobile = useIsMobile();
   const [progress, setProgress] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const [logs, setLogs] = useState([]);
@@ -284,8 +286,6 @@ const IntroAnimation = ({ onComplete }) => {
     return () => cancelAnimationFrame(st.raf);
   }, []);
 
-  const coinSprites = [SPR.coin1, SPR.coin2, SPR.coin3, SPR.coin4];
-
   useEffect(() => {
     let stepIndex = 0;
     let progressValue = 0;
@@ -364,12 +364,18 @@ const IntroAnimation = ({ onComplete }) => {
       />
 
       {/* Drifting clouds */}
-      {[
-        { top: '10%', dur: 90,  scale: 1.2, delay: 0,   op: 0.22 },
-        { top: '24%', dur: 130, scale: 0.9, delay: -30, op: 0.14 },
-        { top: '70%', dur: 110, scale: 1.1, delay: -60, op: 0.18 },
-        { top: '85%', dur: 150, scale: 0.8, delay: -20, op: 0.12 },
-      ].map((c, i) => (
+      {(isMobile
+        ? [
+            { top: '15%', dur: 110, scale: 1.1, delay: 0,   op: 0.18 },
+            { top: '75%', dur: 140, scale: 1.0, delay: -40, op: 0.12 },
+          ]
+        : [
+            { top: '10%', dur: 90,  scale: 1.2, delay: 0,   op: 0.22 },
+            { top: '24%', dur: 130, scale: 0.9, delay: -30, op: 0.14 },
+            { top: '70%', dur: 110, scale: 1.1, delay: -60, op: 0.18 },
+            { top: '85%', dur: 150, scale: 0.8, delay: -20, op: 0.12 },
+          ]
+      ).map((c, i) => (
         <img
           key={`intro-cloud-${i}`}
           src="/assets/mario_game/bg-cloud.png"
@@ -382,7 +388,9 @@ const IntroAnimation = ({ onComplete }) => {
             width: `${118 * c.scale}px`,
             imageRendering: 'pixelated',
             opacity: c.op,
-            filter: 'drop-shadow(0 0 10px rgba(167,139,250,0.5)) drop-shadow(0 0 20px rgba(96,165,250,0.3))',
+            filter: isMobile
+              ? 'none'
+              : 'drop-shadow(0 0 10px rgba(167,139,250,0.5)) drop-shadow(0 0 20px rgba(96,165,250,0.3))',
             animation: `intro-cloud-drift ${c.dur}s linear infinite`,
             animationDelay: `${c.delay}s`,
           }}
@@ -390,14 +398,21 @@ const IntroAnimation = ({ onComplete }) => {
       ))}
 
       {/* Floating coins (ambient) */}
-      {[
-        { left: '8%',  top: '18%', dur: 4.5, delay: 0 },
-        { left: '92%', top: '14%', dur: 4.0, delay: 1.2 },
-        { left: '5%',  top: '72%', dur: 5.2, delay: 0.6 },
-        { left: '94%', top: '68%', dur: 4.8, delay: 1.8 },
-        { left: '15%', top: '88%', dur: 4.2, delay: 0.4 },
-        { left: '86%', top: '92%', dur: 5.0, delay: 1.0 },
-      ].map((c, i) => (
+      {(isMobile
+        ? [
+            { left: '8%',  top: '20%', dur: 4.5, delay: 0 },
+            { left: '92%', top: '70%', dur: 5.0, delay: 1.0 },
+            { left: '50%', top: '90%', dur: 4.2, delay: 0.5 },
+          ]
+        : [
+            { left: '8%',  top: '18%', dur: 4.5, delay: 0 },
+            { left: '92%', top: '14%', dur: 4.0, delay: 1.2 },
+            { left: '5%',  top: '72%', dur: 5.2, delay: 0.6 },
+            { left: '94%', top: '68%', dur: 4.8, delay: 1.8 },
+            { left: '15%', top: '88%', dur: 4.2, delay: 0.4 },
+            { left: '86%', top: '92%', dur: 5.0, delay: 1.0 },
+          ]
+      ).map((c, i) => (
         <img
           key={`intro-coin-${i}`}
           src="/assets/mario_game/bg-coin.png"
@@ -411,16 +426,20 @@ const IntroAnimation = ({ onComplete }) => {
             height: '22px',
             imageRendering: 'pixelated',
             opacity: 0.55,
-            filter: 'drop-shadow(0 0 6px rgba(251,191,36,0.9)) drop-shadow(0 0 14px rgba(253,224,71,0.55))',
-            animation: `intro-coin-bob ${c.dur}s ease-in-out infinite, intro-coin-flip ${c.dur * 0.55}s linear infinite`,
-            animationDelay: `${c.delay}s, ${c.delay}s`,
+            filter: isMobile
+              ? 'drop-shadow(0 0 4px rgba(251,191,36,0.7))'
+              : 'drop-shadow(0 0 6px rgba(251,191,36,0.9)) drop-shadow(0 0 14px rgba(253,224,71,0.55))',
+            animation: isMobile
+              ? `intro-coin-bob ${c.dur}s ease-in-out infinite`
+              : `intro-coin-bob ${c.dur}s ease-in-out infinite, intro-coin-flip ${c.dur * 0.55}s linear infinite`,
+            animationDelay: isMobile ? `${c.delay}s` : `${c.delay}s, ${c.delay}s`,
           }}
         />
       ))}
 
       {/* Distant pixel hills at bottom */}
       <div className="absolute inset-x-0 bottom-[6%] pointer-events-none flex items-end justify-around" style={{ opacity: 0.16 }}>
-        {[1.5, 1.2, 1.8, 1.3, 1.6, 1.1].map((scale, i) => (
+        {(isMobile ? [1.5, 1.3, 1.6] : [1.5, 1.2, 1.8, 1.3, 1.6, 1.1]).map((scale, i) => (
           <img
             key={`intro-hill-${i}`}
             src="/assets/mario_game/bg-hill.png"
@@ -429,7 +448,7 @@ const IntroAnimation = ({ onComplete }) => {
             style={{
               width: `${100 * scale}px`,
               imageRendering: 'pixelated',
-              filter: 'drop-shadow(0 0 12px rgba(124, 58, 237, 0.7))',
+              filter: isMobile ? 'none' : 'drop-shadow(0 0 12px rgba(124, 58, 237, 0.7))',
               transform: `translateY(${6 * (i % 2)}px)`,
             }}
           />
@@ -557,7 +576,7 @@ const IntroAnimation = ({ onComplete }) => {
           {activeCoin >= 0 && (
             <img
               ref={coinRef}
-              src={coinSprites[coinFrame]}
+              src="/assets/mario_game/coin-1.png"
               alt=""
               aria-hidden
               data-testid="intro-coin"

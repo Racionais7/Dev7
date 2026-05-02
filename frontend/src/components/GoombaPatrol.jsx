@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import useIsMobile from '../hooks/useIsMobile';
 
 /**
  * GoombaPatrol - 2-3 Goombas patrolling along the bottom ground layer.
@@ -6,6 +7,8 @@ import React, { useState, useEffect, useRef } from 'react';
  *
  * Uses requestAnimationFrame for smooth 60fps movement. Each goomba carries
  * its own ref-based state to avoid per-frame React re-renders.
+ *
+ * Disabled on mobile (<640px) to preserve battery / prevent jank on iOS Safari.
  */
 const GOOMBA_SIZE = 32;
 const WALK_FRAME_MS = 220; // sprite swap rate
@@ -22,6 +25,7 @@ const makeGoomba = (initX, dir, speed, bottom) => ({
 });
 
 const GoombaPatrol = () => {
+  const isMobile = useIsMobile();
   const [vw, setVw] = useState(typeof window !== 'undefined' ? window.innerWidth : 1920);
   const [, force] = useState(0);
   const goombasRef = useRef([
@@ -40,6 +44,7 @@ const GoombaPatrol = () => {
   }, []);
 
   useEffect(() => {
+    if (isMobile) return undefined; // skip RAF loop entirely on mobile
     const tick = (ts) => {
       const dt = lastTsRef.current ? Math.min((ts - lastTsRef.current) / 1000, 0.05) : 0;
       lastTsRef.current = ts;
@@ -83,7 +88,7 @@ const GoombaPatrol = () => {
     };
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [vw]);
+  }, [vw, isMobile]);
 
   const squish = (i) => {
     const g = goombasRef.current[i];
@@ -99,6 +104,8 @@ const GoombaPatrol = () => {
     if (window.__marioHUD) window.__marioHUD.addCoins(1);
     force((n) => n + 1); // noop re-render to refresh nothing critical
   };
+
+  if (isMobile) return null;
 
   return (
     <div

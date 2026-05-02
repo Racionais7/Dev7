@@ -1,4 +1,5 @@
 import React from 'react';
+import useIsMobile from '../hooks/useIsMobile';
 
 /**
  * Premium Mario-themed animated background with 10 parallax layers.
@@ -17,6 +18,10 @@ import React from 'react';
  *
  * Pure CSS animations for zero JS overhead. Low opacities + neon drop-shadows
  * blend with the dark site theme.
+ *
+ * On mobile (<640px) we aggressively reduce sprite counts and disable the most
+ * expensive GPU effects (filter hue-rotate, multi-layer drop-shadows) so the
+ * page stays silky-smooth on iOS Safari.
  */
 
 // Spread N items with pseudo-random positions (deterministic, based on seed)
@@ -33,9 +38,12 @@ const spread = (n, yMin, yMax, seed) => {
   return arr;
 };
 
-const twinkleStars = spread(42, 3, 55, 7);
+const twinkleStarsDesktop = spread(42, 3, 55, 7);
+const twinkleStarsMobile = spread(12, 3, 55, 7);
 
 const MarioBackground = () => {
+  const isMobile = useIsMobile();
+  const twinkleStars = isMobile ? twinkleStarsMobile : twinkleStarsDesktop;
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-[0]" aria-hidden data-testid="mario-background">
 
@@ -65,7 +73,7 @@ const MarioBackground = () => {
               height: `${6 + ((i * 3) % 8)}px`,
               imageRendering: 'pixelated',
               opacity: 0,
-              filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.95))',
+              filter: isMobile ? 'none' : 'drop-shadow(0 0 4px rgba(255,255,255,0.95))',
               animation: `mbg-twinkle ${s.dur}s ease-in-out infinite`,
               animationDelay: `${s.delay}s`,
             }}
@@ -137,7 +145,7 @@ const MarioBackground = () => {
 
       {/* ══ LAYER 5: Back hills (slow parallax) ══ */}
       <div className="absolute inset-x-0 bottom-[26vh] pointer-events-none flex items-end justify-between opacity-15">
-        {[1.8, 2.4, 1.6, 2.2, 1.9, 2.5, 1.7].map((scale, i) => (
+        {(isMobile ? [1.8, 2.2, 1.7] : [1.8, 2.4, 1.6, 2.2, 1.9, 2.5, 1.7]).map((scale, i) => (
           <img
             key={`back-hill-${i}`}
             src="/assets/mario_game/bg-hill.png"
@@ -145,7 +153,9 @@ const MarioBackground = () => {
             style={{
               width: `${120 * scale}px`,
               imageRendering: 'pixelated',
-              filter: 'drop-shadow(0 0 18px rgba(124, 58, 237, 0.75)) drop-shadow(0 0 36px rgba(88, 28, 160, 0.45))',
+              filter: isMobile
+                ? 'drop-shadow(0 0 10px rgba(124, 58, 237, 0.55))'
+                : 'drop-shadow(0 0 18px rgba(124, 58, 237, 0.75)) drop-shadow(0 0 36px rgba(88, 28, 160, 0.45))',
               transform: `translateY(${10 * ((i + 3) % 3)}px)`,
             }}
           />
@@ -154,14 +164,21 @@ const MarioBackground = () => {
 
       {/* ══ LAYER 6: Clouds drifting at varying speeds ══ */}
       <div className="absolute inset-x-0 top-0 h-[65vh] overflow-hidden">
-        {[
-          { top: '6%',  dur: 140, delay: 0,    scale: 1.2, op: 0.22 },
-          { top: '15%', dur: 95,  delay: -40,  scale: 0.75, op: 0.14 },
-          { top: '24%', dur: 165, delay: -20,  scale: 1.5, op: 0.18 },
-          { top: '35%', dur: 120, delay: -90,  scale: 0.95, op: 0.12 },
-          { top: '46%', dur: 145, delay: -110, scale: 1.25, op: 0.1 },
-          { top: '58%', dur: 175, delay: -60,  scale: 1.05, op: 0.08 },
-        ].map((c, i) => (
+        {(isMobile
+          ? [
+              { top: '10%', dur: 140, delay: 0,   scale: 1.0, op: 0.18 },
+              { top: '30%', dur: 165, delay: -40, scale: 1.3, op: 0.12 },
+              { top: '52%', dur: 175, delay: -80, scale: 1.0, op: 0.08 },
+            ]
+          : [
+              { top: '6%',  dur: 140, delay: 0,    scale: 1.2, op: 0.22 },
+              { top: '15%', dur: 95,  delay: -40,  scale: 0.75, op: 0.14 },
+              { top: '24%', dur: 165, delay: -20,  scale: 1.5, op: 0.18 },
+              { top: '35%', dur: 120, delay: -90,  scale: 0.95, op: 0.12 },
+              { top: '46%', dur: 145, delay: -110, scale: 1.25, op: 0.1 },
+              { top: '58%', dur: 175, delay: -60,  scale: 1.05, op: 0.08 },
+            ]
+        ).map((c, i) => (
           <img
             key={`cloud-${i}`}
             src="/assets/mario_game/bg-cloud.png"
@@ -173,7 +190,9 @@ const MarioBackground = () => {
               width: `${128 * c.scale}px`,
               imageRendering: 'pixelated',
               opacity: c.op,
-              filter: 'drop-shadow(0 0 10px rgba(167, 139, 250, 0.55)) drop-shadow(0 0 22px rgba(96, 165, 250, 0.3))',
+              filter: isMobile
+                ? 'none'
+                : 'drop-shadow(0 0 10px rgba(167, 139, 250, 0.55)) drop-shadow(0 0 22px rgba(96, 165, 250, 0.3))',
               animation: `mbg-cloud-drift ${c.dur}s linear infinite`,
               animationDelay: `${c.delay}s`,
             }}
@@ -183,7 +202,7 @@ const MarioBackground = () => {
 
       {/* ══ LAYER 7: Mid hills (closer, brighter) ══ */}
       <div className="absolute inset-x-0 bottom-[18vh] pointer-events-none flex items-end justify-around opacity-25">
-        {[1.3, 1.7, 1.2, 1.9, 1.5, 1.4, 1.8].map((scale, i) => (
+        {(isMobile ? [1.4, 1.6, 1.3] : [1.3, 1.7, 1.2, 1.9, 1.5, 1.4, 1.8]).map((scale, i) => (
           <img
             key={`mid-hill-${i}`}
             src="/assets/mario_game/bg-hill.png"
@@ -191,7 +210,7 @@ const MarioBackground = () => {
             style={{
               width: `${100 * scale}px`,
               imageRendering: 'pixelated',
-              filter: 'drop-shadow(0 0 12px rgba(139, 92, 246, 0.7))',
+              filter: isMobile ? 'none' : 'drop-shadow(0 0 12px rgba(139, 92, 246, 0.7))',
               transform: `translateY(${5 * (i % 2)}px)`,
             }}
           />
@@ -254,19 +273,28 @@ const MarioBackground = () => {
 
       {/* ══ LAYER 9: Floating coins (ambient + varied sizes) ══ */}
       <div className="absolute inset-0 overflow-hidden">
-        {[
-          { left: '6%',  top: '20%', dur: 4, delay: 0, size: 26 },
-          { left: '92%', top: '15%', dur: 5, delay: 1, size: 22 },
-          { left: '14%', top: '70%', dur: 4.5, delay: 2, size: 28 },
-          { left: '88%', top: '65%', dur: 3.8, delay: 0.5, size: 24 },
-          { left: '3%',  top: '45%', dur: 5.5, delay: 1.5, size: 20 },
-          { left: '95%', top: '40%', dur: 4.2, delay: 2.5, size: 24 },
-          { left: '20%', top: '82%', dur: 4.8, delay: 0.8, size: 22 },
-          { left: '78%', top: '88%', dur: 5.2, delay: 1.8, size: 26 },
-          { left: '30%', top: '12%', dur: 5, delay: 0.3, size: 18 },
-          { left: '62%', top: '8%',  dur: 4.3, delay: 2.2, size: 20 },
-          { left: '50%', top: '92%', dur: 4.6, delay: 1.4, size: 24 },
-        ].map((c, i) => (
+        {(isMobile
+          ? [
+              { left: '6%',  top: '20%', dur: 4,   delay: 0,   size: 22 },
+              { left: '92%', top: '15%', dur: 5,   delay: 1,   size: 20 },
+              { left: '14%', top: '72%', dur: 4.5, delay: 2,   size: 22 },
+              { left: '88%', top: '68%', dur: 3.8, delay: 0.5, size: 20 },
+              { left: '50%', top: '92%', dur: 4.6, delay: 1.4, size: 22 },
+            ]
+          : [
+              { left: '6%',  top: '20%', dur: 4, delay: 0, size: 26 },
+              { left: '92%', top: '15%', dur: 5, delay: 1, size: 22 },
+              { left: '14%', top: '70%', dur: 4.5, delay: 2, size: 28 },
+              { left: '88%', top: '65%', dur: 3.8, delay: 0.5, size: 24 },
+              { left: '3%',  top: '45%', dur: 5.5, delay: 1.5, size: 20 },
+              { left: '95%', top: '40%', dur: 4.2, delay: 2.5, size: 24 },
+              { left: '20%', top: '82%', dur: 4.8, delay: 0.8, size: 22 },
+              { left: '78%', top: '88%', dur: 5.2, delay: 1.8, size: 26 },
+              { left: '30%', top: '12%', dur: 5, delay: 0.3, size: 18 },
+              { left: '62%', top: '8%',  dur: 4.3, delay: 2.2, size: 20 },
+              { left: '50%', top: '92%', dur: 4.6, delay: 1.4, size: 24 },
+            ]
+        ).map((c, i) => (
           <img
             key={`bgcoin-${i}`}
             src="/assets/mario_game/bg-coin.png"
@@ -279,9 +307,13 @@ const MarioBackground = () => {
               height: `${c.size}px`,
               imageRendering: 'pixelated',
               opacity: 0.5,
-              filter: 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.9)) drop-shadow(0 0 16px rgba(253, 224, 71, 0.55))',
-              animation: `mbg-coin-float ${c.dur}s ease-in-out infinite, mbg-coin-spin ${c.dur * 0.5}s linear infinite`,
-              animationDelay: `${c.delay}s, ${c.delay}s`,
+              filter: isMobile
+                ? 'drop-shadow(0 0 6px rgba(251, 191, 36, 0.7))'
+                : 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.9)) drop-shadow(0 0 16px rgba(253, 224, 71, 0.55))',
+              animation: isMobile
+                ? `mbg-coin-float ${c.dur}s ease-in-out infinite`
+                : `mbg-coin-float ${c.dur}s ease-in-out infinite, mbg-coin-spin ${c.dur * 0.5}s linear infinite`,
+              animationDelay: isMobile ? `${c.delay}s` : `${c.delay}s, ${c.delay}s`,
             }}
           />
         ))}
@@ -345,17 +377,26 @@ const MarioBackground = () => {
       />
 
       {/* ══ LAYER 10b: Bushes organically positioned ══ */}
-      {[
-        { left: '5%',  bottom: '10.5vh', scale: 1.2 },
-        { left: '14%', bottom: '10.5vh', scale: 0.9 },
-        { left: '26%', bottom: '10.5vh', scale: 1.6 },
-        { left: '38%', bottom: '10.5vh', scale: 1.1 },
-        { left: '48%', bottom: '10.5vh', scale: 1.8 },
-        { left: '58%', bottom: '10.5vh', scale: 1.0 },
-        { left: '68%', bottom: '10.5vh', scale: 1.5 },
-        { left: '80%', bottom: '10.5vh', scale: 1.3 },
-        { left: '90%', bottom: '10.5vh', scale: 1.1 },
-      ].map((b, i) => (
+      {(isMobile
+        ? [
+            { left: '8%',  bottom: '10.5vh', scale: 1.1 },
+            { left: '30%', bottom: '10.5vh', scale: 1.4 },
+            { left: '52%', bottom: '10.5vh', scale: 1.6 },
+            { left: '72%', bottom: '10.5vh', scale: 1.2 },
+            { left: '90%', bottom: '10.5vh', scale: 1.0 },
+          ]
+        : [
+            { left: '5%',  bottom: '10.5vh', scale: 1.2 },
+            { left: '14%', bottom: '10.5vh', scale: 0.9 },
+            { left: '26%', bottom: '10.5vh', scale: 1.6 },
+            { left: '38%', bottom: '10.5vh', scale: 1.1 },
+            { left: '48%', bottom: '10.5vh', scale: 1.8 },
+            { left: '58%', bottom: '10.5vh', scale: 1.0 },
+            { left: '68%', bottom: '10.5vh', scale: 1.5 },
+            { left: '80%', bottom: '10.5vh', scale: 1.3 },
+            { left: '90%', bottom: '10.5vh', scale: 1.1 },
+          ]
+      ).map((b, i) => (
         <img
           key={`bush-${i}`}
           src="/assets/mario_game/bg-bush.png"
@@ -367,7 +408,7 @@ const MarioBackground = () => {
             width: `${70 * b.scale}px`,
             imageRendering: 'pixelated',
             opacity: 0.4,
-            filter: 'drop-shadow(0 0 10px rgba(34, 197, 94, 0.6))',
+            filter: isMobile ? 'none' : 'drop-shadow(0 0 10px rgba(34, 197, 94, 0.6))',
           }}
         />
       ))}
