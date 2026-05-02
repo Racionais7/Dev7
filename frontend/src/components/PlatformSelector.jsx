@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { platformImage } from '../data/mockData';
 import OrbitingLogos from './OrbitingLogos';
+import MarioHeroScene from './MarioHeroScene';
 
 // Data
 const gameProviders = [
@@ -241,83 +242,8 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                     }}
                   />
 
-                  {/* ═══════ IMPACT SPARKS - appear when Mario headbutts the platform on top of orbit ═══════ */}
-                  <div
-                    className="absolute pointer-events-none animate-mario-orbit-impact"
-                    data-testid="mario-orbit-impact"
-                    style={{
-                      top: 'calc(50% - 145px)',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      zIndex: 11,
-                    }}
-                  >
-                    {/* Pixel-art "POW" burst */}
-                    <div className="relative flex flex-col items-center">
-                      {/* Stars flying out */}
-                      <div className="absolute -top-2 -left-6 text-amber-300 text-[14px] animate-star-fly-left">★</div>
-                      <div className="absolute -top-3 left-0 text-yellow-200 text-[18px] animate-star-fly-up">✦</div>
-                      <div className="absolute -top-2 left-6 text-amber-300 text-[14px] animate-star-fly-right">★</div>
-                      {/* Shockwave ring */}
-                      <div
-                        className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full border-2 border-amber-300/80 animate-shockwave"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Sub-sized sm/lg adjust for impact position */}
-                  <style>{`
-                    @media (min-width: 640px) {
-                      [data-testid="mario-orbit-impact"] {
-                        top: calc(50% - 175px) !important;
-                      }
-                    }
-                    @media (min-width: 1024px) {
-                      [data-testid="mario-orbit-impact"] {
-                        top: calc(50% - 210px) !important;
-                      }
-                    }
-                  `}</style>
-                  
-                  {/* ═══════ MARIO 3D HOLOGRAM - PREMIUM ANIMATIONS ═══════ */}
-                  <div 
-                    className={`absolute w-[100px] h-[130px] sm:w-[120px] sm:h-[160px] lg:w-[140px] lg:h-[190px] flex items-center justify-center pointer-events-none ${glitchActive ? 'animate-glitch-spark' : ''}`}
-                    style={{
-                      transform: `translateX(${mousePosition.x * 2}px) translateY(${mousePosition.y * 2}px)`,
-                      transition: glitchActive ? 'none' : 'transform 0.2s ease-out',
-                      zIndex: 10, // Mario stays in middle layer - between front and back logos
-                    }}
-                  >
-                    {/* Mario pixel art figure with breathing + floating + orbit-jump */}
-                    <div className="animate-mario-orbit-jump w-full h-full">
-                      <div className="animate-mario-float w-full h-full flex items-center justify-center">
-                        <img
-                          src="/assets/mario/mario-pixel-clean.png"
-                          alt="Mario"
-                          data-testid="mario-pixel-hologram"
-                          className={`w-full h-full object-contain animate-mario-breathe ${glitchActive ? '' : 'animate-mario-shimmer'}`}
-                          style={{
-                            imageRendering: 'pixelated',
-                            filter: glitchActive
-                              ? 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.9)) brightness(1.6) hue-rotate(30deg)'
-                              : 'drop-shadow(0 0 10px rgba(124, 58, 237, 0.85)) drop-shadow(0 0 22px rgba(59, 130, 246, 0.55)) drop-shadow(0 0 4px rgba(167, 139, 250, 0.9))'
-                          }}
-                          draggable={false}
-                        />
-                      </div>
-                    </div>
-                    
-                    {/* Scanline effect over Mario - passes every 2-3s */}
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                      <div className="absolute w-full h-[3px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent animate-scanline-premium" />
-                    </div>
-                    
-                    {/* Hologram shimmer/noise overlay */}
-                    <div className="absolute inset-0 pointer-events-none animate-holo-shimmer" style={{
-                      background: 'linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.03) 50%, transparent 100%)',
-                      mixBlendMode: 'overlay'
-                    }} />
-                  </div>
+                  {/* ═══════ MARIO CINEMATIC SCENE (agency-grade) ═══════ */}
+                  <MarioHeroScene glitchActive={glitchActive} mousePosition={mousePosition} />
                   
                   {/* ═══════ HOLOGRAPHIC FLOOR RING WITH MARIO SHADOW ═══════ */}
                   <div 
