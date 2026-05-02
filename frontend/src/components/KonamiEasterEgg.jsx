@@ -57,7 +57,6 @@ const KonamiEasterEgg = () => {
       window.removeEventListener('keydown', onKey);
       delete window.triggerMarioKonami;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const trigger = () => {

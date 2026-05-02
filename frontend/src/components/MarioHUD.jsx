@@ -7,6 +7,7 @@ import React, { useState, useEffect, useRef } from 'react';
  * - Exposes `window.__marioHUD` with addCoins/addScore APIs so any component
  *   (Konami egg, block clicks) can drive it.
  * - Score auto-idles a tiny amount to feel alive; time counts down then resets.
+ * - Fully responsive: compact on mobile, full details on >=sm screens.
  */
 const pad = (n, w) => String(n).padStart(w, '0');
 
@@ -62,80 +63,95 @@ const MarioHUD = () => {
     return () => clearInterval(id);
   }, []);
 
-  const stat = (label, value, opts = {}) => (
-    <div className="flex flex-col items-start leading-none">
-      <span
-        className="text-white text-[7px] sm:text-[8px]"
-        style={{ fontFamily: '"Press Start 2P", monospace', letterSpacing: '1px' }}
-      >
-        {label}
-      </span>
-      <span
-        className={`text-white text-[9px] sm:text-[11px] mt-1 transition-transform ${opts.pulse ? 'scale-110 text-yellow-300' : 'scale-100'}`}
-        style={{
-          fontFamily: '"Press Start 2P", monospace',
-          textShadow: '1px 1px 0 #000',
-          color: opts.color || '#fff',
-        }}
-        data-testid={opts.testid}
-      >
-        {value}
-      </span>
-    </div>
-  );
-
   return (
     <div
       className="w-full flex justify-center pointer-events-none select-none"
       data-testid="mario-hud"
     >
       <div
-        className="inline-flex items-center gap-4 sm:gap-7 px-3 sm:px-5 py-2 rounded"
+        className="inline-flex items-center gap-3 sm:gap-7 px-2.5 sm:px-5 py-1.5 sm:py-2 rounded"
         style={{
           background: 'linear-gradient(180deg, rgba(10,10,20,0.85) 0%, rgba(0,0,0,0.85) 100%)',
           border: '2px solid #000',
           boxShadow: '0 0 0 2px rgba(250,204,21,0.35), inset 0 1px 0 rgba(255,255,255,0.08)',
-          imageRendering: 'pixelated',
+          fontFamily: '"Press Start 2P", monospace',
         }}
       >
-        {stat('MARIO', pad(score, 6), { pulse: scorePulse, testid: 'hud-score' })}
+        {/* MARIO score */}
+        <div className="flex flex-col items-start leading-none">
+          <span className="text-white text-[6px] sm:text-[8px]" style={{ letterSpacing: '1px' }}>MARIO</span>
+          <span
+            className={`text-[7px] sm:text-[11px] mt-1 transition-transform ${scorePulse ? 'scale-110 text-yellow-300' : 'scale-100 text-white'}`}
+            style={{ textShadow: '1px 1px 0 #000' }}
+            data-testid="hud-score"
+          >
+            {pad(score, 6)}
+          </span>
+        </div>
 
-        {/* Animated coin icon */}
-        <div className="flex items-center gap-2">
+        {/* Animated coin icon + coin count */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <img
             src="/assets/mario_game/coin-1.png"
             alt=""
-            className={`w-4 h-4 sm:w-5 sm:h-5 ${coinPulse ? 'animate-pulse' : ''}`}
+            aria-hidden
+            draggable={false}
+            width={14}
+            height={14}
             style={{
+              width: 14,
+              height: 14,
+              minWidth: 14,
+              minHeight: 14,
               imageRendering: 'pixelated',
               filter: 'drop-shadow(0 0 4px rgba(250,204,21,0.6))',
-              animation: 'hud-coin-spin 0.9s steps(4) infinite',
+              flexShrink: 0,
+              objectFit: 'contain',
+              animation: 'mario-hud-coin-spin 1.2s ease-in-out infinite',
+              transformOrigin: 'center',
+              willChange: 'transform',
             }}
           />
           <span
-            className={`text-[9px] sm:text-[11px] transition-transform ${coinPulse ? 'scale-125 text-yellow-300' : 'scale-100 text-white'}`}
-            style={{
-              fontFamily: '"Press Start 2P", monospace',
-              textShadow: '1px 1px 0 #000',
-            }}
+            className={`text-[7px] sm:text-[11px] transition-transform ${coinPulse ? 'scale-125 text-yellow-300' : 'scale-100 text-white'}`}
+            style={{ textShadow: '1px 1px 0 #000' }}
             data-testid="hud-coins"
           >
             ×{pad(coins, 2)}
           </span>
         </div>
 
-        {stat('WORLD', '1-1')}
-        {stat('TIME', pad(time, 3), { color: time < 60 ? '#ef4444' : '#fff', testid: 'hud-time' })}
+        {/* WORLD */}
+        <div className="flex flex-col items-start leading-none">
+          <span className="text-white text-[6px] sm:text-[8px]" style={{ letterSpacing: '1px' }}>WORLD</span>
+          <span
+            className="text-[7px] sm:text-[11px] mt-1 text-white"
+            style={{ textShadow: '1px 1px 0 #000' }}
+          >
+            1-1
+          </span>
+        </div>
+
+        {/* TIME - hidden on very small screens to save space */}
+        <div className="hidden xs:flex flex-col items-start leading-none sm:flex">
+          <span className="text-white text-[6px] sm:text-[8px]" style={{ letterSpacing: '1px' }}>TIME</span>
+          <span
+            className="text-[7px] sm:text-[11px] mt-1"
+            style={{
+              textShadow: '1px 1px 0 #000',
+              color: time < 60 ? '#ef4444' : '#fff',
+            }}
+            data-testid="hud-time"
+          >
+            {pad(time, 3)}
+          </span>
+        </div>
       </div>
 
-      {/* sprite-step coin animation via multiple coin frames */}
       <style>{`
-        @keyframes hud-coin-spin {
-          0%   { content: url('/assets/mario_game/coin-1.png'); }
-          25%  { content: url('/assets/mario_game/coin-2.png'); }
-          50%  { content: url('/assets/mario_game/coin-3.png'); }
-          75%  { content: url('/assets/mario_game/coin-4.png'); }
-          100% { content: url('/assets/mario_game/coin-1.png'); }
+        @keyframes mario-hud-coin-spin {
+          0%, 100% { transform: scale(1) translateY(0); }
+          50%      { transform: scale(1.15) translateY(-1px); }
         }
       `}</style>
     </div>
