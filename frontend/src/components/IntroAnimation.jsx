@@ -88,6 +88,132 @@ const IntroAnimation = ({ onComplete }) => {
       {/* Minimal background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#050510] via-[#030308] to-[#020206]" />
 
+      {/* ═══════ MARIO-THEMED BACKDROP (subtle, behind loading UI) ═══════ */}
+      {/* Twilight tint */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 80% 60% at 50% 10%, rgba(88, 28, 160, 0.22) 0%, transparent 60%), ' +
+            'radial-gradient(ellipse 70% 45% at 50% 100%, rgba(14, 60, 140, 0.3) 0%, transparent 55%)',
+        }}
+      />
+
+      {/* Drifting clouds */}
+      {[
+        { top: '10%', dur: 90,  scale: 1.2, delay: 0,   op: 0.22 },
+        { top: '24%', dur: 130, scale: 0.9, delay: -30, op: 0.14 },
+        { top: '70%', dur: 110, scale: 1.1, delay: -60, op: 0.18 },
+        { top: '85%', dur: 150, scale: 0.8, delay: -20, op: 0.12 },
+      ].map((c, i) => (
+        <img
+          key={`intro-cloud-${i}`}
+          src="/assets/mario_game/bg-cloud.png"
+          alt=""
+          aria-hidden
+          className="absolute pointer-events-none"
+          style={{
+            top: c.top,
+            left: '-180px',
+            width: `${118 * c.scale}px`,
+            imageRendering: 'pixelated',
+            opacity: c.op,
+            filter: 'drop-shadow(0 0 10px rgba(167,139,250,0.5)) drop-shadow(0 0 20px rgba(96,165,250,0.3))',
+            animation: `intro-cloud-drift ${c.dur}s linear infinite`,
+            animationDelay: `${c.delay}s`,
+          }}
+        />
+      ))}
+
+      {/* Floating coins (ambient) */}
+      {[
+        { left: '8%',  top: '18%', dur: 4.5, delay: 0 },
+        { left: '92%', top: '14%', dur: 4.0, delay: 1.2 },
+        { left: '5%',  top: '72%', dur: 5.2, delay: 0.6 },
+        { left: '94%', top: '68%', dur: 4.8, delay: 1.8 },
+        { left: '15%', top: '88%', dur: 4.2, delay: 0.4 },
+        { left: '86%', top: '92%', dur: 5.0, delay: 1.0 },
+      ].map((c, i) => (
+        <img
+          key={`intro-coin-${i}`}
+          src="/assets/mario_game/bg-coin.png"
+          alt=""
+          aria-hidden
+          className="absolute pointer-events-none"
+          style={{
+            left: c.left,
+            top: c.top,
+            width: '22px',
+            height: '22px',
+            imageRendering: 'pixelated',
+            opacity: 0.55,
+            filter: 'drop-shadow(0 0 6px rgba(251,191,36,0.9)) drop-shadow(0 0 14px rgba(253,224,71,0.55))',
+            animation: `intro-coin-bob ${c.dur}s ease-in-out infinite, intro-coin-flip ${c.dur * 0.55}s linear infinite`,
+            animationDelay: `${c.delay}s, ${c.delay}s`,
+          }}
+        />
+      ))}
+
+      {/* Distant pixel hills at bottom */}
+      <div className="absolute inset-x-0 bottom-[6%] pointer-events-none flex items-end justify-around" style={{ opacity: 0.16 }}>
+        {[1.5, 1.2, 1.8, 1.3, 1.6, 1.1].map((scale, i) => (
+          <img
+            key={`intro-hill-${i}`}
+            src="/assets/mario_game/bg-hill.png"
+            alt=""
+            aria-hidden
+            style={{
+              width: `${100 * scale}px`,
+              imageRendering: 'pixelated',
+              filter: 'drop-shadow(0 0 12px rgba(124, 58, 237, 0.7))',
+              transform: `translateY(${6 * (i % 2)}px)`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Decorative pipes on sides */}
+      <img
+        src="/assets/mario_game/bg-pipe.png"
+        alt=""
+        aria-hidden
+        className="absolute hidden md:block pointer-events-none"
+        style={{
+          left: '3%', bottom: '3%',
+          width: '72px',
+          imageRendering: 'pixelated',
+          opacity: 0.35,
+          filter: 'drop-shadow(0 0 10px rgba(16,185,129,0.7))',
+        }}
+      />
+      <img
+        src="/assets/mario_game/bg-pipe.png"
+        alt=""
+        aria-hidden
+        className="absolute hidden md:block pointer-events-none"
+        style={{
+          right: '3%', bottom: '3%',
+          width: '85px',
+          imageRendering: 'pixelated',
+          opacity: 0.35,
+          filter: 'drop-shadow(0 0 12px rgba(16,185,129,0.75))',
+          transform: 'scaleX(-1)',
+        }}
+      />
+
+      {/* Brick ground at very bottom */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-[6vh] pointer-events-none"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(120, 50, 20, 0) 0%, rgba(120, 50, 20, 0.25) 40%, rgba(88, 35, 14, 0.55) 100%), ' +
+            'repeating-linear-gradient(0deg, rgba(120, 50, 20, 0.22) 0px, rgba(120, 50, 20, 0.22) 8px, transparent 8px, transparent 9px), ' +
+            'repeating-linear-gradient(90deg, rgba(60, 25, 10, 0.35) 0px, rgba(60, 25, 10, 0.35) 1px, transparent 1px, transparent 24px)',
+          imageRendering: 'pixelated',
+          boxShadow: 'inset 0 2px 0 rgba(200, 120, 60, 0.3)',
+        }}
+      />
+
       {/* Star sparkles - Mario reference */}
       {[...Array(14)].map((_, i) => (
         <div
@@ -361,6 +487,23 @@ const IntroAnimation = ({ onComplete }) => {
           50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
         }
         .animate-mario-sparkle { animation: mario-sparkle 3s ease-in-out infinite; }
+
+        /* Cloud drift (Mario-themed BG) */
+        @keyframes intro-cloud-drift {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(calc(100vw + 220px)); }
+        }
+
+        /* Coin ambient bob & flip */
+        @keyframes intro-coin-bob {
+          0%, 100% { transform: translateY(0); }
+          50%      { transform: translateY(-12px); }
+        }
+        @keyframes intro-coin-flip {
+          0%   { filter: drop-shadow(0 0 6px rgba(251,191,36,0.9)) drop-shadow(0 0 14px rgba(253,224,71,0.55)) brightness(1); }
+          50%  { filter: drop-shadow(0 0 12px rgba(253,224,71,1)) drop-shadow(0 0 22px rgba(251,191,36,0.9)) brightness(1.3) hue-rotate(10deg); }
+          100% { filter: drop-shadow(0 0 6px rgba(251,191,36,0.9)) drop-shadow(0 0 14px rgba(253,224,71,0.55)) brightness(1); }
+        }
       `}</style>
     </div>
   );

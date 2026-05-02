@@ -3,6 +3,7 @@ import { platformImage } from '../data/mockData';
 import OrbitingLogos from './OrbitingLogos';
 import MarioPlayScene from './MarioPlayScene';
 import MarioBackground from './MarioBackground';
+import MarioBlockEntrar from './MarioBlockEntrar';
 
 // Data
 const gameProviders = [
@@ -589,18 +590,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                           <span className="text-violet-400"> JOGO</span>
                         </h3>
                         
-                        <span 
-                          className="w-full py-3 px-6 rounded-lg text-base font-bold flex items-center justify-center gap-2 text-white mt-3"
-                          style={{
-                            background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(168, 85, 247, 0.3) 100%)',
-                            border: '1px solid rgba(139, 92, 246, 0.4)'
-                          }}
-                        >
-                          <span>ENTRAR</span>
-                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                          </svg>
-                        </span>
+                        <MarioBlockEntrar text="ENTRAR" testId="vg-entrar-block" />
                       </div>
                     </div>
                   </button>
@@ -636,18 +626,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                           <span className="text-cyan-400"> JOGO</span>
                         </h3>
                         
-                        <span 
-                          className="w-full py-3 px-6 rounded-lg text-base font-bold flex items-center justify-center gap-2 text-white mt-3"
-                          style={{
-                            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(6, 182, 212, 0.3) 100%)',
-                            border: '1px solid rgba(16, 185, 129, 0.4)'
-                          }}
-                        >
-                          <span>ENTRAR</span>
-                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                          </svg>
-                        </span>
+                        <MarioBlockEntrar text="ENTRAR" testId="hg-entrar-block" />
                       </div>
                     </div>
                   </button>
@@ -683,18 +662,7 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                           <span className="text-pink-500"> JOGO</span>
                         </h3>
                         
-                        <span 
-                          className="w-full py-3 px-6 rounded-lg text-base font-bold flex items-center justify-center gap-2 text-white mt-3"
-                          style={{
-                            background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%)',
-                            border: '1px solid rgba(168, 85, 247, 0.4)'
-                          }}
-                        >
-                          <span>ENTRAR</span>
-                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                          </svg>
-                        </span>
+                        <MarioBlockEntrar text="ENTRAR" testId="fg-entrar-block" />
                       </div>
                     </div>
                   </button>
