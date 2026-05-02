@@ -166,10 +166,40 @@ const PlatformSelector = ({ onPlatformSelect }) => {
             HEADER - Clean minimal
         ════════════════════════════════════════════════════════════════════════ */}
         <header className={`py-4 px-4 sm:px-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="max-w-7xl mx-auto flex items-center justify-end">
-            <div className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
-              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs sm:text-sm text-gray-400">Online</span>
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            {/* Mario-style logo/title on the left */}
+            <div className="flex items-center gap-2">
+              <img
+                src="/assets/mario/mario-pixel-clean.png"
+                alt=""
+                className="w-7 h-7"
+                style={{ imageRendering: 'pixelated', filter: 'drop-shadow(0 0 6px rgba(239,68,68,0.8))' }}
+              />
+              <span
+                className="text-white font-black text-[11px] sm:text-[12px] tracking-wider"
+                style={{
+                  fontFamily: '"Press Start 2P", monospace',
+                  textShadow: '2px 2px 0 #ef4444, 3px 3px 0 #7c2d12',
+                }}
+              >
+                MARIO<span className="text-yellow-300"> AI</span>
+              </span>
+            </div>
+            <div
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md"
+              style={{
+                background: 'linear-gradient(180deg, #16a34a 0%, #15803d 100%)',
+                border: '2px solid #000',
+                boxShadow: '2px 2px 0 #000, inset 0 1px 0 rgba(255,255,255,0.4)',
+              }}
+            >
+              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" style={{ boxShadow: '0 0 6px #ef4444' }} />
+              <span
+                className="text-white font-black text-[8px] tracking-wider"
+                style={{ fontFamily: '"Press Start 2P", monospace', textShadow: '1px 1px 0 #000', paddingTop: '1px' }}
+              >
+                ONLINE
+              </span>
             </div>
           </div>
         </header>
@@ -286,12 +316,27 @@ const PlatformSelector = ({ onPlatformSelect }) => {
             ════════════════════════════════════════════════════════════════════════ */}
             <div className={`space-y-4 transition-all duration-700 ${cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               
-              {/* ════════ LIVE SIGNALS BADGE ONLY ════════ */}
+              {/* ════════ LIVE SIGNALS BADGE - Mario style ════════ */}
               <div className="flex items-center justify-center mb-4">
-                {/* Live badge pulsing */}
-                <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 animate-live-pulse">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-emerald-400 font-bold text-sm tracking-wide">SINAIS AO VIVO</span>
+                <div
+                  className="flex items-center gap-2 px-4 py-2 rounded-md animate-live-pulse"
+                  style={{
+                    background: 'linear-gradient(180deg, #16a34a 0%, #15803d 100%)',
+                    border: '3px solid #000',
+                    boxShadow: '0 0 14px rgba(16, 185, 129, 0.55), 3px 3px 0 #000, inset 0 1px 0 rgba(255,255,255,0.4)',
+                  }}
+                >
+                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" style={{ boxShadow: '0 0 6px #ef4444' }} />
+                  <span
+                    className="text-white font-black text-[9px] tracking-widest"
+                    style={{
+                      fontFamily: '"Press Start 2P", monospace',
+                      textShadow: '2px 2px 0 #000',
+                      paddingTop: '1px',
+                    }}
+                  >
+                    SINAIS AO VIVO
+                  </span>
                 </div>
               </div>
               
@@ -445,8 +490,40 @@ const PlatformSelector = ({ onPlatformSelect }) => {
             ════════════════════════════════════════════════════════════════════════ */}
             <div className={`mt-8 sm:mt-12 transition-all duration-700 delay-200 ${ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               
-              {/* Título da seção */}
-              <h2 className="text-center text-xl sm:text-2xl font-bold text-white mb-6">Escolha sua Plataforma</h2>
+              {/* Título da seção com estilo Mario */}
+              <div className="flex items-center justify-center gap-3 mb-8">
+                <img
+                  src="/assets/mario_game/bg-coin.png"
+                  alt=""
+                  className="w-6 h-6 animate-coin-spin-title"
+                  style={{
+                    imageRendering: 'pixelated',
+                    filter: 'drop-shadow(0 0 6px rgba(251,191,36,0.9))',
+                  }}
+                />
+                <h2
+                  className="text-center text-sm sm:text-base md:text-lg font-black tracking-wider"
+                  style={{
+                    fontFamily: '"Press Start 2P", monospace',
+                    color: '#fff',
+                    textShadow: '2px 2px 0 #ef4444, 4px 4px 0 #7c2d12, 0 0 16px rgba(239,68,68,0.5)',
+                    letterSpacing: '1px',
+                  }}
+                  data-testid="platform-section-title"
+                >
+                  ESCOLHA SUA PLATAFORMA
+                </h2>
+                <img
+                  src="/assets/mario_game/bg-coin.png"
+                  alt=""
+                  className="w-6 h-6 animate-coin-spin-title"
+                  style={{
+                    imageRendering: 'pixelated',
+                    filter: 'drop-shadow(0 0 6px rgba(251,191,36,0.9))',
+                    animationDelay: '0.5s',
+                  }}
+                />
+              </div>
               
               {/* Grid com 3 plataformas */}
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 max-w-4xl mx-auto px-4">
@@ -463,6 +540,37 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                     data-testid="platform-select-vg-btn"
                     className="w-full block group relative"
                   >
+                    {/* ═══ RECOMENDADO BADGE (Mario gold pill) ═══ */}
+                    <div
+                      className="absolute -top-2.5 left-3 z-20 pointer-events-none animate-recommended-bob"
+                      data-testid="vg-recommended-badge"
+                    >
+                      <div
+                        className="flex items-center gap-1 px-2 py-0.5 rounded-full"
+                        style={{
+                          background: 'linear-gradient(180deg, #fde047 0%, #fbbf24 55%, #d97706 100%)',
+                          border: '2px solid #000',
+                          boxShadow: '0 0 10px rgba(251,191,36,0.75), 2px 2px 0 #000, inset 0 1px 0 rgba(255,255,255,0.6)',
+                        }}
+                      >
+                        <span
+                          className="text-black text-[9px] leading-none"
+                          style={{ textShadow: '0 0 2px rgba(255,255,255,0.7)' }}
+                        >
+                          ★
+                        </span>
+                        <span
+                          className="text-black font-black text-[8px] leading-none tracking-wider"
+                          style={{
+                            fontFamily: '"Press Start 2P", monospace',
+                            paddingTop: '1px',
+                          }}
+                        >
+                          RECOMENDADO
+                        </span>
+                      </div>
+                    </div>
+
                     <div className="absolute -inset-[2px] rounded-2xl animate-cta-breathing-border" style={{
                       background: 'linear-gradient(90deg, #8b5cf6, #a855f7, #8b5cf6)',
                       backgroundSize: '200% 100%'
@@ -797,6 +905,27 @@ const PlatformSelector = ({ onPlatformSelect }) => {
           50% { opacity: 0.8; transform: scale(1.05); }
         }
         .animate-breathing-glow { animation: breathing-glow 3s ease-in-out infinite; }
+
+        /* ═══════ RECOMENDADO BADGE (bob + flash) ═══════ */
+        @keyframes recommended-bob {
+          0%, 100% { transform: translateY(0) rotate(-3deg); }
+          50%      { transform: translateY(-3px) rotate(3deg); }
+        }
+        .animate-recommended-bob {
+          animation: recommended-bob 1.2s ease-in-out infinite;
+          transform-origin: center;
+        }
+
+        /* ═══════ Coin spin decoration on section titles ═══════ */
+        @keyframes coin-spin-title {
+          0%, 100% { transform: scaleX(1); filter: drop-shadow(0 0 6px rgba(251,191,36,0.9)) brightness(1); }
+          25%      { transform: scaleX(0.2); filter: drop-shadow(0 0 10px rgba(253,224,71,1)) brightness(1.3); }
+          50%      { transform: scaleX(-1); filter: drop-shadow(0 0 6px rgba(251,191,36,0.9)) brightness(1); }
+          75%      { transform: scaleX(-0.2); filter: drop-shadow(0 0 10px rgba(253,224,71,1)) brightness(1.3); }
+        }
+        .animate-coin-spin-title {
+          animation: coin-spin-title 2.2s linear infinite;
+        }
         
         @keyframes cta-breathing-border {
           0% { background-position: 0% 50%; opacity: 0.7; }
