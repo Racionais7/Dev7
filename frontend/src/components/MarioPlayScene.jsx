@@ -52,18 +52,18 @@ const T_IDLE2_END       = 4200;
 const T_CYCLE_END       = 6000;
 
 // Distances & positions (in stage pixels, scaled via responsive container)
-const STAGE_W = 160;   // stage width baseline
-const STAGE_H = 110;   // stage height baseline
-const GROUND_Y = 90;   // Mario's feet rest on this Y coordinate
-const MARIO_SIZE = 34; // rendered Mario sprite size
-const BLOCK_SIZE = 32;
-const COIN_SIZE = 22;
-const WALK_DISTANCE = 46;
-const MARIO_START_X = 30;
+const STAGE_W = 260;   // stage width baseline (BIGGER)
+const STAGE_H = 180;   // stage height baseline
+const GROUND_Y = 150;  // Mario's feet rest on this Y coordinate
+const MARIO_SIZE = 56; // rendered Mario sprite size (much bigger)
+const BLOCK_SIZE = 48;
+const COIN_SIZE = 32;
+const WALK_DISTANCE = 72;
+const MARIO_START_X = 50;
 const MARIO_END_X = MARIO_START_X + WALK_DISTANCE;
-const BLOCK_X = MARIO_END_X + 1;           // block sits right above where Mario jumps
-const BLOCK_Y = 24;                        // top of block area
-const MARIO_JUMP_PEAK_Y = GROUND_Y - 36;   // how high Mario's feet reach at peak
+const BLOCK_X = MARIO_END_X + 2;            // block sits right above where Mario jumps
+const BLOCK_Y = 38;                         // top of block area
+const MARIO_JUMP_PEAK_Y = GROUND_Y - 60;    // how high Mario's feet reach at peak
 
 const easeOutQuad = (t) => 1 - (1 - t) * (1 - t);
 const easeInQuad = (t) => t * t;
@@ -357,9 +357,9 @@ const MarioPlayScene = ({ glitchActive }) => {
             left: 0,
             top: 0,
             fontFamily: '"Press Start 2P", monospace',
-            fontSize: '9px',
+            fontSize: '13px',
             color: '#fde047',
-            textShadow: '1px 1px 0 #000, 0 0 6px rgba(251,191,36,0.9)',
+            textShadow: '2px 2px 0 #000, 0 0 8px rgba(251,191,36,0.95)',
             letterSpacing: '0.5px',
             willChange: 'transform, opacity',
           }}

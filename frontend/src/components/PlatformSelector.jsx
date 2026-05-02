@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { platformImage } from '../data/mockData';
 import OrbitingLogos from './OrbitingLogos';
 import MarioPlayScene from './MarioPlayScene';
+import MarioBackground from './MarioBackground';
 
 // Data
 const gameProviders = [
@@ -153,6 +154,11 @@ const PlatformSelector = ({ onPlatformSelect }) => {
         <div className="absolute top-0 left-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-violet-500/8 to-transparent animate-beam-pass" />
         <div className="absolute top-0 right-[30%] w-[1px] h-full bg-gradient-to-b from-transparent via-blue-500/6 to-transparent animate-beam-pass-delay" />
       </div>
+
+      {/* ════════════════════════════════════════════════════════════════════════
+          MARIO-THEMED BACKGROUND (pixel clouds, hills, coins, bushes, pipes, brick)
+      ════════════════════════════════════════════════════════════════════════ */}
+      <MarioBackground />
 
       <div className="relative z-10">
         
