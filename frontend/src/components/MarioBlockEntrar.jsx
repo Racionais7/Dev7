@@ -12,10 +12,17 @@ import React from 'react';
  *   </button>
  */
 const MarioBlockEntrar = ({ text = 'ENTRAR', testId }) => {
+  const handleHit = () => {
+    // Reward a coin through the global HUD API when the parent CTA is pressed
+    if (typeof window !== 'undefined' && window.__marioHUD) {
+      window.__marioHUD.addCoins(1);
+    }
+  };
   return (
     <div
       className="relative w-full mt-3"
       data-testid={testId}
+      onClick={handleHit}
     >
       {/* ═══ Coin pops out on hover (group-hover) ═══ */}
       <img

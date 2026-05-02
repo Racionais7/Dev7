@@ -40,7 +40,32 @@ Cliente pediu modificações Mario-themed:
 - ✅ Dark/neon theme preserved in rest of site
 - ✅ Build successfully compiling, frontend running
 
+## Novidades (2 fev 2026) — Easter eggs & HUD
+### MarioHUD.jsx (novo)
+- HUD clássico SMB no topo: `MARIO {score} | ×{coins} | WORLD 1-1 | TIME {countdown}`
+- Moeda animada girando, pulso amarelo ao ganhar moedas
+- Score drift passivo (+10 a cada 2.4s), TIME conta regressiva (reseta em 400)
+- API global `window.__marioHUD.addCoins(n)` / `addScore(n)` para acoplamentos
+
+### GoombaPatrol.jsx (novo)
+- 3 Goombas patrulham o chão em 60fps (`requestAnimationFrame`)
+- Clicar em Goomba → squish sprite + +1 moeda no HUD + respawn após 1.4s
+- Sprites gerados via Python PIL em `/tmp/gen_goomba.py` → `goomba-1.png`, `goomba-2.png`, `goomba-squish.png`
+
+### KonamiEasterEgg.jsx (novo)
+- Sequência ↑↑↓↓←→←→BA dispara celebração 1-UP
+- Chuva de 42 moedas pixel art caindo com rotação aleatória
+- Banner "1-UP! +99 COINS" com animação de bounce
+- +99 moedas no HUD + hint de progresso em canto inferior-esquerdo durante combo
+
+### Integração (PlatformSelector.jsx)
+- HUD renderizado acima do header
+- GoombaPatrol e KonamiEasterEgg renderizados como overlays root
+- MarioBlockEntrar.jsx dispara `addCoins(1)` em cada click (antes de navegar)
+
 ## Backlog / Future (P2)
+- Refatorar `PlatformSelector.jsx` (~1450 linhas) em componentes menores
 - Som de "boing" ao bater no bloco (opcional)
-- Adicionar moeda animada saindo do bloco após hit
-- Star power-up aparecendo aleatoriamente no footer
+- Power-up mushroom caindo aleatoriamente do céu
+- Fireball trail no cursor (modo gaming)
+- Persistir score/moedas em localStorage entre sessões

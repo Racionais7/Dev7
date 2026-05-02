@@ -4,6 +4,9 @@ import OrbitingLogos from './OrbitingLogos';
 import MarioPlayScene from './MarioPlayScene';
 import MarioBackground from './MarioBackground';
 import MarioBlockEntrar from './MarioBlockEntrar';
+import MarioHUD from './MarioHUD';
+import GoombaPatrol from './GoombaPatrol';
+import KonamiEasterEgg from './KonamiEasterEgg';
 
 // Data
 const gameProviders = [
@@ -161,8 +164,17 @@ const PlatformSelector = ({ onPlatformSelect }) => {
       ════════════════════════════════════════════════════════════════════════ */}
       <MarioBackground />
 
+      {/* Floating Goombas patrolling the ground + Konami Code easter egg */}
+      <GoombaPatrol />
+      <KonamiEasterEgg />
+
       <div className="relative z-10">
-        
+
+        {/* Classic SMB HUD - MARIO | score | COINS | WORLD | TIME */}
+        <div className={`pt-3 px-4 sm:px-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
+          <MarioHUD />
+        </div>
+
         {/* ════════════════════════════════════════════════════════════════════════
             HEADER - Clean minimal
         ════════════════════════════════════════════════════════════════════════ */}
@@ -683,20 +695,37 @@ const PlatformSelector = ({ onPlatformSelect }) => {
         ════════════════════════════════════════════════════════════════════════ */}
         <footer ref={footerRef} className={`mt-12 sm:mt-16 bg-[#08080e] border-t border-white/5 transition-all duration-700 ${footerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           
-          {/* LINE 1: Responsibility Badges */}
+          {/* LINE 1: Responsibility Badges — Mario block style */}
           <div className="py-5 sm:py-6 border-b border-white/5 bg-[#0a0a12]">
             <div className="max-w-7xl mx-auto px-2 sm:px-6">
               <div className="flex items-center justify-between sm:justify-center gap-2 sm:gap-10">
                 {responsibilityBadges.map((b, idx) => (
                   <div 
                     key={b.name} 
-                    className={`flex items-center gap-1 sm:gap-3 text-gray-400 transition-all duration-500 hover:text-gray-300 ${footerVisible ? 'opacity-100' : 'opacity-0'}`}
+                    className={`flex items-center gap-1.5 sm:gap-3 text-gray-300 transition-all duration-500 hover:text-white ${footerVisible ? 'opacity-100' : 'opacity-0'}`}
                     style={{ transitionDelay: `${idx * 100}ms` }}
                   >
-                    <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[8px] sm:text-xs font-bold hover:bg-white/10 transition-all flex-shrink-0">
+                    <div
+                      className="w-7 h-7 sm:w-10 sm:h-10 flex items-center justify-center text-[8px] sm:text-xs font-black flex-shrink-0 transition-transform hover:-translate-y-0.5"
+                      style={{
+                        background: 'linear-gradient(180deg, #fef08a 0%, #fde047 30%, #fbbf24 65%, #d97706 100%)',
+                        border: '2px solid #000',
+                        borderRadius: '4px',
+                        boxShadow: '2px 2px 0 #000, inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -2px 0 rgba(120,53,15,0.4)',
+                        color: '#000',
+                        fontFamily: '"Press Start 2P", monospace',
+                        textShadow: '1px 1px 0 rgba(255,255,255,0.4)',
+                        imageRendering: 'pixelated',
+                      }}
+                    >
                       {b.icon}
                     </div>
-                    <span className="text-[8px] sm:text-sm font-bold whitespace-nowrap">{b.name}</span>
+                    <span
+                      className="text-[8px] sm:text-[9px] font-black tracking-wider whitespace-nowrap uppercase"
+                      style={{ fontFamily: '"Press Start 2P", monospace' }}
+                    >
+                      {b.name}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -723,9 +752,36 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                   </div>
                 ))}
               </div>
-              <p className="text-center text-xs text-gray-600 italic">
-                Outros fornecedores estão sendo adicionados constantemente...
-              </p>
+              <div className="flex items-center justify-center gap-2 mt-1">
+                <img
+                  src="/assets/mario_game/bg-coin.png"
+                  alt=""
+                  className="w-3.5 h-3.5 animate-coin-spin-title"
+                  style={{
+                    imageRendering: 'pixelated',
+                    filter: 'drop-shadow(0 0 4px rgba(251,191,36,0.9))',
+                  }}
+                />
+                <p
+                  className="text-center text-[9px] text-amber-300/70 tracking-wider"
+                  style={{
+                    fontFamily: '"Press Start 2P", monospace',
+                    textShadow: '1px 1px 0 rgba(0,0,0,0.8)',
+                  }}
+                >
+                  NOVOS FORNECEDORES EM BREVE
+                </p>
+                <img
+                  src="/assets/mario_game/bg-coin.png"
+                  alt=""
+                  className="w-3.5 h-3.5 animate-coin-spin-title"
+                  style={{
+                    imageRendering: 'pixelated',
+                    filter: 'drop-shadow(0 0 4px rgba(251,191,36,0.9))',
+                    animationDelay: '0.5s',
+                  }}
+                />
+              </div>
             </div>
           </div>
           
