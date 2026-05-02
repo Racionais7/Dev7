@@ -250,104 +250,21 @@ const PlatformSelector = ({ onPlatformSelect }) => {
                       zIndex: 10, // Mario stays in middle layer - between front and back logos
                     }}
                   >
-                    {/* Mario holographic figure with breathing + floating */}
-                    <div className="animate-mario-float">
-                      <svg 
-                        className={`w-full h-full animate-mario-breathe ${glitchActive ? '' : 'animate-mario-shimmer'}`}
-                        viewBox="0 0 100 140" 
-                        fill="none"
-                        style={{ 
-                          filter: glitchActive 
-                            ? 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.9)) brightness(1.5)' 
-                            : 'drop-shadow(0 0 12px rgba(124, 58, 237, 0.6)) drop-shadow(0 0 25px rgba(59, 130, 246, 0.35))'
+                    {/* Mario pixel art figure with breathing + floating */}
+                    <div className="animate-mario-float w-full h-full flex items-center justify-center">
+                      <img
+                        src="/assets/mario/mario-pixel-clean.png"
+                        alt="Mario"
+                        data-testid="mario-pixel-hologram"
+                        className={`w-full h-full object-contain animate-mario-breathe ${glitchActive ? '' : 'animate-mario-shimmer'}`}
+                        style={{
+                          imageRendering: 'pixelated',
+                          filter: glitchActive
+                            ? 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.9)) brightness(1.6) hue-rotate(30deg)'
+                            : 'drop-shadow(0 0 10px rgba(124, 58, 237, 0.85)) drop-shadow(0 0 22px rgba(59, 130, 246, 0.55)) drop-shadow(0 0 4px rgba(167, 139, 250, 0.9))'
                         }}
-                      >
-                        <defs>
-                          {/* Holographic gradient for Mario */}
-                          <linearGradient id="marioHoloGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.85">
-                              <animate attributeName="stopColor" values="#60a5fa;#a78bfa;#60a5fa" dur="4s" repeatCount="indefinite" />
-                            </stop>
-                            <stop offset="50%" stopColor="#a78bfa" stopOpacity="0.9">
-                              <animate attributeName="stopColor" values="#a78bfa;#60a5fa;#a78bfa" dur="4s" repeatCount="indefinite" />
-                            </stop>
-                            <stop offset="100%" stopColor="#818cf8" stopOpacity="0.8">
-                              <animate attributeName="stopColor" values="#818cf8;#7c3aed;#818cf8" dur="4s" repeatCount="indefinite" />
-                            </stop>
-                          </linearGradient>
-                          
-                          {/* Red accent gradient for Mario details */}
-                          <linearGradient id="marioRedAccent" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#ef4444" stopOpacity="0.65" />
-                            <stop offset="100%" stopColor="#dc2626" stopOpacity="0.45" />
-                          </linearGradient>
-                          
-                          {/* Blue accent for overalls */}
-                          <linearGradient id="marioBlueAccent" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.75" />
-                            <stop offset="100%" stopColor="#1d4ed8" stopOpacity="0.55" />
-                          </linearGradient>
-                          
-                          {/* Noise filter for hologram shimmer */}
-                          <filter id="holoNoise" x="0%" y="0%" width="100%" height="100%">
-                            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="noise">
-                              <animate attributeName="baseFrequency" values="0.9;1.1;0.9" dur="0.5s" repeatCount="indefinite" />
-                            </feTurbulence>
-                            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1" xChannelSelector="R" yChannelSelector="G" />
-                          </filter>
-                          
-                          {/* Energy glow filter */}
-                          <filter id="energyGlow" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur stdDeviation="0.8" result="blur" />
-                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                          </filter>
-                        </defs>
-                        
-                        {/* ══ MARIO BODY - Holographic Light Effect ══ */}
-                        
-                        {/* Hat - iconic M cap with red accent */}
-                        <ellipse cx="50" cy="22" rx="26" ry="10" fill="url(#marioRedAccent)" stroke="url(#marioHoloGradient)" strokeWidth="1.2" />
-                        <path d="M24 22 Q50 8 76 22" fill="url(#marioRedAccent)" stroke="url(#marioHoloGradient)" strokeWidth="0.8" />
-                        {/* M logo on cap */}
-                        <text x="50" y="20" textAnchor="middle" fill="url(#marioHoloGradient)" fontSize="10" fontWeight="bold" fontFamily="Arial">M</text>
-                        
-                        {/* Head/Face */}
-                        <ellipse cx="50" cy="38" rx="18" ry="16" fill="none" stroke="url(#marioHoloGradient)" strokeWidth="1.5" filter="url(#energyGlow)" />
-                        {/* Eyes */}
-                        <ellipse cx="43" cy="36" rx="3" ry="4" fill="url(#marioHoloGradient)" />
-                        <ellipse cx="57" cy="36" rx="3" ry="4" fill="url(#marioHoloGradient)" />
-                        {/* Nose */}
-                        <ellipse cx="50" cy="42" rx="5" ry="3" fill="url(#marioRedAccent)" stroke="url(#marioHoloGradient)" strokeWidth="0.4" />
-                        {/* Mustache */}
-                        <path d="M38 46 Q44 50 50 46 Q56 50 62 46" fill="none" stroke="url(#marioHoloGradient)" strokeWidth="1.5" strokeLinecap="round" />
-                        
-                        {/* Body/Torso with overalls */}
-                        <ellipse cx="50" cy="72" rx="20" ry="18" fill="url(#marioBlueAccent)" stroke="url(#marioHoloGradient)" strokeWidth="1.2" filter="url(#energyGlow)" />
-                        {/* Overalls straps */}
-                        <path d="M40 58 L42 82" stroke="url(#marioHoloGradient)" strokeWidth="1.5" />
-                        <path d="M60 58 L58 82" stroke="url(#marioHoloGradient)" strokeWidth="1.5" />
-                        {/* Buttons */}
-                        <circle cx="42" cy="68" r="2" fill="url(#marioHoloGradient)" />
-                        <circle cx="58" cy="68" r="2" fill="url(#marioHoloGradient)" />
-                        
-                        {/* Arms - raised victory pose */}
-                        <path d="M30 65 Q20 55 18 45" stroke="url(#marioHoloGradient)" strokeWidth="3" strokeLinecap="round" fill="none" filter="url(#energyGlow)" />
-                        <path d="M70 65 Q80 55 82 45" stroke="url(#marioHoloGradient)" strokeWidth="3" strokeLinecap="round" fill="none" filter="url(#energyGlow)" />
-                        {/* Gloves */}
-                        <circle cx="16" cy="43" r="4" fill="none" stroke="url(#marioHoloGradient)" strokeWidth="1.5" />
-                        <circle cx="84" cy="43" r="4" fill="none" stroke="url(#marioHoloGradient)" strokeWidth="1.5" />
-                        
-                        {/* Legs */}
-                        <path d="M40 88 L36 115" stroke="url(#marioBlueAccent)" strokeWidth="4" strokeLinecap="round" filter="url(#energyGlow)" />
-                        <path d="M60 88 L64 115" stroke="url(#marioBlueAccent)" strokeWidth="4" strokeLinecap="round" filter="url(#energyGlow)" />
-                        
-                        {/* Shoes - brown boots */}
-                        <ellipse cx="32" cy="120" rx="10" ry="5" fill="url(#marioRedAccent)" stroke="url(#marioHoloGradient)" strokeWidth="0.8" />
-                        <ellipse cx="68" cy="120" rx="10" ry="5" fill="url(#marioRedAccent)" stroke="url(#marioHoloGradient)" strokeWidth="0.8" />
-                        
-                        {/* Energy lines running through body */}
-                        <path d="M50 15 L50 125" stroke="url(#marioHoloGradient)" strokeWidth="0.4" strokeDasharray="3,5" opacity="0.4" className="animate-energy-flow" />
-                      </svg>
+                        draggable={false}
+                      />
                     </div>
                     
                     {/* Scanline effect over Mario - passes every 2-3s */}

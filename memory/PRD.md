@@ -1,33 +1,46 @@
-# Signal Analytics - PRD
+# Super Mario AI - Signal Analytics Platform
 
-## O Que Foi Implementado
+## Problema Original (Jan 2026)
+Cliente pediu modificações Mario-themed:
+1. Tela de entrada (loading) deve ter Mario pixel art pulando e batendo em um bloco de tijolos
+2. Trocar o holograma central (personagem azul/roxo) por um Mario pixel art animado
+3. Manter o tema neon/escuro do resto do site
 
-### Data: 01/05/2026 - Provedora Micro Gaming adicionada
-- 8ª provedora adicionada: **Micro Gaming** (48 jogos reais extraídos do nandabets.com.br/VG)
-- Logo da Micro Gaming adicionada em `/assets/providers/microgaming.png` e `/providers/microgaming.png`
-- 48 imagens dos slots baixadas em `/images/microgaming/{1-49}.png` (sem o 23)
-- Aparece em:
-  - Tela inicial → grid de provedoras (barra inferior, agora 8 cards)
-  - Tela inicial → footer providers (8 logos)
-  - Plataforma VG JOGO → ProviderSelector (8 abas: PG, Pragmatic, Tada, Spirit, Revenge, FA CHAI, JDB, **Micro Gaming**)
-- Grid atualizado para `lg:grid-cols-8` em ambos os componentes (PlatformSelector e ProviderSelector)
-- SlotCard atualizado para mostrar "Micro Gaming" como provider name
+## Stack
+- Frontend: React (CRA + Craco) em /app/frontend
+- Backend: FastAPI em /app/backend
+- DB: MongoDB
+- Tailwind CSS
 
-### Data: 09/01/2026 - JDB jogos reais (28 jogos)
-- 28 jogos JDB
+## O que foi implementado (2 de maio, 2026)
 
-### Data: 09/01/2026 - FA CHAI jogos reais (45 jogos)
-- 45 jogos FA CHAI
+### Tela de Loading (IntroAnimation.jsx)
+- Mario 8-bit pixel art pulando de baixo para cima (1.2s loop)
+- Bloco de tijolo "?" em CSS pixel art (laranja/marrom com rebites e sombras pixeladas)
+- Animação sincronizada: no pico do pulo (~42%), Mario bate no bloco; o bloco salta pra cima 10px; faíscas (✦ ★ ✦) aparecem
+- Sombra do Mario que encolhe/cresce conforme pulo
+- Barra de progresso pixelada vermelha (estilo Mario/NES) com brilho animado
+- Título "SUPER MARIO AI" com sombra pixelada vermelha
+- Star sparkles animados no fundo (referência Mario)
 
-### Provedores e jogos (todos com nomes reais)
-- PG Soft: 40 jogos | Pragmatic Play: 50+ jogos | Tada Gaming: 40+ jogos
-- Spirit Gaming: 16 jogos | Revenge: 12 jogos
-- FA CHAI: 45 jogos | JDB: 28 jogos | **Micro Gaming: 48 jogos**
-- Total: 280+ jogos (8 provedoras)
+### Holograma Central (PlatformSelector.jsx)
+- Substituído SVG cartoon antigo por imagem pixel art real do Mario 8-bit
+- Efeito holográfico preservado via `filter: drop-shadow` (púrpura + azul)
+- Animações existentes mantidas: mario-float, mario-breathe, mario-shimmer, glitch-spark, scanline
+- `image-rendering: pixelated` para preservar o estilo retrô
+- Os logos orbitais em volta (VGJOGO, DGJOGO, etc) continuam girando
 
-## URLs
-- Frontend: https://gaming-slots-hub-3.preview.emergentagent.com
+### Assets
+- `/app/frontend/public/assets/mario/mario-pixel-clean.png` - Pixel art Mario 441x745 (sem marca d'água, fundo transparente)
+- Processamento: crop do watermark + conversão de pixels brancos para transparente
 
-## Dados MOCKED
-- Nomes e imagens dos jogos: REAIS (extraídos do nandabets.com.br)
-- Sinais e RTPs: gerados aleatoriamente no frontend
+## Status
+- ✅ Intro animation rendering and animating Mario jumping at brick
+- ✅ Platform hologram replaced with pixel Mario
+- ✅ Dark/neon theme preserved in rest of site
+- ✅ Build successfully compiling, frontend running
+
+## Backlog / Future (P2)
+- Som de "boing" ao bater no bloco (opcional)
+- Adicionar moeda animada saindo do bloco após hit
+- Star power-up aparecendo aleatoriamente no footer
