@@ -122,6 +122,7 @@ const MarioPlayScene = ({ glitchActive }) => {
   const st = useRef({
     raf: 0, startTime: 0, lastIdx: -1, impactTime: 0,
     didImpact: false, didLand: false, lastDir: 1,
+    regenGlintFired: false, regenResetFired: false,
   });
 
   // Helper setters
@@ -171,10 +172,30 @@ const MarioPlayScene = ({ glitchActive }) => {
       const elapsed = (now - s.startTime) % CYCLE_DUR;
       const phase = currentPhase(elapsed);
 
-      // Cycle restart → regenerate blocks
-      if (phase.idx < s.lastIdx) {
-        setBlockSprites([SPR.blockGlint, SPR.blockGlint, SPR.blockGlint]);
-        setTimeout(() => setBlockSprites([SPR.block, SPR.block, SPR.block]), 220);
+      // Cycle restart → regenerate blocks (deterministic, no setTimeout races)
+      // Phase 0 is the entrance walk (dur ~350ms). Fire glint in first ~60ms
+      // then full `?` reset after ~240ms. Flags are reset when leaving phase 0.
+      const cycleWrapped = phase.idx < s.lastIdx;
+      if (cycleWrapped) {
+        // Safety reset: ensures blocks are always `?` at start of new cycle,
+        // even if the previous cycle was interrupted (tab backgrounded, long frame).
+        setBlockSprites([SPR.block, SPR.block, SPR.block]);
+        s.regenGlintFired = false;
+        s.regenResetFired = true; // reset already happened synchronously
+      }
+      if (phase.idx === 0) {
+        if (phase.localT < 60 && !s.regenGlintFired) {
+          setBlockSprites([SPR.blockGlint, SPR.blockGlint, SPR.blockGlint]);
+          s.regenGlintFired = true;
+          s.regenResetFired = false;
+        } else if (phase.localT >= 240 && !s.regenResetFired) {
+          setBlockSprites([SPR.block, SPR.block, SPR.block]);
+          s.regenResetFired = true;
+        }
+      } else {
+        // not in phase 0 anymore → arm flags for the next cycle
+        s.regenGlintFired = false;
+        s.regenResetFired = false;
       }
 
       let marioX = 25;
