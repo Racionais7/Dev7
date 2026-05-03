@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import useIsMobile from '../hooks/useIsMobile';
 
 /**
  * Agency-grade NES Mario scene inside the hologram circle.
@@ -88,6 +89,7 @@ let _pid = 0;
 const nextId = () => ++_pid;
 
 const MarioPlayScene = ({ glitchActive }) => {
+  const isMobile = useIsMobile();
   // Sprites (infrequent updates)
   const [marioSprite, setMarioSprite] = useState(SPR.idle);
   const [blockSprites, setBlockSprites] = useState([SPR.block, SPR.block, SPR.block]);
@@ -351,7 +353,10 @@ const MarioPlayScene = ({ glitchActive }) => {
       style={{
         left: '50%',
         top: '50%',
-        transform: 'translate(-50%, -50%)',
+        transform: isMobile
+          ? 'translate(-50%, -50%) scale(0.62)'
+          : 'translate(-50%, -50%)',
+        transformOrigin: 'center center',
         width: `${STAGE_W}px`,
         height: `${STAGE_H}px`,
         imageRendering: 'pixelated',
